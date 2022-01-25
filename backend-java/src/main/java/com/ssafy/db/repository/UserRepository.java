@@ -12,5 +12,6 @@ import java.util.Optional;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
     // 아래와 같이, Query Method 인터페이스(반환값, 메소드명, 인자) 정의를 하면 자동으로 Query Method 구현됨.
-    Optional<User> findByUserId(String userId);
+    // 이미 email을 통해 생성된 사용자인지 체크
+    Optional<User> findByEmail(String email);
 }
