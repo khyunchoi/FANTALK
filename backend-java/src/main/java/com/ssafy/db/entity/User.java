@@ -19,7 +19,7 @@ public class User extends BaseEntity{
     String department;
     String name;
     String userId;
-    // test
+    // test(review)
 
     @JsonIgnore
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
