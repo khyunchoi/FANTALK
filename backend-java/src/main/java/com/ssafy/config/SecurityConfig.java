@@ -1,8 +1,7 @@
 package com.ssafy.config;
 
-import com.ssafy.api.service.UserService;
-import com.ssafy.common.auth.JwtAuthenticationFilter;
 import com.ssafy.common.auth.SsafyUserDetailService;
+import com.ssafy.config.oauth.PrincipalOauth2UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,9 +24,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private SsafyUserDetailService ssafyUserDetailService;
-    
+
     @Autowired
-    private UserService userService;
+    private PrincipalOauth2UserService principalOauth2UserService;
     
     // Password 인코딩 방식에 BCrypt 암호화 방식 사용
     @Bean
@@ -56,12 +55,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .httpBasic().disable()
                 .csrf().disable()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) // 토큰 기반 인증이므로 세션 사용 하지않음
-                .and()
-                .addFilter(new JwtAuthenticationFilter(authenticationManager(), userService)) //HTTP 요청에 JWT 토큰 인증 필터를 거치도록 필터를 추가
                 .authorizeRequests()
                 .antMatchers("/api/v1/users/me").authenticated()       //인증이 필요한 URL과 필요하지 않은 URL에 대하여 설정
-    	        	    .anyRequest().permitAll()
-                .and().cors();
+                .anyRequest().permitAll()
+                .and()
+                .formLogin()
+                .loginPage("/loginForm")
+                .loginProcessingUrl("/login") // /login 주소가 호출이 되면 시큐리티가 낚아채서 대신 로그인을 진행해줍니다.
+                .defaultSuccessUrl("/")
+                .and()
+                .oauth2Login()
+                .loginPage("/loginForm") // 구글 로그인이 완료된 뒤의 후처리가 필요함. Tip. 코드X (엑세스토큰+사용자프로필정보)
+                .userInfoEndpoint()
+                .userService(principalOauth2UserService);
     }
 }

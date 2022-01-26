@@ -16,13 +16,17 @@ import javax.persistence.*;
 public class User extends BaseEntity{
 
     @Column(nullable = false)
-    private String name;
+    private String username;
+
+    private String password;
 
     @Column(nullable = false)
     private String email;
 
     @Column
     private String profileImage;
+
+    private String role;
 
     @ColumnDefault("false")
     private boolean isManager;
@@ -31,14 +35,14 @@ public class User extends BaseEntity{
     private boolean isDelete;
 
     @Builder
-    public User(String name, String email, String profileImage){
-        this.name = name;
+    public User(String username, String email, String profileImage){
+        this.username = username;
         this.email = email;
         this.profileImage = profileImage;
     }
 
-    public User update(String name, String profileImage, boolean isManager, boolean isDelete){
-        this.name = name;
+    public User update(String username, String profileImage, boolean isManager, boolean isDelete){
+        this.username = username;
         this.profileImage = profileImage;
         this.isManager = isManager;
         this.isDelete = isDelete;
