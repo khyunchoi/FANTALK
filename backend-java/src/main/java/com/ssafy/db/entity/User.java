@@ -20,31 +20,31 @@ public class User extends BaseEntity{
 
     private String password;
 
+    private String name;
+
     @Column(nullable = false)
     private String email;
 
     @Column
     private String profileImage;
 
-    private String role;
-
-    @ColumnDefault("false")
-    private boolean isManager;
+    private String role; // ROLE_USER, ROLE_MANAGER
 
     @ColumnDefault("false")
     private boolean isDelete;
 
     @Builder
-    public User(String username, String email, String profileImage){
+    public User(String username, String name, String email, String profileImage, String role){
         this.username = username;
+        this.name = name;
         this.email = email;
         this.profileImage = profileImage;
+        this.role = role;
     }
 
-    public User update(String username, String profileImage, boolean isManager, boolean isDelete){
+    public User update(String username, String profileImage, boolean isDelete){
         this.username = username;
         this.profileImage = profileImage;
-        this.isManager = isManager;
         this.isDelete = isDelete;
         return this;
     }

@@ -1,7 +1,7 @@
 package com.ssafy.config;
 
 import com.ssafy.common.auth.SsafyUserDetailService;
-import com.ssafy.config.oauth.PrincipalOauth2UserService;
+import com.ssafy.common.oauth.SsafyOauth2UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,7 +11,6 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -22,12 +21,16 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-    @Autowired
+
     private SsafyUserDetailService ssafyUserDetailService;
+    private SsafyOauth2UserService ssafyOauth2UserService;
 
     @Autowired
-    private PrincipalOauth2UserService principalOauth2UserService;
-    
+    public SecurityConfig(SsafyUserDetailService ssafyUserDetailService, SsafyOauth2UserService ssafyOauth2UserService) {
+        this.ssafyUserDetailService = ssafyUserDetailService;
+        this.ssafyOauth2UserService = ssafyOauth2UserService;
+    }
+
     // Password 인코딩 방식에 BCrypt 암호화 방식 사용
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -53,20 +56,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .httpBasic().disable()
-                .csrf().disable()
-                .authorizeRequests()
-                .antMatchers("/api/v1/users/me").authenticated()       //인증이 필요한 URL과 필요하지 않은 URL에 대하여 설정
-                .anyRequest().permitAll()
-                .and()
+                .httpBasic()
+                    .disable()
+                .csrf()
+                    .disable()
                 .formLogin()
-                .loginPage("/loginForm")
-                .loginProcessingUrl("/login") // /login 주소가 호출이 되면 시큐리티가 낚아채서 대신 로그인을 진행해줍니다.
-                .defaultSuccessUrl("/")
-                .and()
+                    .disable()
+                .authorizeRequests() //인증이 필요한 URL과 필요하지 않은 URL에 대하여 설정
+                    .antMatchers("/users").authenticated()
+                    .antMatchers("/meeting/apply").access("hasRole('ROLE_MANAGER')")
+                    .anyRequest().permitAll()
+                    .and()
+                .logout()
+                    .logoutSuccessUrl("/logout-success")
+                    .and()
                 .oauth2Login()
-                .loginPage("/loginForm") // 구글 로그인이 완료된 뒤의 후처리가 필요함. Tip. 코드X (엑세스토큰+사용자프로필정보)
-                .userInfoEndpoint()
-                .userService(principalOauth2UserService);
+                    .loginPage("/oauth2/authorization/google") // 구글 로그인이 완료된 뒤의 후처리가 필요함. Tip. 코드X (엑세스토큰+사용자프로필정보)
+                    .userInfoEndpoint()
+                    .userService(ssafyOauth2UserService);
     }
 }

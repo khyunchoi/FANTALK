@@ -2,10 +2,8 @@ package com.ssafy.common.auth;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -17,14 +15,13 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
  */
 public class SsafyUserDetails implements UserDetails, OAuth2User {
 
-	@Autowired
-	User user;
+	private User user;
 	private Map<String, Object> attributes;
 
-	boolean accountNonExpired;
-    boolean accountNonLocked;
-    boolean credentialNonExpired;
-    boolean enabled = false;
+	boolean accountNonExpired = true;
+    boolean accountNonLocked = true;
+    boolean credentialNonExpired = true;
+    boolean enabled = true;
 
 	//일반 로그인
     public SsafyUserDetails(User user) {
