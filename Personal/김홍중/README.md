@@ -248,3 +248,193 @@
 
   - 비공개/공개 전환(보류)
 
+<br>
+
+### UI 재설계
+
+- 메인 페이지, 컬러 팔레트, 소셜 로그인 페이지
+
+![1](README.assets/1.PNG)
+
+<br>
+
+- 팬 커뮤니티 페이지
+
+![2](README.assets/2-16433000060851.PNG)
+
+<br>
+
+- 팬미팅 신청 페이지
+
+![3](README.assets/3.PNG)
+
+<br>
+
+- 팬미팅룸 입장, 대기룸, 1:1 미팅룸 페이지
+
+![4](README.assets/4.PNG)
+
+<br>
+
+### 커뮤니티 등록 API 구현
+
+- 가능한 실수를 방지하기 위해 생성자 주입으로 의존성 주입
+- Response는 상태 코드와 메시지로 반환
+
+-  Community Entity
+
+```java
+@Entity
+@Getter
+@NoArgsConstructor
+public class Community extends BaseEntity{
+
+    @NotNull
+    private String title;
+
+    @NotNull
+    private String logoImage;
+
+    @NotNull
+    private String backgroundImage;
+
+    @NotNull
+    private LocalDateTime createdAt;
+
+    @NotNull
+    private LocalDateTime updatedAt;
+
+    @Builder
+    public Community(String title, String logoImage, String backgroundImage, LocalDateTime createdAt, LocalDateTime updatedAt) {
+        this.title = title;
+        this.logoImage = logoImage;
+        this.backgroundImage = backgroundImage;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
+}
+```
+
+- Community Repository
+
+```java
+@Repository
+public interface CommunityRepository extends JpaRepository<Community, Long> {
+}
+```
+
+- Community Service
+
+```java
+public interface CommunityService {
+
+    // 커뮤니티 등록
+    void registerCommunity(Community community);
+}
+
+
+@Service
+public class CommunityServiceImpl implements CommunityService{
+
+    private final CommunityRepository communityRepository;
+
+    @Autowired
+    public CommunityServiceImpl(CommunityRepository communityRepository) {
+        this.communityRepository = communityRepository;
+    }
+
+    @Override
+    public void registerCommunity(Community community) {
+        communityRepository.save(community);
+    }
+}
+```
+
+- Community RegisterPostReq(DTO)
+
+```java
+@Getter
+@Setter
+@ApiModel("CommunityRegisterRequest")
+public class CommunityRegisterPostReq {
+
+    @ApiModelProperty(name = "title", example="community_title")
+    @NotNull
+    private String title;
+
+    @ApiModelProperty(name = "logoImage", example="logo_image_url")
+    @NotNull
+    private String logoImage;
+
+    @ApiModelProperty(name = "backgroundImage", example="background_image_url")
+    @NotNull
+    private String backgroundImage;
+}
+```
+
+- Community Controller
+
+```java
+@Api(value = "커뮤니티 API", tags = {"Community"})
+@RestController
+@RequestMapping("/api/communities")
+public class CommunityController {
+
+    @Autowired
+    private CommunityService communityService;
+
+    @PostMapping()
+    @ApiOperation(value = "커뮤니티 등록", notes = "제목, 로고 이미지, 배경 이미지를 통해 커뮤니티를 등록한다.")
+    public ResponseEntity<? extends BaseResponseBody> saveCommunity(
+            @RequestBody CommunityRegisterPostReq registerInfo) {
+
+        Community community = Community.builder()
+                .title(registerInfo.getTitle())
+                .logoImage(registerInfo.getLogoImage())
+                .backgroundImage(registerInfo.getBackgroundImage())
+                .createdAt(LocalDateTime.now())
+                .updatedAt(LocalDateTime.now())
+                .build();
+        try {
+            communityService.registerCommunity(community);
+            return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
+        } catch (Exception e) {
+            return ResponseEntity.status(400).body(BaseResponseBody.of(400, "Fail"));
+        }
+    }
+}
+```
+
+<br>
+
+### API 명세서 구현(진행 중..)
+
+- 화상 서비스는 아직 Openvidu를 완벽하게 이해하지 못해 일단 보류
+- 커뮤니티와 회원관리 서비스가 완성되면 천천히 완성할 예정
+
+![api명세서](README.assets/api명세서.PNG)
+
+
+
+### Git branch 전략 수립
+
+- Local에서 본인의 이름의 브랜치를 생성
+  - ex) git branch hongjung
+- master 브랜치에서 본인이 생성한 브랜치로 전환
+  - ex) git checkout hongjung
+- 브랜치 안에서 작업을 완료
+- 본인의 브랜치 작업물을 master 브랜치에 merge
+  - git add .
+  - git commit -m "날짜 기능명-작업종류 [간단한 작업내용]"
+    - ex) git commit -m "0125 signup-update [service modify]"
+  - git push origin 본인 브랜치명
+    - ex) git push origin hongjung
+- Gitlab Repo로 이동한 후 create merge request를 해서 merge 요청
+- merge 승인 후 Local에서 master 브랜치로 전환
+  - ex) git checkout master
+- master 브랜치에서 pull
+  - ex) git pull origin master
+- master 브랜치 pull에 되었는지 확인한 후 Local에서 작업한 본인 브랜치 삭제
+  - git branch -D 본인 브랜치명
+    - ex) git branch -D hongjung
+- 다시 본인의 이름으로 브랜치 생성한 후 작업
