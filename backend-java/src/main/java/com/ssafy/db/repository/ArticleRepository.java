@@ -1,4 +1,14 @@
 package com.ssafy.db.repository;
 
-public class ArticleRepository {
+import com.ssafy.db.entity.Article;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
+@Repository
+public interface ArticleRepository extends JpaRepository<Article, Long> {
+
+    List<Article> findAllByCommunity_Id(Long community_id);
+
 }
