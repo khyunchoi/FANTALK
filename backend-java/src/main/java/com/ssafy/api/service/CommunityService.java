@@ -12,4 +12,5 @@ public interface CommunityService {
     List<Community> getAllCommunity();
     List<Community> findCommunityByTitle(String title);
     boolean findCommunityByName(String name);
+    Community findById(Long id);
 }

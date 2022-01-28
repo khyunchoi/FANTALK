@@ -23,10 +23,7 @@ public class ArticleServiceImpl implements ArticleService{
 
     // 게시글 작성
     @Override
-    public void registerArticle(ArticleRegisterPostReq articleInfo) {
-
-        Community community = new Community();
-        community.setId(articleInfo.getCommunity_id());
+    public void registerArticle(ArticleRegisterPostReq articleInfo, Community community) {
 
         try{
             Article article = Article.builder()
@@ -35,6 +32,7 @@ public class ArticleServiceImpl implements ArticleService{
                     .content(articleInfo.getContent())
                     .build();
             articleRepository.save(article);
+            // IllegalArgumentException – in case the given entity is null
             return;
         }catch(Exception e){
             e.printStackTrace();

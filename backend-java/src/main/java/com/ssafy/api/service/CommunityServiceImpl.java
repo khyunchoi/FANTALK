@@ -63,5 +63,17 @@ public class CommunityServiceImpl implements CommunityService{
         return false;
     }
 
+    @Override
+    public Community findById(Long id) {
+        try{
+            Community community = communityRepository.findById(id).get();
+            //return non-null value
+            //throws NoSuchElementException – if no value is present
+            return community;
+        }catch(Exception e){
+            throw e;
+        }
+    }
+
 
 }

@@ -20,6 +20,7 @@ import io.swagger.annotations.ApiResponses;
 import io.swagger.annotations.ApiResponse;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Api(value = "게시판 API", tags = {"Community"})
 @RestController
@@ -109,19 +110,29 @@ public class CommunityController {
     @PostMapping("/{community_id}/articles")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
-            @ApiResponse(code = 204, message = "실패"),
+            @ApiResponse(code = 400, message = "커뮤니티 탐색 오류"),
+            @ApiResponse(code = 204, message = "게시글 작성 오류"),
     })
     @ApiOperation(value = "게시글 작성", notes = "새로운 게시글을 생성한다.")//, response = String.class)
     public ResponseEntity<String> registerArticle(
-            @RequestBody @ApiParam(value="글 정보", required = true) ArticleRegisterPostReq articleInfo) {
+            @RequestBody @ApiParam(value="글 정보", required = true) ArticleRegisterPostReq articleInfo,
+            @PathVariable("community_id") @ApiParam(value="커뮤니티 ", required = true) Long community_id) {
         logger.info("registerCommunity 호출");
-//        if(userRepository.findByUserId(userId).isPresent())
-        //미리 findByTitle 로 찾아보고 있으면 이미존재한다는 메시지리턴, 없으면 다음 단계 넘어가게 해야?
+//
         try{
-            articleService.registerArticle(articleInfo);
+            Community community = communityService.findById(community_id);//NoSuchElementException
+            articleService.registerArticle(articleInfo,community);//
+
             return new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
-        }catch(Exception e){
+
+        }catch(NoSuchElementException e){// community 탐색 실패
+
+            return new ResponseEntity<String>("FAIL", HttpStatus.BAD_REQUEST);
+
+        }catch(IllegalArgumentException e){// 게시글 작성 실패
+
             return new ResponseEntity<String>("FAIL", HttpStatus.NO_CONTENT);
+
         }
     }
 }

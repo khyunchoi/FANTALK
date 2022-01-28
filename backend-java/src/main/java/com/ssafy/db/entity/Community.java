@@ -11,7 +11,6 @@ import javax.persistence.Entity;
 
 @Entity
 @Getter
-@Setter
 @NoArgsConstructor
 public class Community extends BaseEntityAll{
 
