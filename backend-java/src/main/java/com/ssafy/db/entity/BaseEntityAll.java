@@ -10,7 +10,6 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Getter
-@Setter
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 public class BaseEntityAll {
@@ -20,7 +19,7 @@ public class BaseEntityAll {
     private Long id;
 
     @CreatedDate
-    @Column(name = "CREATED_AT")
+    @Column(name = "CREATED_AT", updatable = false)
     private LocalDateTime createdAt;
 
     @LastModifiedDate

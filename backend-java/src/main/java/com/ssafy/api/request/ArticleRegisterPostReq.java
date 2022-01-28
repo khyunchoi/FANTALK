@@ -15,9 +15,6 @@ import javax.persistence.Column;
 @ApiModel("ArticleRegisterPostRequest")
 public class ArticleRegisterPostReq {
 
-    @ApiModelProperty(name="게시판 id", example="1")
-    Long community_id;
-
     @ApiModelProperty(name="글 제목", example="제목123")
     String title;
 
