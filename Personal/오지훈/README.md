@@ -181,7 +181,7 @@ SQL 표준에 지정된 고립성 수준
 
 ![res](README.assets/res.PNG)
 
-
+---
 ---
 
 ## 인증(Authentication)과 인가(Authorization)
@@ -271,7 +271,7 @@ Authorized redirect URIs
 ---
 ## Resource Owner의 승인
 
-![regiorder1](README.assets/1.jpg)
+![regiorder1](README.assets/regiorder1.jpg)
 
 1. 링크 클릭(ex. login with google)
 2. 링크
@@ -286,7 +286,7 @@ Authorized redirect URIs
 
 ## Resource Server의 승인
 
-![regiorder2](README.assets/2.jpg)
+![regiorder2](README.assets/regiorder2.jpg)
 
 1. Resource Owner에게 authorization code(임시 비밀번호)를 전송<br> (redirect URL에 담아서,ex https://test/callback?__code=3__
    )
@@ -299,7 +299,7 @@ Authorized redirect URIs
 
 ## Access Token 발급
 
-![regiorder3](README.assets/3.jpg)
+![regiorder3](README.assets/regiorder3.jpg)
 
 1. (authorization code 값을 지운다) accessToken을 발급하고 Client에 응답한다.
 2. Client는 내부적으로 토큰을 저장한다.
@@ -396,7 +396,56 @@ WebRTC란?
 
 <Br>
 
+필요한 요소
 
+- Signaling Server
+- NAT Traversal(STUN TURN) Server
+- Media Server
+
+<Br>
+
+## Signaling Server
+
+<br>
+
+WebRTC는 사용자 간의 Peer to Peer 통신을 통해 데이터를 교환한다.
+그리고 이를 위해서는 통신을 하는 주체끼리의 약속이 필요하다.
+<Br>
+
+Signaling Server는 사용자 간의 P2P 통신을 위해 사용자를 엮어주는 역할을 한다.
+
+<br>
+
+## STUN, TURN
+
+Signaling 서버를 통해 P2P 통신을 하고자 하는데, 방확벽이 있거나 NAT 환경에서는 연결이 불가하다.<br>
+
+이런 때에 시그널링을 하기 위해서는 __방화벽을 통과시켜주거나 private ip를 public ip로 바꿔주는 STUN서버 또는 TURN서버__ 를 시용해야 한다.
+<br>중간에서 중개해줄 무언가가 필요하다.
+
+<br>
+
+### STUN Server
+<Br>
+
+__S__ ession __T__ raversal __U__ tilities for __N__ AT <br>
+
+client가 자신의 public IP를 확인하기 위해 STUN 서버로 요청을 보내고 서버로 부터 자신의 Public IP를 받는다. <br>
+~~신분을 확인받고 입장권을 받는 느낌~~
+<br>
+그리고 받은 Public IP를 이용하여 시그널링을 한다.
+
+*단 두 Cleint가 같은 네트워크에 존재하고 있을 때는 이것으로 해결이 되지않는다
+
+### TURN Server
+
+<br>
+Client들이 통신할 때 public 망에 존재하는 TURN 서버를 경유하여 통신하게 한다.
+Client는 자신의 private IP를 포함한 TURN 메시지를 턴서보로 보내고, TURN 서버는 메시지에 포함된 주소와 UDP 포트넘버와의 차이를 통해 public ip에 응답한다.
+<br>
+그리고 이때 NAT 매핑 테이블에 기록되어 있는 정보에 따라 NAT가 클라이언트의 private IP로 메시지를 전송함.
+
+<Br>
 
 ---
-
+---
