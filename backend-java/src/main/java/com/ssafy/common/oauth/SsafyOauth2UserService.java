@@ -26,7 +26,6 @@ public class SsafyOauth2UserService extends DefaultOAuth2UserService {
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
 //        System.out.println("getClientRegistration: "+userRequest.getClientRegistration()); // registrationId로 어떤 OAuth로 로그인했는지 확인 가능
-//        System.out.println("getAccessToken: "+userRequest.getAccessToken()); // AccessToken 확인 가능
 //        System.out.println("getAttributes: "+super.loadUser(userRequest).getAttributes()); // 어떤 정보들을 받아오는지 확인 가능
 
         // 구글로그인 버튼 클릭 -> 구글로그인창 -> 로그인을 완료 -> code를 리턴(OAuth-Client라이브러리) -> AccessToken요청
@@ -53,6 +52,8 @@ public class SsafyOauth2UserService extends DefaultOAuth2UserService {
 
             userRepository.save(userEntity);
         }
+
+        System.out.println("getAccessToken: "+userRequest.getAccessToken().getTokenValue()); // AccessToken 확인 가능
 
         return new SsafyUserDetails(userEntity, oAuth2User.getAttributes());
     }

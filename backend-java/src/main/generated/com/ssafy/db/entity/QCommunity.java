@@ -31,6 +31,8 @@ public class QCommunity extends EntityPathBase<Community> {
 
     public final StringPath logoImage = createString("logoImage");
 
+    public final StringPath name = createString("name");
+
     public final StringPath title = createString("title");
 
     //inherited
