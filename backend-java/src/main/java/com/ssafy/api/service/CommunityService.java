@@ -10,6 +10,7 @@ import java.util.List;
  * 팬 커뮤니티 서비스 인터페이스 정의
  */
 public interface CommunityService {
+
     void registerCommunity(CommunityRegisterPostReq communityInfo);
     boolean findByName(String name);
     List<Community> getAllCommunity();

@@ -59,8 +59,14 @@ public class Article {
         this.community = community;
     }
 
-    // 조회수 증가를 위한 setter
-    public void setHits(int hits) {
+    // 조회수 증가를 위한 편의 함수
+    public void raiseHits(int hits) {
         this.hits = hits;
+    }
+
+    // 제목 및 내용을 수정을 위한 편의 함수
+    public void changeTitleAndContent(String title, String content) {
+        this.title = title;
+        this.content = content;
     }
 }
