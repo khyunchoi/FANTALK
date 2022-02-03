@@ -90,7 +90,7 @@ public class ArticleController {
     public ResponseEntity<?> getArticleDetail(
             @PathVariable("community_id") @ApiParam(value="커뮤니티 id", required = true) Long communityId,
             @PathVariable("article_id") @ApiParam(value="게시글 id", required = true) Long articleId) {
-        logger.info("getArticle 호출");
+        logger.info("getArticleDetail 호출");
 
         try {
             return new ResponseEntity<ArticleDetailGetRes>(articleService.getArticleDetail(articleId, communityId), HttpStatus.OK);

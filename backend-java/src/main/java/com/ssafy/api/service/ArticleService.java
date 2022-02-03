@@ -20,4 +20,5 @@ public interface ArticleService {
     List<ArticleListGetRes> searchArticle(Long community_id, String searchWord);
     Article modifyArticle(ArticleRegisterPostReq articleInfo, Long articleId, Long communityId);
     void deleteArticle(Article article);
+    Article findById(Long id);
 }

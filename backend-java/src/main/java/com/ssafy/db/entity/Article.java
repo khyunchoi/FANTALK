@@ -10,6 +10,8 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -50,6 +52,9 @@ public class Article {
     @JoinColumn(name = "community_id")
     private Community community;
 
+    @OneToMany(mappedBy = "article", cascade = CascadeType.ALL)
+    private List<Comment> commentList = new ArrayList<>();
+
     @Builder
     public Article(String title, String content, int hits, User user, Community community) {
         this.title = title;
@@ -68,5 +73,10 @@ public class Article {
     public void changeTitleAndContent(String title, String content) {
         this.title = title;
         this.content = content;
+    }
+
+    // 해당 게시글의 댓글 리스트 추가를 위한 편의 함수
+    public void addCommentList(Comment comment) {
+        this.commentList.add(comment);
     }
 }
