@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 
 /**
@@ -82,7 +83,7 @@ public class ArticleController {
             @ApiResponse(code = 400, message = "커뮤니티 탐색 오류"),
     })
     @ApiOperation(value = "게시글 상세 조회", notes = "게시글을 상세 조회")
-    public ResponseEntity<ArticleDetailGetRes> getArticleDetail(
+    public ResponseEntity<?> getArticleDetail(
             @PathVariable("community_id") @ApiParam(value="커뮤니티 id", required = true) Long communityId,
             @PathVariable("article_id") @ApiParam(value="게시글 id", required = true) Long articleId) {
         logger.info("getArticle 호출");
@@ -90,19 +91,45 @@ public class ArticleController {
         try {
             return new ResponseEntity<ArticleDetailGetRes>(articleService.getArticleDetail(articleId, communityId), HttpStatus.OK);
         } catch (NoSuchElementException e){
-            return new ResponseEntity<ArticleDetailGetRes>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<String>("NO COMMUNITY", HttpStatus.BAD_REQUEST);
         }
     }
 
     // 게시글 검색
-    @GetMapping("/{community_id}/articles/search")
-    @ApiOperation(value = "게시글 조회(분류,검색어)", notes = "게시글을 조회한다.")
-    public ResponseEntity<?> findArticle(
-            @PathVariable("community_id") @ApiParam(value="커뮤니티 id", required = true) Long community_id,
-            @RequestParam("category") @ApiParam(value="셀렉트 박스", required = true) String category,
-            @RequestParam("search") @ApiParam(value="검색어", required = true) String search){
+    @GetMapping("/search")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "모든 게시글 리스트 반환, 없을 시 [] 반환"),
+    })
+    @ApiOperation(value = "게시글 검색", notes = "게시글 제목과 내용을 기반으로 검색")
+    public ResponseEntity<?> searchArticle(
+            @PathVariable("community_id") @ApiParam(value="커뮤니티 id", required = true) Long communityId,
+            @RequestParam("q") @ApiParam(value="검색어", required = true) String searchWord) {
         logger.info("searchArticle 호출");
 
-        return new ResponseEntity<List<Article>>(articleService.searchArticle(community_id,category,search), HttpStatus.OK);
+        return new ResponseEntity<List<ArticleListGetRes>>(articleService.searchArticle(communityId, searchWord), HttpStatus.OK);
+    }
+
+    // 게시글 수정
+    @PutMapping("/articles/{article_id}")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 204, message = "오류"),
+    })
+    @ApiOperation(value = "게시글 수정", notes = "게시글을 수정")
+    public ResponseEntity<?> modifyArticle(
+            @PathVariable("community_id") @ApiParam(value="커뮤니티 id", required = true) Long community_id,
+            @PathVariable("article_id") @ApiParam(value="게시글 번호", required = true) Long article_id,
+            @RequestBody @ApiParam(value="글 정보", required = true) ArticleRegisterPostReq articleInfo) {
+        logger.info("modifyArticle 호출");
+        try {
+            Community community = communityService.findById(community_id);
+            Optional<Article> article = this.articleService.modifyArticle(articleInfo, community, article_id);
+            if(article.isPresent()){
+                return ResponseEntity.ok(article);
+            }
+        }catch (Exception e){
+            return ResponseEntity.badRequest().build();// 수정
+        }
+        return ResponseEntity.badRequest().build();
     }
 }
