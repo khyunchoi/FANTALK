@@ -68,6 +68,10 @@ public class ArticleServiceImpl implements ArticleService{
     @Override
     public ArticleDetailGetRes getArticleDetail(Long articleId, Long communityId) {
         Article article = articleRepository.findByIdAndCommunityId(articleId, communityId).get();
+        // 조회수 1 증가
+        article.setHits(article.getHits() + 1);
+        articleRepository.save(article);
+
         ArticleDetailGetRes articleDetailGetRes = new ArticleDetailGetRes();
         articleDetailGetRes.setArticleId(article.getId());
         articleDetailGetRes.setTitle(article.getTitle());

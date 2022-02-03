@@ -4,6 +4,7 @@ import com.sun.istack.NotNull;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.checkerframework.checker.units.qual.A;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -57,5 +58,10 @@ public class Article {
         this.hits = hits;
         this.user = user;
         this.community = community;
+    }
+
+    // 조회수 증가를 위한 setter
+    public void setHits(int hits) {
+        this.hits = hits;
     }
 }
