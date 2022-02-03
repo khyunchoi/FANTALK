@@ -1,10 +1,8 @@
 package com.ssafy.api.controller;
 
-import com.ssafy.api.request.ArticleRegisterPostReq;
 import com.ssafy.api.request.CommunityRegisterPostReq;
 import com.ssafy.api.service.ArticleService;
 import com.ssafy.api.service.CommunityService;
-import com.ssafy.db.entity.Article;
 import com.ssafy.db.entity.Community;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,7 +17,6 @@ import io.swagger.annotations.ApiResponses;
 import io.swagger.annotations.ApiResponse;
 
 import java.util.List;
-import java.util.Optional;
 
 
 /**

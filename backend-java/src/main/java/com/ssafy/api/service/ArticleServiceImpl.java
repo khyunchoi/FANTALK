@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 
 /**
@@ -52,6 +51,7 @@ public class ArticleServiceImpl implements ArticleService{
     // 팬 커뮤니티 안의 모든 게시글 조회
     @Override
     public List<ArticleListGetRes> getAllArticles(Long communityId) {
+
         List<Article> articles = articleRepository.findAllByCommunityId(communityId);
         List<ArticleListGetRes> articleListGetRes = new ArrayList<>();
 
@@ -71,9 +71,10 @@ public class ArticleServiceImpl implements ArticleService{
     // 게시글 상세 조회
     @Override
     public ArticleDetailGetRes getArticleDetail(Long articleId, Long communityId) {
+
         Article article = articleRepository.findByIdAndCommunityId(articleId, communityId).get();
         // 조회수 1 증가
-        article.setHits(article.getHits() + 1);
+        article.raiseHits(article.getHits() + 1);
         articleRepository.save(article);
 
         ArticleDetailGetRes articleDetailGetRes = new ArticleDetailGetRes();
@@ -88,6 +89,7 @@ public class ArticleServiceImpl implements ArticleService{
 
     // 게시글 검색
     public List<ArticleListGetRes> searchArticle(Long communityId, String searchWord){
+
         QArticle article = QArticle.article;
         Community community = communityService.findById(communityId);
         List<Article> articles = jpaQueryFactory.selectFrom(article)
@@ -108,19 +110,23 @@ public class ArticleServiceImpl implements ArticleService{
         return articleListGetRes;
     }
 
-    //게시글 수정
+    // 게시글 수정
     @Override
-    public Optional<Article> modifyArticle(ArticleRegisterPostReq articleInfo, Community community, Long article_id) {
-        Optional<Article> article = this.articleRepository.findByIdAndCommunityId(article_id, community.getId());
+    public Article modifyArticle(ArticleRegisterPostReq articleInfo, Long articleId, Long communityId) {
 
-        if(article.isPresent()){
-            Article t = Article.builder()
-                    .title(articleInfo.getTitle())
-                    .content(articleInfo.getContent())
-                    .community(community)
-                .build();
-            this.articleRepository.save(t);
+        try {
+            Article article = articleRepository.findByIdAndCommunityId(articleId, communityId).get();
+            article.changeTitleAndContent(articleInfo.getTitle(), articleInfo.getContent());
+            articleRepository.save(article);
+            return article;
+        } catch (Exception e) {
+            throw e;
         }
-        return article;
+    }
+
+    // 게시글 삭제
+    @Override
+    public void deleteArticle(Article article) {
+        articleRepository.delete(article);
     }
 }

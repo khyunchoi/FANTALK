@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
  */
 @Getter
 @Setter
-@ApiModel("ArticleDetailGetRes")
+@ApiModel("ArticleDetailGetResponse")
 public class ArticleDetailGetRes {
 
     @ApiModelProperty(name="게시글 ID", example="1")
