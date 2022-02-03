@@ -38,4 +38,16 @@ public class UserServiceImpl implements UserService {
         userRepository.delete(user);
 
     }
+
+    // 회원 ID로 조회
+    @Override
+    public User findById(Long id) {
+
+        try{
+            User user = userRepository.findById(id).get();
+            return user;
+        }catch(Exception e){
+            throw e;
+        }
+    }
 }

@@ -19,15 +19,9 @@ public class QCommunity extends EntityPathBase<Community> {
 
     public static final QCommunity community = new QCommunity("community");
 
-    public final QBaseEntityAll _super = new QBaseEntityAll(this);
+    public final DateTimePath<java.time.LocalDateTime> createdAt = createDateTime("createdAt", java.time.LocalDateTime.class);
 
-    public final StringPath backgroundImage = createString("backgroundImage");
-
-    //inherited
-    public final DateTimePath<java.time.LocalDateTime> createdAt = _super.createdAt;
-
-    //inherited
-    public final NumberPath<Long> id = _super.id;
+    public final NumberPath<Long> id = createNumber("id", Long.class);
 
     public final StringPath logoImage = createString("logoImage");
 
@@ -35,8 +29,7 @@ public class QCommunity extends EntityPathBase<Community> {
 
     public final StringPath title = createString("title");
 
-    //inherited
-    public final DateTimePath<java.time.LocalDateTime> updatedAt = _super.updatedAt;
+    public final DateTimePath<java.time.LocalDateTime> updatedAt = createDateTime("updatedAt", java.time.LocalDateTime.class);
 
     public QCommunity(String variable) {
         super(Community.class, forVariable(variable));

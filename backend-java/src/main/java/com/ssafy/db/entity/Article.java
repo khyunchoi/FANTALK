@@ -1,9 +1,9 @@
 package com.ssafy.db.entity;
 
+import com.sun.istack.NotNull;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.ColumnDefault;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -11,43 +11,51 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+
+/**
+ * 게시글 모델 정의
+ */
 @Entity
 @Getter
 @NoArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
-public class Article {//extends BaseEntityAll{
+public class Article {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @CreatedDate
-    @Column(name = "CREATED_AT", updatable = false)
+    @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
 
     @LastModifiedDate
-    @Column(name = "UPDATED_AT")
+    @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    @Column(length = 50, nullable = false)
+    @NotNull
     private String title;
 
-    @Column(nullable = false)
+    @NotNull
     private String content;
 
-    @ColumnDefault("0")
+    @NotNull
     private int hits;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "COMMUNITY_ID")
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "community_id")
     private Community community;
 
     @Builder
-    public Article(String title, String content, int hits, Community community, Long id) {
+    public Article(String title, String content, int hits, User user, Community community) {
         this.title = title;
         this.content = content;
         this.hits = hits;
+        this.user = user;
         this.community = community;
-        this.id = id;
     }
 }
