@@ -39,7 +39,7 @@ public class CommunityServiceImpl implements CommunityService{
     @Override
     public boolean findByName(String name) {
 
-        if(communityRepository.findByName(name).isPresent()){
+        if (communityRepository.findByName(name).isPresent()) {
             return true;
         }
         return false;
@@ -65,10 +65,10 @@ public class CommunityServiceImpl implements CommunityService{
     @Override
     public Community findById(Long id) {
 
-        try{
+        try {
             Community community = communityRepository.findById(id).get();
             return community;
-        }catch(Exception e){
+        } catch (Exception e){
             throw e;
         }
     }

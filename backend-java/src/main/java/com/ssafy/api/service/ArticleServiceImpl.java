@@ -43,7 +43,6 @@ public class ArticleServiceImpl implements ArticleService{
                     .build();
             articleRepository.save(article);
         } catch (Exception e) {
-            e.printStackTrace();
             throw e;
         }
     }
@@ -128,5 +127,17 @@ public class ArticleServiceImpl implements ArticleService{
     @Override
     public void deleteArticle(Article article) {
         articleRepository.delete(article);
+    }
+
+    // 팬 커뮤니티 ID를 기반으로 탐색
+    @Override
+    public Article findById(Long id) {
+
+        try {
+            Article article = articleRepository.findById(id).get();
+            return article;
+        } catch (Exception e){
+            throw e;
+        }
     }
 }

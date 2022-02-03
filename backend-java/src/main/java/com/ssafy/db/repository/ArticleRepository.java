@@ -16,4 +16,5 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
 
     List<Article> findAllByCommunityId(Long communityId);
     Optional<Article> findByIdAndCommunityId(Long id, Long communityId);
+    Optional<Article> findById(Long id);
 }
