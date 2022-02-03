@@ -49,7 +49,7 @@ public class CommunityServiceImpl implements CommunityService{
 
     //title에 해당하는 커뮤니티 조회
     @Override
-    public List<Community> findCommunityByTitle(String title) {
+    public List<Community> searchCommunity(String title) {
         //Community community = communityRepository.findByTitle(title); optional 사용안헐시, 없으면 에러페이지라 이거로 사용?
         List<Community> communities = communityRepository.findByTitleContaining(title);
         return communities;
