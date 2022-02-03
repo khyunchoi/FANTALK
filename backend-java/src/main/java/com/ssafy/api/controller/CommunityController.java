@@ -88,31 +88,4 @@ public class CommunityController {
 
         return new ResponseEntity<List<Community>>(communityService.searchCommunity(searchWord), HttpStatus.OK);
     }
-
-// --------------------------------------article -----------------------------------------------
-
-
-    //게시글 수정
-    @PutMapping("/{community_id}/articles/{article_id}")
-    @ApiOperation(value = "게시글 수정", notes = "게시글을 수정한다.")//, response = String.class)
-    @ApiResponses({
-            @ApiResponse(code = 200, message = "성공"),
-            @ApiResponse(code = 204, message = "오류"),
-    })
-    public ResponseEntity<?> modifyArticle(
-            @PathVariable("community_id") @ApiParam(value="커뮤니티 id", required = true) Long community_id,
-            @PathVariable("article_id") @ApiParam(value="게시글 번호", required = true) Long article_id,
-            @RequestBody @ApiParam(value="글 정보", required = true) ArticleRegisterPostReq articleInfo) {
-        logger.info("modifyArticle 호출");
-        try {
-            Community community = communityService.findById(community_id);
-            Optional<Article> article = this.articleService.modifyArticle(articleInfo, community, article_id);
-            if(article.isPresent()){
-                return ResponseEntity.ok(article);
-            }
-        }catch (Exception e){
-            return ResponseEntity.badRequest().build();// 수정
-        }
-        return ResponseEntity.badRequest().build();
-    }
 }

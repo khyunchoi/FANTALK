@@ -1,10 +1,12 @@
 package com.ssafy.api.service;
 
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.ssafy.api.request.ArticleRegisterPostReq;
 import com.ssafy.api.response.ArticleDetailGetRes;
 import com.ssafy.api.response.ArticleListGetRes;
 import com.ssafy.db.entity.Article;
 import com.ssafy.db.entity.Community;
+import com.ssafy.db.entity.QArticle;
 import com.ssafy.db.entity.User;
 import com.ssafy.db.repository.ArticleRepository;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +26,8 @@ public class ArticleServiceImpl implements ArticleService{
 
     private final ArticleRepository articleRepository;
     private final UserService userService;
+    private final JPAQueryFactory jpaQueryFactory;
+    private final CommunityService communityService;
 
     // 게시글 등록
     @Override
@@ -82,6 +86,28 @@ public class ArticleServiceImpl implements ArticleService{
         return articleDetailGetRes;
     }
 
+    // 게시글 검색
+    public List<ArticleListGetRes> searchArticle(Long communityId, String searchWord){
+        QArticle article = QArticle.article;
+        Community community = communityService.findById(communityId);
+        List<Article> articles = jpaQueryFactory.selectFrom(article)
+                .where(article.community.eq(community).and(article.title.contains(searchWord).or(article.content.contains(searchWord))))
+                .fetch();
+        List<ArticleListGetRes> articleListGetRes = new ArrayList<>();
+
+        for (Article searchedArticle : articles) {
+            ArticleListGetRes articleRes = new ArticleListGetRes();
+            articleRes.setArticleId(searchedArticle.getId());
+            articleRes.setTitle(searchedArticle.getTitle());
+            articleRes.setCreatedAt(searchedArticle.getCreatedAt());
+            articleRes.setHits(searchedArticle.getHits());
+            articleRes.setEmail(searchedArticle.getUser().getEmail());
+            articleListGetRes.add(articleRes);
+        }
+
+        return articleListGetRes;
+    }
+
     //게시글 수정
     @Override
     public Optional<Article> modifyArticle(ArticleRegisterPostReq articleInfo, Community community, Long article_id) {
@@ -96,17 +122,5 @@ public class ArticleServiceImpl implements ArticleService{
             this.articleRepository.save(t);
         }
         return article;
-    }
-
-    //게시글 검색
-    public List<Article> searchArticle(Long community_id, String category, String search){
-        List<Article> articles = new ArrayList<>();
-        if(category.equals("title")){
-            return articleRepository.findAllByCommunity_IdAndTitleContaining(community_id,search);
-        }else if(category.equals("content")){
-            return articleRepository.findAllByCommunity_IdAndContentContaining(community_id,search);
-        }
-
-        return articles;
     }
 }

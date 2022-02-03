@@ -17,6 +17,6 @@ public interface ArticleService {
     void registerArticle(ArticleRegisterPostReq articleInfo, Community community);
     List<ArticleListGetRes> getAllArticles(Long communityId);
     ArticleDetailGetRes getArticleDetail(Long communityId, Long articleId);
+    List<ArticleListGetRes> searchArticle(Long community_id, String searchWord);
     Optional<Article> modifyArticle(ArticleRegisterPostReq articleInfo, Community community, Long article_id);
-    public List<Article> searchArticle(Long community_id, String category, String search);
 }
