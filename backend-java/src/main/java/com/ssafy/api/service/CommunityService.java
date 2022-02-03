@@ -10,7 +10,7 @@ import java.util.List;
 public interface CommunityService {
     void registerCommunity(CommunityRegisterPostReq communityInfo);
     List<Community> getAllCommunity();
-    List<Community> findCommunityByTitle(String title);
+    List<Community> searchCommunity(String title);
     boolean findCommunityByName(String name);
     Community findById(Long id);
 }
