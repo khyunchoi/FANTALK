@@ -27,7 +27,7 @@ import java.util.Optional;
  */
 @Api(value = "유저 API", tags = {"User"})
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/api/v1/users")
 public class UserController {
 
     private UserService userService;

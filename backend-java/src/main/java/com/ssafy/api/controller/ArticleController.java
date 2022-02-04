@@ -27,7 +27,7 @@ import java.util.NoSuchElementException;
 @Api(value = "게시글 API", tags = {"Article"})
 @RestController
 @CrossOrigin(origins = {"*"})
-@RequestMapping("/api/communities/{community_id}")
+@RequestMapping("/api/v1/communities/{community_id}")
 public class ArticleController {
 
     private static final Logger logger = LoggerFactory.getLogger(CommunityController.class);
