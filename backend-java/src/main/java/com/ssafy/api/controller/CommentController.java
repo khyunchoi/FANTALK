@@ -24,7 +24,7 @@ import java.util.NoSuchElementException;
 @Api(value = "댓글 API", tags = {"Comment"})
 @RestController
 @CrossOrigin(origins = {"*"})
-@RequestMapping("/api/article/{article_id}/comments")
+@RequestMapping("/api/v1/article/{article_id}/comments")
 public class CommentController {
 
     private static final Logger logger = LoggerFactory.getLogger(CommunityController.class);

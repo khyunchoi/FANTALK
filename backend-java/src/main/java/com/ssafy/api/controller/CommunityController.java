@@ -25,7 +25,7 @@ import java.util.List;
 @Api(value = "커뮤니티 API", tags = {"Community"})
 @RestController
 @CrossOrigin(origins = {"*"})
-@RequestMapping("/api/communities")
+@RequestMapping("/api/v1/communities")
 public class CommunityController {
 
     private static final Logger logger = LoggerFactory.getLogger(CommunityController.class);
