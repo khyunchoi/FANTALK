@@ -4,10 +4,8 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.ssafy.api.request.ArticleRegisterPostReq;
 import com.ssafy.api.response.ArticleDetailGetRes;
 import com.ssafy.api.response.ArticleListGetRes;
-import com.ssafy.db.entity.Article;
-import com.ssafy.db.entity.Community;
-import com.ssafy.db.entity.QArticle;
-import com.ssafy.db.entity.User;
+import com.ssafy.api.response.CommentDetailGetRes;
+import com.ssafy.db.entity.*;
 import com.ssafy.db.repository.ArticleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -72,6 +70,7 @@ public class ArticleServiceImpl implements ArticleService{
     public ArticleDetailGetRes getArticleDetail(Long articleId, Long communityId) {
 
         Article article = articleRepository.findByIdAndCommunityId(articleId, communityId).get();
+
         // 조회수 1 증가
         article.raiseHits(article.getHits() + 1);
         articleRepository.save(article);
@@ -83,6 +82,20 @@ public class ArticleServiceImpl implements ArticleService{
         articleDetailGetRes.setCreatedAt(article.getCreatedAt());
         articleDetailGetRes.setHits(article.getHits());
         articleDetailGetRes.setEmail(article.getUser().getEmail());
+
+        List<CommentDetailGetRes> commentDetailGetResList = new ArrayList<>();
+        // 게시글을 댓글 목록
+        List<Comment> comments = article.getCommentList();
+        for (Comment comment : comments) {
+            CommentDetailGetRes commentDetailGetRes = new CommentDetailGetRes();
+            commentDetailGetRes.setCommentId(comment.getId());
+            commentDetailGetRes.setContent(comment.getContent());
+            commentDetailGetRes.setCreatedAt(comment.getCreatedAt());
+            commentDetailGetRes.setEmail(comment.getUser().getEmail());
+            commentDetailGetResList.add(commentDetailGetRes);
+        }
+        articleDetailGetRes.setCommentList(commentDetailGetResList);
+
         return articleDetailGetRes;
     }
 
