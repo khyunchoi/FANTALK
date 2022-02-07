@@ -1,23 +1,45 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
+import Index from '../views/Index.vue'
+import CommunityList from '../views/CommunityList.vue'
+import CommunityListItem from '../views/CommunityListItem.vue'
+import CreateArticle from '../views/CreateArticle.vue'
+import DetailArticle from '../views/DetailArticle.vue'
+import UpdateArticle from '../views/UpdateArticle.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/',
-    name: 'Home',
-    component: Home
+    name: 'Index',
+    component: Index
   },
   {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-  }
+    path: '/communites',
+    name: 'CommunityList',
+    component: CommunityList,
+  },
+  {
+    path: '/communites/:communityId',
+    name: 'CommunityListItem',
+    component: CommunityListItem,
+  },
+  {
+    path: '/communites/:communityId/article/create',
+    name: 'CreateArticle',
+    component: CreateArticle,
+  },
+  {
+    path: '/communites/:communityId/article/:articleId',
+    name: 'DetailArticle',
+    component: DetailArticle,
+  },
+  {
+    path: '/communites/:communityId/article/:articleId/update',
+    name: 'UpdateArticle',
+    component: UpdateArticle,
+  },
 ]
 
 const router = new VueRouter({
