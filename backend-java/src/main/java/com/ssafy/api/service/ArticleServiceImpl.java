@@ -49,7 +49,7 @@ public class ArticleServiceImpl implements ArticleService{
     @Override
     public List<ArticleListGetRes> getAllArticles(Long communityId) {
 
-        List<Article> articles = articleRepository.findAllByCommunityId(communityId);
+        List<Article> articles = articleRepository.findAllByCommunityIdOrderByIdDesc(communityId);
         List<ArticleListGetRes> articleListGetRes = new ArrayList<>();
 
         for (Article article : articles) {
@@ -69,7 +69,7 @@ public class ArticleServiceImpl implements ArticleService{
     @Override
     public ArticleDetailGetRes getArticleDetail(Long articleId, Long communityId) {
 
-        Article article = articleRepository.findByIdAndCommunityId(articleId, communityId).get();
+        Article article = articleRepository.findByIdAndCommunityIdOrderByIdDesc(articleId, communityId).get();
 
         // 조회수 1 증가
         article.raiseHits(article.getHits() + 1);
@@ -127,7 +127,7 @@ public class ArticleServiceImpl implements ArticleService{
     public Article modifyArticle(ArticleRegisterPostReq articleInfo, Long articleId, Long communityId) {
 
         try {
-            Article article = articleRepository.findByIdAndCommunityId(articleId, communityId).get();
+            Article article = articleRepository.findByIdAndCommunityIdOrderByIdDesc(articleId, communityId).get();
             article.changeTitleAndContent(articleInfo.getTitle(), articleInfo.getContent());
             articleRepository.save(article);
             return article;
