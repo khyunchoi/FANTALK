@@ -36,6 +36,6 @@ public class ArticleDetailGetRes {
     @ApiModelProperty(name="작성자 이메일", example="xxxxxx@xxx.com")
     String email;
 
-    @ApiModelProperty(name="댓글 목록", example="{[content: xxxx, created_at: xxxx-xx-xx xx:xx ....")
+    @ApiModelProperty(name="댓글 목록", example="{[content: xxxx, createdAt: xxxx-xx-xx xx:xx ....")
     List<CommentDetailGetRes> commentList = new ArrayList<>();
 }
