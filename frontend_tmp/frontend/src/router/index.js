@@ -13,7 +13,7 @@ const routes = [
   {
     path: '/',
     name: 'Index',
-    component: Index
+    component: Index,
   },
   {
     path: '/communites',
