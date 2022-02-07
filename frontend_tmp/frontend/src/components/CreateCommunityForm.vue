@@ -33,7 +33,7 @@
 
 <script>
   export default {
-    name: 'CreateCommunityForm.vue',
+    name: 'CreateCommunityForm',
 
     data: () => ({
       valid: true,
