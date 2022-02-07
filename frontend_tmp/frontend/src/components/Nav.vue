@@ -1,24 +1,20 @@
 <template>
-  <v-container>
-    <router-link style="text-decoration: none; color: #797BF8" :to="{name: 'Index'}">
-      FANTALK
+  <v-toolbar>
+    <router-link style="text-decoration: none; color: #797BF8; font-size: 1.2em; font-weight: bold;" :to="{name: 'Index'}">
+        FANTALK
     </router-link>
-    <v-tabs centered>
-      <v-tab>
-        팬미팅 입장
-      </v-tab>
-      <v-tab>
-        <router-link style="text-decoration: none;" :to="{name: 'CommunityList'}">
-          팬 커뮤니티
-        </router-link>
-      </v-tab>
-      <v-tab>
-        팬미팅 신청
-      </v-tab>
-    </v-tabs>
-    <v-btn color="#FFFFFF">로그인</v-btn>
-
-  </v-container>
+    <v-toolbar-items class="container">
+      <v-btn flat style="background-color: #FFFFFF;">팬미팅 입장</v-btn>
+      <router-link style="text-decoration: none; color: #000000; font-weight: bold" :to="{name: 'CommunityList'}">
+        팬 커뮤니티
+      </router-link>
+      <v-btn flat style="background-color: #FFFFFF;">팬미팅 신청</v-btn>
+    </v-toolbar-items>
+    <v-btn flat style="background-color: #FFFFFF; font-weight: bold">
+      <img src="../assets/google.png" alt="logo" width="20px" height="20px">
+      <a href="/oauth2/authorization/google" class="login" style="text-decoration: none;" hrefclass="login">로그인</a>
+    </v-btn>
+  </v-toolbar>
 </template>
 
 <script>
@@ -29,3 +25,17 @@
     }),
   }
 </script>
+
+<style scoped>
+  .container {
+    width: 90%;
+    display: flex;
+    justify-content: space-between;
+    padding: 1.2% 15%;
+  }
+  
+  .login {
+    padding: 0 5%;
+    font-size: 1em;
+  }
+</style>

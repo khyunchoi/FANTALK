@@ -17,32 +17,32 @@ const routes = [
     component: Index,
   },
   {
-    path: '/communites',
+    path: '/communities',
     name: 'CommunityList',
     component: CommunityList,
   },
   {
-    path: '/communites/:communityId',
+    path: '/communities/:communityId',
     name: 'CommunityListItem',
     component: CommunityListItem,
   },
   {
-    path: '/communites/create',
+    path: '/communities/create',
     name: 'CreateCommunity',
     component: CreateCommunity,
   },
   {
-    path: '/communites/:communityId/article/create',
+    path: '/communities/:communityId/article/create',
     name: 'CreateArticle',
     component: CreateArticle,
   },
   {
-    path: '/communites/:communityId/article/:articleId',
+    path: '/communities/:communityId/article/:articleId',
     name: 'DetailArticle',
     component: DetailArticle,
   },
   {
-    path: '/communites/:communityId/article/:articleId/update',
+    path: '/communities/:communityId/article/:articleId/update',
     name: 'UpdateArticle',
     component: UpdateArticle,
   },
