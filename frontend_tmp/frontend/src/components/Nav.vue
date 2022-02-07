@@ -1,6 +1,6 @@
 <template>
   <div>
-    <router-link :to="{name:'CommunityList'}">이동</router-link>
+    <router-link :to="{name:'CreateCommunity'}">이동</router-link>
   </div>
 </template>
 

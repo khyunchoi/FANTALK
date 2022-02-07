@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Index from '../views/Index.vue'
 import CommunityList from '../views/CommunityList.vue'
 import CommunityListItem from '../views/CommunityListItem.vue'
+import CreateCommunity from '../views/CreateCommunity.vue'
 import CreateArticle from '../views/CreateArticle.vue'
 import DetailArticle from '../views/DetailArticle.vue'
 import UpdateArticle from '../views/UpdateArticle.vue'
@@ -24,6 +25,11 @@ const routes = [
     path: '/communites/:communityId',
     name: 'CommunityListItem',
     component: CommunityListItem,
+  },
+  {
+    path: '/communites/create',
+    name: 'CreateCommunity',
+    component: CreateCommunity,
   },
   {
     path: '/communites/:communityId/article/create',
