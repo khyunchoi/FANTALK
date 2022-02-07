@@ -128,7 +128,7 @@ public class ArticleController {
         logger.info("modifyArticle 호출");
 
         try {
-            Article article = articleRepository.findByIdAndCommunityId(articleId, communityId).get();
+            Article article = articleRepository.findByIdAndCommunityIdOrderByIdDesc(articleId, communityId).get();
             // 게시글의 회원 id와 수정 요청 DTO의 회원 id가 일치하는지 확인
             if (article.getUser().getId().equals(articleInfo.getUserId())) {
                 articleService.modifyArticle(articleInfo, articleId, communityId);
@@ -156,7 +156,7 @@ public class ArticleController {
         logger.info("deleteArticle 호출");
 
         try {
-            Article article = articleRepository.findByIdAndCommunityId(articleId, communityId).get();
+            Article article = articleRepository.findByIdAndCommunityIdOrderByIdDesc(articleId, communityId).get();
             if (article.getUser().getId().equals(articleInfo.getUserId())) {
                 articleService.deleteArticle(article);
                 return new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
