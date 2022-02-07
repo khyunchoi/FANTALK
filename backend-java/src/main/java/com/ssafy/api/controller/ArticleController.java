@@ -27,7 +27,7 @@ import java.util.NoSuchElementException;
 @Api(value = "게시글 API", tags = {"Article"})
 @RestController
 @CrossOrigin(origins = {"*"})
-@RequestMapping("/api/v1/communities/{community_id}")
+@RequestMapping("/api/v1/communities/{communityId}")
 public class ArticleController {
 
     private static final Logger logger = LoggerFactory.getLogger(CommunityController.class);
@@ -51,7 +51,7 @@ public class ArticleController {
     @ApiOperation(value = "게시글 등록", notes = "새로운 게시글을 등록")
     public ResponseEntity<String> registerArticle(
             @RequestBody @ApiParam(value="게시글 정보", required = true) ArticleRegisterPostReq articleInfo,
-            @PathVariable("community_id") @ApiParam(value="커뮤니티 id", required = true) Long communityId) {
+            @PathVariable("communityId") @ApiParam(value="커뮤니티 id", required = true) Long communityId) {
         logger.info("registerArticle 호출");
 
         try {
@@ -74,22 +74,22 @@ public class ArticleController {
     })
     @ApiOperation(value = "커뮤니티 안의 모든 게시글 목록 조회", notes = "커뮤니티 안의 모든 게시글 목록을 조회")
     public ResponseEntity<List<ArticleListGetRes>> getAllArticles(
-            @PathVariable("community_id") @ApiParam(value="커뮤니티 id", required = true) Long communityId) {
+            @PathVariable("communityId") @ApiParam(value="커뮤니티 id", required = true) Long communityId) {
         logger.info("getAllArticles 호출");
 
         return new ResponseEntity<List<ArticleListGetRes>>(articleService.getAllArticles(communityId), HttpStatus.OK);
     }
 
     // 게시글 상세 조회
-    @GetMapping("/articles/{article_id}")
+    @GetMapping("/articles/{articleId}")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
             @ApiResponse(code = 400, message = "커뮤니티 탐색 오류"),
     })
     @ApiOperation(value = "게시글 상세 조회", notes = "게시글을 상세 조회")
     public ResponseEntity<?> getArticleDetail(
-            @PathVariable("community_id") @ApiParam(value="커뮤니티 id", required = true) Long communityId,
-            @PathVariable("article_id") @ApiParam(value="게시글 id", required = true) Long articleId) {
+            @PathVariable("communityId") @ApiParam(value="커뮤니티 id", required = true) Long communityId,
+            @PathVariable("articleId") @ApiParam(value="게시글 id", required = true) Long articleId) {
         logger.info("getArticleDetail 호출");
 
         try {
@@ -106,7 +106,7 @@ public class ArticleController {
     })
     @ApiOperation(value = "게시글 검색", notes = "게시글 제목과 내용을 기반으로 검색")
     public ResponseEntity<?> searchArticle(
-            @PathVariable("community_id") @ApiParam(value="커뮤니티 id", required = true) Long communityId,
+            @PathVariable("communityId") @ApiParam(value="커뮤니티 id", required = true) Long communityId,
             @RequestParam("q") @ApiParam(value="검색어", required = true) String searchWord) {
         logger.info("searchArticle 호출");
 
@@ -114,7 +114,7 @@ public class ArticleController {
     }
 
     // 게시글 수정
-    @PutMapping("/articles/{article_id}")
+    @PutMapping("/articles/{articleId}")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공(SUCCESS)"),
             @ApiResponse(code = 204, message = "회원 불일치(NOT SAME USER)"),
@@ -122,8 +122,8 @@ public class ArticleController {
     })
     @ApiOperation(value = "게시글 수정", notes = "게시글을 수정")
     public ResponseEntity<String> modifyArticle(
-            @PathVariable("community_id") @ApiParam(value="커뮤니티 id", required = true) Long communityId,
-            @PathVariable("article_id") @ApiParam(value="게시글 id", required = true) Long articleId,
+            @PathVariable("communityId") @ApiParam(value="커뮤니티 id", required = true) Long communityId,
+            @PathVariable("articleId") @ApiParam(value="게시글 id", required = true) Long articleId,
             @RequestBody @ApiParam(value="글 정보", required = true) ArticleRegisterPostReq articleInfo) {
         logger.info("modifyArticle 호출");
 
@@ -142,7 +142,7 @@ public class ArticleController {
     }
 
     // 게시글 삭제
-    @DeleteMapping("/articles/{article_id}")
+    @DeleteMapping("/articles/{articleId}")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공(SUCCESS)"),
             @ApiResponse(code = 204, message = "회원 불일치(NOT SAME USER)"),
@@ -150,8 +150,8 @@ public class ArticleController {
     })
     @ApiOperation(value = "게시글 삭제", notes = "게시글을 삭제")
     public ResponseEntity<String> deleteArticle(
-            @PathVariable("community_id") @ApiParam(value="커뮤니티 id", required = true) Long communityId,
-            @PathVariable("article_id") @ApiParam(value="게시글 id", required = true) Long articleId,
+            @PathVariable("communityId") @ApiParam(value="커뮤니티 id", required = true) Long communityId,
+            @PathVariable("articleId") @ApiParam(value="게시글 id", required = true) Long articleId,
             @RequestBody @ApiParam(value="글 정보", required = true) ArticleDeleteReq articleInfo) {
         logger.info("deleteArticle 호출");
 

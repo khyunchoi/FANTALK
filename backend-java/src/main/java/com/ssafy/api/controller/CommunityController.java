@@ -33,9 +33,6 @@ public class CommunityController {
     @Autowired
     private CommunityService communityService;
 
-    @Autowired
-    private ArticleService articleService;
-
     // 팬 커뮤니티 생성
     @PostMapping
     @ApiResponses({

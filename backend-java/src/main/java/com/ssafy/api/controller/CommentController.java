@@ -24,7 +24,7 @@ import java.util.NoSuchElementException;
 @Api(value = "댓글 API", tags = {"Comment"})
 @RestController
 @CrossOrigin(origins = {"*"})
-@RequestMapping("/api/v1/article/{article_id}/comments")
+@RequestMapping("/api/v1/article/{articleId}/comments")
 public class CommentController {
 
     private static final Logger logger = LoggerFactory.getLogger(CommunityController.class);
@@ -47,7 +47,7 @@ public class CommentController {
     @ApiOperation(value = "댓글 등록", notes = "새로운 댓글을 등록")
     public ResponseEntity<String> registerComment(
             @RequestBody @ApiParam(value="댓글 정보", required = true) CommentRegisterPostReq commentInfo,
-            @PathVariable("article_id") @ApiParam(value="게시글 id", required = true) Long articleId) {
+            @PathVariable("articleId") @ApiParam(value="게시글 id", required = true) Long articleId) {
         logger.info("registerComment 호출");
 
         try {
@@ -64,7 +64,7 @@ public class CommentController {
     }
 
     // 댓글 삭제
-    @DeleteMapping("/{comment_id}")
+    @DeleteMapping("/{commentId}")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공(SUCCESS)"),
             @ApiResponse(code = 204, message = "회원 불일치(NOT SAME USER)"),
@@ -72,8 +72,8 @@ public class CommentController {
     })
     @ApiOperation(value = "댓글 삭제", notes = "댓글을 삭제")
     public ResponseEntity<String> deleteArticle(
-            @PathVariable("article_id") @ApiParam(value="게시글 id", required = true) Long articleId,
-            @PathVariable("comment_id") @ApiParam(value="댓글 id", required = true) Long commentId,
+            @PathVariable("articleId") @ApiParam(value="게시글 id", required = true) Long articleId,
+            @PathVariable("commentId") @ApiParam(value="댓글 id", required = true) Long commentId,
             @RequestBody @ApiParam(value="댓글 정보", required = true) CommentDeleteReq commentInfo) {
         logger.info("deleteComment 호출");
 
