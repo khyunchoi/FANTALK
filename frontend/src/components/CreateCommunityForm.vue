@@ -28,11 +28,12 @@
         ></v-text-field>
 
         <v-file-input
-          v-model="files"
+          v-model="file"
           accept="image/*"
           label="File input"
           outlined
           dense
+          type="file"
         ></v-file-input>
         
         <div style="display: flex; justify-content: center;">
@@ -70,42 +71,18 @@
         this.$router.push({ name: 'Index' })
       },
       submit () {
-        // const formData = new FormData();
-        // formData.append('name', this.name);
-        // formData.append('title', this.title);
-        // formData.append('logoImage', this.files);
-        // if (formData) {
-        //   this.$axios({
-        //       method: 'post',
-        //       url: `http://127.0.0.1:8080/api/v1/communities/`,
-        //       data: formData,
-        //       headers: {
-        //         'Content-Type': 'multipart/form-data'
-        //       }
-        //     })
-        //     .then(res => {
-        //       console.log(res)
-        //       this.name = ''
-        //       this.title = ''
-        //       this.files = ''
-        //       this.$router.push({ name: 'Index' })
-        //     })
-        //     .catch(err => {
-        //       console.log(formData)
-        //       console.log(err)
-        //   })
-        // }
-
-        const communityItem = {
-          name: this.name,
-          title: this.title,
-          logoImage: this.files
-        }
-        if (communityItem.name) {
+        const formData = new FormData();
+        formData.append('name', this.name);
+        formData.append('title', this.title);
+        formData.append('logoImage', this.files);
+        if (formData) {
           this.$axios({
               method: 'post',
               url: `http://127.0.0.1:8080/api/v1/communities/`,
-              data: communityItem,
+              data: formData,
+              headers: {
+                'Content-Type': 'multipart/form-data'
+              }
             })
             .then(res => {
               console.log(res)
@@ -115,10 +92,36 @@
               this.$router.push({ name: 'Index' })
             })
             .catch(err => {
-              console.log(communityItem)
+              console.log(formData)
               console.log(err)
           })
         }
+
+        // const communityItem = {
+        //   name: this.name,
+        //   title: this.title,
+        //   logoImage: {
+        //     file: this.files
+        //   }
+        // }
+        // if (communityItem.name) {
+        //   this.$axios({
+        //       method: 'post',
+        //       url: `http://127.0.0.1:8080/api/v1/communities/`,
+        //       data: communityItem,
+        //     })
+        //     .then(res => {
+        //       console.log(res)
+        //       this.name = ''
+        //       this.title = ''
+        //       this.files = ''
+        //       this.$router.push({ name: 'Index' })
+        //     })
+        //     .catch(err => {
+        //       console.log(communityItem)
+        //       console.log(err)
+        //   })
+        // }
       },
     }
   }
