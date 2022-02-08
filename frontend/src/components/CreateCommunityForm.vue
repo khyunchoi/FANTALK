@@ -68,7 +68,7 @@
         if (communityItem.name) {
           this.$axios({
             method: 'post',
-            url: `http://127.0.0.1:8080/api/v1/communities/`,
+            url: `http://localhost:8080/api/v1/communities/`,
             data: communityItem,
           })
           .then(res => {
@@ -82,32 +82,6 @@
             console.log(err)
           })
         }
-
-        // const communityItem = {
-        //   name: this.name,
-        //   title: this.title,
-        //   logoImage: {
-        //     file: this.files
-        //   }
-        // }
-        // if (communityItem.name) {
-        //   this.$axios({
-        //       method: 'post',
-        //       url: `http://127.0.0.1:8080/api/v1/communities/`,
-        //       data: communityItem,
-        //     })
-        //     .then(res => {
-        //       console.log(res)
-        //       this.name = ''
-        //       this.title = ''
-        //       this.files = ''
-        //       this.$router.push({ name: 'Index' })
-        //     })
-        //     .catch(err => {
-        //       console.log(communityItem)
-        //       console.log(err)
-        //   })
-        // }
       },
     }
   }

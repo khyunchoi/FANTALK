@@ -63,7 +63,7 @@
         if (articleItem.title) {
           this.$axios({
             method: 'put',
-            url: `http://127.0.0.1:8080/api/v1/communities/${this.communityId}/articles/${this.articleId}`,
+            url: `http://localhost:8080/api/v1/communities/${this.communityId}/articles/${this.articleId}`,
             data: articleItem,
           })
           .then(res => {
@@ -83,7 +83,7 @@
         }
         this.$axios({
           method: 'delete',
-          url: `http://127.0.0.1:8080/api/v1/communities/${this.communityId}/articles/${this.articleId}`,
+          url: `http://localhost:8080/api/v1/communities/${this.communityId}/articles/${this.articleId}`,
           data: userId,
         })
         .then(res => {
@@ -102,7 +102,7 @@
 
       this.$axios({
         method: 'get',
-        url: `http://127.0.0.1:8080/api/v1/communities/${this.communityId}/articles/${this.articleId}`,
+        url: `http://localhost:8080/api/v1/communities/${this.communityId}/articles/${this.articleId}`,
       })
       .then(res => {
         this.title = res.data.title
