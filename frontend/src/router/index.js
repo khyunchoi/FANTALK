@@ -32,17 +32,17 @@ const routes = [
     component: CreateCommunity,
   },
   {
-    path: '/communities/:communityId/article/create',
+    path: '/communities/:communityId/articles/create',
     name: 'CreateArticle',
     component: CreateArticle,
   },
   {
-    path: '/communities/:communityId/article/:articleId',
+    path: '/communities/:communityId/articles/:articleId',
     name: 'DetailArticle',
     component: DetailArticle,
   },
   {
-    path: '/communities/:communityId/article/:articleId/update',
+    path: '/communities/:communityId/articles/:articleId/update',
     name: 'UpdateArticle',
     component: UpdateArticle,
   },

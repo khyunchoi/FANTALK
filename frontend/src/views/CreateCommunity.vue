@@ -17,7 +17,9 @@
     components: {
       CreateCommunityForm,
     },
-    data: () => ({
-    }),
+    data: function() {
+      return {
+      }
+    },
   }
 </script>

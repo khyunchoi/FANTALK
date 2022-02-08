@@ -24,7 +24,9 @@
     components: {
       UpdateArticleForm,
     },
-    data: () => ({
-    }),
+    data: function() {
+      return {
+      }
+    },
   }
 </script>

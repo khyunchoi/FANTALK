@@ -14,7 +14,9 @@
     components: {
       Body, Footer
     },
-    data: () => ({
-    }),
+    data: function() {
+      return {
+      }
+    },
   }
 </script>

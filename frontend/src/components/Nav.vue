@@ -10,6 +10,9 @@
       </router-link>
       <v-btn style="background-color: #FFFFFF;">팬미팅 신청</v-btn>
     </v-toolbar-items>
+    <router-link style="text-decoration: none; color: #000000; font-weight: bold" :to="{name: 'CreateCommunity'}">
+      커뮤니티생성
+    </router-link>
     <v-btn style="background-color: #FFFFFF; font-weight: bold">
       <img src="../assets/google.png" alt="logo" width="20px" height="20px">
       <a href="/oauth2/authorization/google" class="login" style="text-decoration: none;" hrefclass="login">로그인</a>
