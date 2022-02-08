@@ -1,20 +1,19 @@
 <template>
-  <!-- main 으로 시작 -->
-  <Main/>
+  <div id="app">
+    <Nav />
+    <router-view/>
+  </div>
 </template>
 
 <script>
-import Main from './views/main/main.vue'
+import Nav from "./components/Nav.vue"
 
 export default {
   name: 'App',
-
   components: {
-    Main,
+    Nav,
   },
-
   data: () => ({
-    //
   }),
-}
+};
 </script>
