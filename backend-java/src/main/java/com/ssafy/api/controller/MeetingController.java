@@ -161,4 +161,25 @@ public class MeetingController {
             return new ResponseEntity<String>("NO MANAGER", HttpStatus.BAD_REQUEST);
         }
     }
+
+    // 기업회원 확인
+    @GetMapping("/isManager")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공(SUCCESS)"),
+            @ApiResponse(code = 400, message = "실패(Fail)"),
+    })
+    @ApiOperation(value = "기업회원 확인", notes = "기업회원 여부 확인")
+    public ResponseEntity<String> checkManager() {
+        logger.info("checkManager 호출");
+
+        SsafyUserDetails userDetails = (SsafyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = userService.getUserByUsername(userDetails.getUsername());
+
+        // 관리자 여부 확인
+        if (user.getRole().equals("ROLE_USER")) {
+            return new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<String>("FAIL", HttpStatus.BAD_REQUEST);
+        }
+    }
 }
