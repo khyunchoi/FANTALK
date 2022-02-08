@@ -1,12 +1,16 @@
 <template>
   <div> 
+    <div class="community-list-search-container">
 
-    <div class="community-list-header">
-      <div class="search-bar-menu">
-        검색창 / 검색버튼 / 등록버튼
-      </div>
+      <h1>검색창 / 검색버튼 / 등록버튼</h1>
+
+
+
+
+
+
+        
     </div>
-
   </div>
 </template>
 
@@ -22,24 +26,11 @@ export default {
 </script>
 
 <style>
-  .community-list-header {
+  .community-list-search-container {
     width: 100%;
     display: flex;
-    padding: 10%;
+    padding: 5%;
     flex-direction: column;
     align-items: center;
   }
-
-  .search-bar-menu {
-    width: 100%;
-    display: flex;
-    padding: 10%;
-    flex-direction: column;
-    align-items: center;
-    color: #7743b3;
-    background-color: #240361;
-    font-size: 1.5em;
-  }
-
-
 </style>
