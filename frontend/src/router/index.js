@@ -7,6 +7,11 @@ import CreateCommunity from '../views/CreateCommunity.vue'
 import CreateArticle from '../views/CreateArticle.vue'
 import DetailArticle from '../views/DetailArticle.vue'
 import UpdateArticle from '../views/UpdateArticle.vue'
+import MeetingList from '../views/MeetingList.vue'
+import CreateMeeting from '../views/CreateMeeting.vue'
+import MyMeetingList from '../views/MyMeetingList.vue'
+import DetailMyMeeting from '../views/DetailMyMeeting.vue'
+import UpdateMeeting from '../views/UpdateMeeting.vue'
 
 Vue.use(VueRouter)
 
@@ -45,6 +50,31 @@ const routes = [
     path: '/communities/:communityId/articles/:articleId/update',
     name: 'UpdateArticle',
     component: UpdateArticle,
+  },
+  {
+    path: '/meetings',
+    name: 'MeetingList',
+    component: MeetingList,
+  },
+  {
+    path: '/meetings/create',
+    name: 'CreateMeeting',
+    component: CreateMeeting,
+  },
+  {
+    path: '/meetings/me',
+    name: 'MyMeetingList',
+    component: MyMeetingList,
+  },
+  {
+    path: '/meetings/:meetingId',
+    name: 'DetailMyMeeting',
+    component: DetailMyMeeting,
+  },
+  {
+    path: '/meetings/:meetingId/update',
+    name: 'UpdateMeeting',
+    component: UpdateMeeting,
   },
 ]
 
