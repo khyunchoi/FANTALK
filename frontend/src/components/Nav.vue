@@ -10,12 +10,14 @@
       </router-link>
       <v-btn style="background-color: #FFFFFF;">팬미팅 신청</v-btn>
     </v-toolbar-items>
-    <router-link style="text-decoration: none; color: #000000; font-weight: bold" :to="{name: 'CreateCommunity'}">
-      커뮤니티생성
-    </router-link>
     <v-btn style="background-color: #FFFFFF; font-weight: bold">
-      <img src="../assets/google.png" alt="logo" width="20px" height="20px">
-      <a href="/oauth2/authorization/google" class="login" style="text-decoration: none;" hrefclass="login">로그인</a>
+      <div v-if="userId == 0" style="display: flex;">
+        <img src="../assets/google.png" alt="logo" width="20px" height="20px">
+        <a href="/oauth2/authorization/google" class="login" style="text-decoration: none;" hrefclass="login">로그인</a>
+      </div>
+      <div v-else>
+        <a href="/logout" style="text-decoration: none;">로그아웃</a>
+      </div>
     </v-btn>
   </v-toolbar>
 </template>
@@ -25,8 +27,23 @@
     name: 'Nav',
     data: function() {
       return {
+        userId: 0
       }
     },
+
+    created: function () {
+      this.$axios({
+        method: 'get',
+        url: `http://localhost:8080/api/v1/users/me`
+      })
+      .then(res => {
+        console.log(res)
+        this.userId = res.data.id
+      })
+      .catch(err => {
+        console.log(err)
+      })
+    }
   }
 </script>
 
