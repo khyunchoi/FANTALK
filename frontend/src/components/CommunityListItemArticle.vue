@@ -1,7 +1,5 @@
 <template>
-	<div>   
-		게시글 목록
-	</div>
+  
 </template>
 
 <script>
