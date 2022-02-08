@@ -16,15 +16,13 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class CommentServiceImpl implements CommentService{
 
-    private final UserService userService;
     private final CommentRepository commentRepository;
 
     // 댓글 등록
     @Override
-    public void registerComment(CommentRegisterPostReq commentInfo, Article article) {
+    public void registerComment(CommentRegisterPostReq commentInfo, Article article, User user) {
 
         try {
-            User user = userService.findById(commentInfo.getUserId());
             Comment comment = Comment.builder()
                     .content(commentInfo.getContent())
                     .user(user)

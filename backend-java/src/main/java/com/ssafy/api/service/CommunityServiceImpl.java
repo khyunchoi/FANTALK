@@ -26,7 +26,6 @@ public class CommunityServiceImpl implements CommunityService{
             Community community = Community.builder()
                     .name(communityInfo.getName())
                     .title(communityInfo.getTitle())
-                    .logoImage(communityInfo.getLogoImage())
                     .build();
             communityRepository.save(community);
         } catch (Exception e) {

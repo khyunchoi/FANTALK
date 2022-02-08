@@ -1,13 +1,15 @@
 package com.ssafy.api.controller;
 
-import com.ssafy.api.request.ArticleDeleteReq;
 import com.ssafy.api.request.ArticleRegisterPostReq;
 import com.ssafy.api.response.ArticleDetailGetRes;
 import com.ssafy.api.response.ArticleListGetRes;
 import com.ssafy.api.service.ArticleService;
 import com.ssafy.api.service.CommunityService;
+import com.ssafy.api.service.UserService;
+import com.ssafy.common.auth.SsafyUserDetails;
 import com.ssafy.db.entity.Article;
 import com.ssafy.db.entity.Community;
+import com.ssafy.db.entity.User;
 import com.ssafy.db.repository.ArticleRepository;
 import io.swagger.annotations.*;
 import org.slf4j.Logger;
@@ -15,6 +17,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -41,6 +44,9 @@ public class ArticleController {
     @Autowired
     private ArticleRepository articleRepository;
 
+    @Autowired
+    private UserService userService;
+
     // 게시글 등록
     @PostMapping("/articles")
     @ApiResponses({
@@ -54,9 +60,12 @@ public class ArticleController {
             @PathVariable("communityId") @ApiParam(value="커뮤니티 id", required = true) Long communityId) {
         logger.info("registerArticle 호출");
 
+        SsafyUserDetails userDetails = (SsafyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = userService.getUserByUsername(userDetails.getUsername());
+
         try {
             Community community = communityService.findById(communityId);
-            articleService.registerArticle(articleInfo, community);//
+            articleService.registerArticle(articleInfo, community, user);//
             return new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
 
         } catch (NoSuchElementException e){
@@ -127,10 +136,13 @@ public class ArticleController {
             @RequestBody @ApiParam(value="글 정보", required = true) ArticleRegisterPostReq articleInfo) {
         logger.info("modifyArticle 호출");
 
+        SsafyUserDetails userDetails = (SsafyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = userService.getUserByUsername(userDetails.getUsername());
+
         try {
-            Article article = articleRepository.findByIdAndCommunityIdOrderByIdDesc(articleId, communityId).get();
-            // 게시글의 회원 id와 수정 요청 DTO의 회원 id가 일치하는지 확인
-            if (article.getUser().getId().equals(articleInfo.getUserId())) {
+            Article article = articleRepository.findByIdAndCommunityId(articleId, communityId).get();
+            // 게시글의 회원 id와 수정 요청 회원 id가 일치하는지 확인
+            if (article.getUser().getId().equals(user.getId())) {
                 articleService.modifyArticle(articleInfo, articleId, communityId);
                 return new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
             } else {
@@ -151,13 +163,15 @@ public class ArticleController {
     @ApiOperation(value = "게시글 삭제", notes = "게시글을 삭제")
     public ResponseEntity<String> deleteArticle(
             @PathVariable("communityId") @ApiParam(value="커뮤니티 id", required = true) Long communityId,
-            @PathVariable("articleId") @ApiParam(value="게시글 id", required = true) Long articleId,
-            @RequestBody @ApiParam(value="글 정보", required = true) ArticleDeleteReq articleInfo) {
+            @PathVariable("articleId") @ApiParam(value="게시글 id", required = true) Long articleId) {
         logger.info("deleteArticle 호출");
 
+        SsafyUserDetails userDetails = (SsafyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = userService.getUserByUsername(userDetails.getUsername());
+
         try {
-            Article article = articleRepository.findByIdAndCommunityIdOrderByIdDesc(articleId, communityId).get();
-            if (article.getUser().getId().equals(articleInfo.getUserId())) {
+            Article article = articleRepository.findByIdAndCommunityId(articleId, communityId).get();
+            if (article.getUser().getId().equals(user.getId())) {
                 articleService.deleteArticle(article);
                 return new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
             } else {
@@ -166,6 +180,5 @@ public class ArticleController {
         } catch (Exception e) {
             return new ResponseEntity<String>("NO COMMUNITY", HttpStatus.BAD_REQUEST);
         }
-
     }
 }

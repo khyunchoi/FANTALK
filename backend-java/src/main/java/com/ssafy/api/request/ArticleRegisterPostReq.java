@@ -19,7 +19,4 @@ public class ArticleRegisterPostReq {
 
     @ApiModelProperty(name="게시글 내용", example="내용1")
     String content;
-
-    @ApiModelProperty(name="회원 id", example="1")
-    Long userId;
 }

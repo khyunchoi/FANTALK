@@ -40,14 +40,9 @@ public class Community {
     @NotNull
     private String title;
 
-    @Column(name = "logo_image")
-    @NotNull
-    private String logoImage;
-
     @Builder
-    public Community(String name, String title, String logoImage) {
+    public Community(String name, String title) {
         this.name = name;
         this.title = title;
-        this.logoImage = logoImage;
     }
 }
