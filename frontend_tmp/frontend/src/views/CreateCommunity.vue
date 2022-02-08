@@ -1,6 +1,11 @@
 <template>
-  <div style="margin: 20px;">
-    <CreateCommunityForm />
+  <div style="display: flex; justify-content: center;">
+    <v-card
+      outlined
+      style="margin: 20px; padding: 20px; outline: 1px solid #979797; width: 500px;"
+    >
+      <CreateCommunityForm />
+    </v-card>
   </div>
 </template>
 
