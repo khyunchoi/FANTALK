@@ -24,16 +24,10 @@
           solo
         ></v-textarea>
 
-        <v-file-input
-          accept="image/*"
-          label="File input"
-          outlined
-          dense
-        ></v-file-input>
-
         <div style="display: flex; justify-content: center;">
           <v-btn @click="goBack()" style="background-color: #979797; color: #FFFFFF; margin: 0 10px;">취소</v-btn>
-          <v-btn @click="submit()" style="background-color: #797BF8; color: #FFFFFF; margin: 0 10px;">수정</v-btn>
+          <v-btn @click="edit()" style="background-color: #797BF8; color: #FFFFFF; margin: 0 10px;">수정</v-btn>
+          <v-btn @click="deleteArticle()" style="background-color: #FF6666; color: #FFFFFF; margin: 0 10px; position: absolute; right: 10px;">삭제</v-btn>
         </div>
       </v-form>
     </template>
@@ -48,7 +42,6 @@
       return {
         valid: true,
         communityId: '',
-        articleId: '',
         title: '',
         titleRules: [
           v => !!v || '제목은 필수입니다.',
@@ -59,17 +52,65 @@
     },
 
     methods: {
-      goBack() {
+      goBack () {
         this.$router.push({ name: 'DetailArticle', params: {communityId: this.communityId, articleId: this.articleId} })
       },
-      submit () {
-        this.$v.$touch()
+      edit () {
+        const articleItem = {
+          title: this.title,
+          content: this.content,
+        }
+        if (articleItem.title) {
+          this.$axios({
+            method: 'put',
+            url: `http://127.0.0.1:8080/api/v1/communities/${this.communityId}/articles/${this.articleId}`,
+            data: articleItem,
+          })
+          .then(res => {
+            console.log(res)
+            this.title = ''
+            this.content = ''
+            this.$router.push({ name: 'Index' })
+          })
+          .catch(err => {
+            console.log(err)
+          })
+        }
       },
+      deleteArticle () {
+        const userId = {
+          userId: 1,
+        }
+        this.$axios({
+          method: 'delete',
+          url: `http://127.0.0.1:8080/api/v1/communities/${this.communityId}/articles/${this.articleId}`,
+          data: userId,
+        })
+        .then(res => {
+          console.log(res)
+          this.$router.push({ name: 'Index' })
+        })
+        .catch(err => {
+          console.log(err)
+        })
+      }
     },
 
-    created() {
+    created: function () {
       this.communityId = this.$route.params.communityId
       this.articleId = this.$route.params.articleId
+
+      this.$axios({
+        method: 'get',
+        url: `http://127.0.0.1:8080/api/v1/communities/${this.communityId}/articles/${this.articleId}`,
+      })
+      .then(res => {
+        this.title = res.data.title
+        this.content = res.data.content
+      })
+      .catch(err => {
+        console.log(err)
+      })
     }
   }
 </script>

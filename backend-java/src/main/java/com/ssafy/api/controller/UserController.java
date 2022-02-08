@@ -39,7 +39,7 @@ public class UserController {
         this.userRepository = userRepository;
     }
 
-    @GetMapping("/{username}")
+    @GetMapping("/me")
     @ApiOperation(value = "회원 본인 정보 조회", notes = "로그인한 회원 본인의 정보를 응답한다.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
@@ -47,17 +47,22 @@ public class UserController {
             @ApiResponse(code = 404, message = "사용자 없음"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
-    public ResponseEntity<UserRes> getUserInfo(@PathVariable("username") String username) {
-
-        SsafyUserDetails userDetails = (SsafyUserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        System.out.println("userDetails.getUsername() = " + userDetails.getUsername());
-
-        User user = userService.getUserByUsername(username);
+    public ResponseEntity<UserRes> getUserInfo() {
 
         UserRes res = new UserRes();
-        res.setName(user.getName());
-        res.setEmail(user.getEmail());
-        res.setProfileImage(user.getProfileImage());
+        try {
+            SsafyUserDetails userDetails = (SsafyUserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            User user = userDetails.getUser();
+
+            res.setId(user.getId());
+            res.setName(user.getName());
+            res.setEmail(user.getEmail());
+            res.setProfileImage(user.getProfileImage());
+        } catch (Exception e) {
+
+            res.setId(0L);
+            return ResponseEntity.status(200).body(res);
+        }
 
         return ResponseEntity.status(200).body(res);
     }

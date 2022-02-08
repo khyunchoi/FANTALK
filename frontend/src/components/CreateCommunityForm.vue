@@ -26,14 +26,6 @@
           solo
           required
         ></v-text-field>
-
-        <v-file-input
-          v-model="files"
-          accept="image/*"
-          label="File input"
-          outlined
-          dense
-        ></v-file-input>
         
         <div style="display: flex; justify-content: center;">
           <v-btn @click="goBack()" style="background-color: #979797; color: #FFFFFF; margin: 0 10px;">취소</v-btn>
@@ -61,7 +53,6 @@
           v => !!v || '제목은 필수입니다.',
           v => (v && v.length <= 30) || '제목은 30자 이하이어야 합니다.'
         ],
-        files: [],
       }
     },
 
@@ -70,53 +61,25 @@
         this.$router.push({ name: 'Index' })
       },
       submit () {
-        // const formData = new FormData();
-        // formData.append('name', this.name);
-        // formData.append('title', this.title);
-        // formData.append('logoImage', this.files);
-        // if (formData) {
-        //   this.$axios({
-        //       method: 'post',
-        //       url: `http://127.0.0.1:8080/api/v1/communities/`,
-        //       data: formData,
-        //       headers: {
-        //         'Content-Type': 'multipart/form-data'
-        //       }
-        //     })
-        //     .then(res => {
-        //       console.log(res)
-        //       this.name = ''
-        //       this.title = ''
-        //       this.files = ''
-        //       this.$router.push({ name: 'Index' })
-        //     })
-        //     .catch(err => {
-        //       console.log(formData)
-        //       console.log(err)
-        //   })
-        // }
-
         const communityItem = {
           name: this.name,
           title: this.title,
-          logoImage: this.files
         }
         if (communityItem.name) {
           this.$axios({
-              method: 'post',
-              url: `http://127.0.0.1:8080/api/v1/communities/`,
-              data: communityItem,
-            })
-            .then(res => {
-              console.log(res)
-              this.name = ''
-              this.title = ''
-              this.files = ''
-              this.$router.push({ name: 'Index' })
-            })
-            .catch(err => {
-              console.log(communityItem)
-              console.log(err)
+            method: 'post',
+            url: `http://127.0.0.1:8080/api/v1/communities/`,
+            data: communityItem,
+          })
+          .then(res => {
+            console.log(res)
+            this.name = ''
+            this.title = ''
+            this.$router.push({ name: 'Index' })
+          })
+          .catch(err => {
+            console.log(communityItem)
+            console.log(err)
           })
         }
       },

@@ -51,30 +51,30 @@
     },
 
     methods: {
-      goBack() {
+      goBack () {
         this.$router.push({ name: 'CommunityListItem', params: {communityId: this.communityId} })
       },
       submit () {
         const articleItem = {
           title: this.title,
-          content: this.content
+          content: this.content,
         }
         if (articleItem.title) {
           this.$axios({
-              method: 'post',
-              url: `http://127.0.0.1:8080/api/v1/communities/${this.communityId}/articles`,
-              data: articleItem,
-            })
-            .then(res => {
-              console.log(res)
-              this.title = ''
-              this.content = ''
-              this.$router.push({ name: 'Index' })
-            })
-            .catch(err => {
-              console.log(localStorage)
-              console.log(articleItem)
-              console.log(err)
+            method: 'post',
+            url: `http://127.0.0.1:8080/api/v1/communities/${this.communityId}/articles`,
+            data: articleItem,
+          })
+          .then(res => {
+            console.log(res)
+            this.title = ''
+            this.content = ''
+            this.$router.push({ name: 'Index' })
+          })
+          .catch(err => {
+            console.log(localStorage)
+            console.log(articleItem)
+            console.log(err)
           })
         }
       },
