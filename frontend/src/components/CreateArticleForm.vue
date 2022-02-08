@@ -24,13 +24,6 @@
           solo
         ></v-textarea>
 
-        <v-file-input
-          accept="image/*"
-          label="File input"
-          outlined
-          dense
-        ></v-file-input>
-
         <div style="display: flex; justify-content: center;">
           <v-btn @click="goBack()" style="background-color: #979797; color: #FFFFFF; margin: 0 10px;">취소</v-btn>
           <v-btn @click="submit()" style="background-color: #797BF8; color: #FFFFFF; margin: 0 10px;">등록</v-btn>
@@ -44,23 +37,46 @@
   export default {
     name: 'CreateArticleForm',
 
-    data: () => ({
-      valid: true,
-      communityId: '',
-      title: '',
-      titleRules: [
-        v => !!v || '제목은 필수입니다.',
-        v => (v && v.length <= 50) || '제목은 50자 이하이어야 합니다.'
-      ],
-      content: '',
-    }),
+    data: function() {
+      return {
+        valid: true,
+        communityId: '',
+        title: '',
+        titleRules: [
+          v => !!v || '제목은 필수입니다.',
+          v => (v && v.length <= 50) || '제목은 50자 이하이어야 합니다.'
+        ],
+        content: '',
+      }
+    },
 
     methods: {
       goBack() {
         this.$router.push({ name: 'CommunityListItem', params: {communityId: this.communityId} })
       },
       submit () {
-        this.$v.$touch()
+        const articleItem = {
+          title: this.title,
+          content: this.content
+        }
+        if (articleItem.title) {
+          this.$axios({
+              method: 'post',
+              url: `http://127.0.0.1:8080/api/v1/communities/${this.communityId}/articles`,
+              data: articleItem,
+            })
+            .then(res => {
+              console.log(res)
+              this.title = ''
+              this.content = ''
+              this.$router.push({ name: 'Index' })
+            })
+            .catch(err => {
+              console.log(localStorage)
+              console.log(articleItem)
+              console.log(err)
+          })
+        }
       },
     },
 

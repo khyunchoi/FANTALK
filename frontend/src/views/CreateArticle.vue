@@ -24,7 +24,9 @@
     components: {
       CreateArticleForm,
     },
-    data: () => ({
-    }),
+    data: function() {
+      return {
+      }
+    },
   }
 </script>

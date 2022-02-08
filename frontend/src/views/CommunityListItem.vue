@@ -13,7 +13,9 @@
       CommunityListItemArticle
     },
 
-    data: () => ({
-    }),
+    data: function() {
+      return {
+      }
+    },
   }
 </script>

@@ -6,7 +6,9 @@
   export default {
     name: 'DetailArticle',
 
-    data: () => ({
-    }),
+    data: function() {
+      return {
+      }
+    },
   }
 </script>

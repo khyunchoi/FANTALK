@@ -44,17 +44,19 @@
   export default {
     name: 'UpdateArticleForm',
 
-    data: () => ({
-      valid: true,
-      communityId: '',
-      articleId: '',
-      title: '',
-      titleRules: [
-        v => !!v || '제목은 필수입니다.',
-        v => (v && v.length <= 50) || '제목은 50자 이하이어야 합니다.'
-      ],
-      content: '',
-    }),
+    data: function() {
+      return {
+        valid: true,
+        communityId: '',
+        articleId: '',
+        title: '',
+        titleRules: [
+          v => !!v || '제목은 필수입니다.',
+          v => (v && v.length <= 50) || '제목은 50자 이하이어야 합니다.'
+        ],
+        content: '',
+      }
+    },
 
     methods: {
       goBack() {

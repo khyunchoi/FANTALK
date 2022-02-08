@@ -73,6 +73,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .oauth2Login()
                     .loginPage("/oauth2/authorization/google") // 구글 로그인이 완료된 뒤의 후처리가 필요함. Tip. 코드X (엑세스토큰+사용자프로필정보)
                     .userInfoEndpoint()
-                    .userService(ssafyOauth2UserService);
+                    .userService(ssafyOauth2UserService)
+                .and().and().cors();
     }
 }
