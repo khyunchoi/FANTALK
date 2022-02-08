@@ -19,7 +19,4 @@ public class CommunityRegisterPostReq {
 
     @ApiModelProperty(name="팬 커뮤니티 이름", example="어른말고아이유")
     String title;
-
-    @ApiModelProperty(name="로고 이미지", example="아이유 팬 커뮤니티 로고 이미지")
-    String logoImage;
 }

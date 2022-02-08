@@ -3,6 +3,7 @@ package com.ssafy.api.service;
 import com.ssafy.api.request.CommentRegisterPostReq;
 import com.ssafy.db.entity.Article;
 import com.ssafy.db.entity.Comment;
+import com.ssafy.db.entity.User;
 
 
 /**
@@ -10,6 +11,6 @@ import com.ssafy.db.entity.Comment;
  */
 public interface CommentService {
 
-    void registerComment(CommentRegisterPostReq commentInfo, Article article);
+    void registerComment(CommentRegisterPostReq commentInfo, Article article, User user);
     void deleteComment(Comment comment);
 }

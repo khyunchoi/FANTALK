@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -28,10 +29,9 @@ public class ArticleServiceImpl implements ArticleService{
 
     // 게시글 등록
     @Override
-    public void registerArticle(ArticleRegisterPostReq articleInfo, Community community) {
+    public void registerArticle(ArticleRegisterPostReq articleInfo, Community community, User user) {
 
         try {
-            User user = userService.findById(articleInfo.getUserId());
             Article article = Article.builder()
                     .user(user)
                     .community(community)
@@ -69,7 +69,7 @@ public class ArticleServiceImpl implements ArticleService{
     @Override
     public ArticleDetailGetRes getArticleDetail(Long articleId, Long communityId) {
 
-        Article article = articleRepository.findByIdAndCommunityIdOrderByIdDesc(articleId, communityId).get();
+        Article article = articleRepository.findByIdAndCommunityId(articleId, communityId).get();
 
         // 조회수 1 증가
         article.raiseHits(article.getHits() + 1);
@@ -118,7 +118,7 @@ public class ArticleServiceImpl implements ArticleService{
             articleRes.setEmail(searchedArticle.getUser().getEmail());
             articleListGetRes.add(articleRes);
         }
-
+        Collections.reverse(articleListGetRes);
         return articleListGetRes;
     }
 
@@ -127,7 +127,7 @@ public class ArticleServiceImpl implements ArticleService{
     public Article modifyArticle(ArticleRegisterPostReq articleInfo, Long articleId, Long communityId) {
 
         try {
-            Article article = articleRepository.findByIdAndCommunityIdOrderByIdDesc(articleId, communityId).get();
+            Article article = articleRepository.findByIdAndCommunityId(articleId, communityId).get();
             article.changeTitleAndContent(articleInfo.getTitle(), articleInfo.getContent());
             articleRepository.save(article);
             return article;

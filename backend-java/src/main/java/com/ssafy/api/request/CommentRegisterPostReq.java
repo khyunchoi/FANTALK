@@ -16,7 +16,4 @@ public class CommentRegisterPostReq {
 
     @ApiModelProperty(name="댓글 내용", example="내용1")
     private String content;
-
-    @ApiModelProperty(name="회원 id", example="1")
-    private Long userId;
 }

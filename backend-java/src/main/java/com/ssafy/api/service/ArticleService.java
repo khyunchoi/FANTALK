@@ -5,6 +5,7 @@ import com.ssafy.api.response.ArticleDetailGetRes;
 import com.ssafy.api.response.ArticleListGetRes;
 import com.ssafy.db.entity.Article;
 import com.ssafy.db.entity.Community;
+import com.ssafy.db.entity.User;
 
 import java.util.List;
 
@@ -14,7 +15,7 @@ import java.util.List;
  */
 public interface ArticleService {
 
-    void registerArticle(ArticleRegisterPostReq articleInfo, Community community);
+    void registerArticle(ArticleRegisterPostReq articleInfo, Community community, User user);
     List<ArticleListGetRes> getAllArticles(Long communityId);
     ArticleDetailGetRes getArticleDetail(Long communityId, Long articleId);
     List<ArticleListGetRes> searchArticle(Long community_id, String searchWord);
