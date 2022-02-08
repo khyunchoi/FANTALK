@@ -85,7 +85,7 @@
 
   .third-small-container {
     display: flex;
-    justify-content: start;
+    justify-content: flex-start;
     width: 100%;
     padding: 3% 5% 3% 10%;
     background-color: #EBEBFF;
@@ -96,7 +96,7 @@
 
   .fourth-small-container {
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
     width: 100%;
     padding: 3% 10% 3% 5%;
     background-color: #DADBFF;
@@ -106,7 +106,7 @@
 
   .fifth-small-container {
     display: flex;
-    justify-content: start;
+    justify-content: flex-start;
     width: 100%;
     padding: 3% 5% 3% 10%;
     background-color: #ACAEFF;

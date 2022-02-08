@@ -70,6 +70,8 @@
 export default {
   name: 'CommunityListCards',
   data: function () {
+    return  {
+    }
   },
 }
 </script>
