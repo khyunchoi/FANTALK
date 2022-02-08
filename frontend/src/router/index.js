@@ -22,14 +22,14 @@ const routes = [
     component: CommunityList,
   },
   {
-    path: '/communities/:communityId',
-    name: 'CommunityListItem',
-    component: CommunityListItem,
-  },
-  {
     path: '/communities/create',
     name: 'CreateCommunity',
     component: CreateCommunity,
+  },
+  {
+    path: '/communities/:communityId',
+    name: 'CommunityListItem',
+    component: CommunityListItem,
   },
   {
     path: '/communities/:communityId/articles/create',
