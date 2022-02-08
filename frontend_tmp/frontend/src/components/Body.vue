@@ -1,8 +1,8 @@
 <template>
  <v-container>
    <v-layout>
-     <v-col>
-      <h2>당신의 연예인과 지금 바로 만나보세요!</h2>
+     <v-col style="display: flex; justify-content: center;">
+        <h2>당신의 연예인과 지금 바로 만나보세요!</h2>
      </v-col>
    </v-layout>
  </v-container>
