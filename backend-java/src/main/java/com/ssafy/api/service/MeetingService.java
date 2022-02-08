@@ -3,6 +3,7 @@ package com.ssafy.api.service;
 
 import com.ssafy.api.request.MeetingRegisterPostReq;
 import com.ssafy.api.response.MeetingDetailGetRes;
+import com.ssafy.api.response.MyMeetingDetailGetRes;
 import com.ssafy.db.entity.Meeting;
 import com.ssafy.db.entity.User;
 
@@ -18,4 +19,6 @@ public interface MeetingService {
     List<MeetingDetailGetRes> searchMeeting(String searchWord);
     Meeting modifyMeeting(MeetingRegisterPostReq meetingInfo, Long meetingId);
     void deleteMeeting(Meeting meeting);
+    List<MyMeetingDetailGetRes> getAllMyMeeting(Long userId);
+    MyMeetingDetailGetRes getMyMeetingDetail(Long meetingId, Long userId);
 }

@@ -2,6 +2,7 @@ package com.ssafy.api.controller;
 
 import com.ssafy.api.request.MeetingRegisterPostReq;
 import com.ssafy.api.response.MeetingDetailGetRes;
+import com.ssafy.api.response.MyMeetingDetailGetRes;
 import com.ssafy.api.service.MeetingService;
 import com.ssafy.api.service.UserService;
 import com.ssafy.common.auth.SsafyUserDetails;
@@ -179,6 +180,43 @@ public class MeetingController {
         if (user.getRole().equals("ROLE_USER")) {
             return new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
         } else {
+            return new ResponseEntity<String>("FAIL", HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    // 신청한 팬미팅 목록 조회
+    @GetMapping("/me")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "팬미팅 목록 리스트 반환, 없을 시 [] 반환"),
+    })
+    @ApiOperation(value = "신청한 팬미팅 목록 조회", notes = "기업회원이 신청한 팬미팅 전체 목록 조회")
+    public ResponseEntity<List<MyMeetingDetailGetRes>> getAllMyMeeting() {
+        logger.info("getAllMyMeeting 호출");
+
+        SsafyUserDetails userDetails = (SsafyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = userService.getUserByUsername(userDetails.getUsername());
+
+        return new ResponseEntity<List<MyMeetingDetailGetRes>>(meetingService.getAllMyMeeting(user.getId()), HttpStatus.OK);
+    }
+
+    // 신청한 팬미팅 상세 조회
+    @GetMapping("/me/{meetingId}")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "SUCCESS(성공)"),
+            @ApiResponse(code = 400, message = "FAIL(실패)"),
+    })
+    @ApiOperation(value = "신청한 팬미팅 상세 조회", notes = "기업회원이 신청한 특정 팬미팅 상세 조회")
+    public ResponseEntity<?> getMyMeetingDetail(
+            @PathVariable("meetingId") @ApiParam(value="팬미팅 id", required = true) Long meetingId) {
+        logger.info("getMyMeetingDetail 호출");
+
+        SsafyUserDetails userDetails = (SsafyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = userService.getUserByUsername(userDetails.getUsername());
+
+        try {
+            MyMeetingDetailGetRes myMeetingDetailGetRes = meetingService.getMyMeetingDetail(meetingId, user.getId());
+            return new ResponseEntity<MyMeetingDetailGetRes>(myMeetingDetailGetRes, HttpStatus.OK);
+        } catch (Exception e) {
             return new ResponseEntity<String>("FAIL", HttpStatus.BAD_REQUEST);
         }
     }

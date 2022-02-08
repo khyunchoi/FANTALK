@@ -2,6 +2,7 @@ package com.ssafy.api.service;
 
 import com.ssafy.api.request.MeetingRegisterPostReq;
 import com.ssafy.api.response.MeetingDetailGetRes;
+import com.ssafy.api.response.MyMeetingDetailGetRes;
 import com.ssafy.db.entity.Meeting;
 import com.ssafy.db.entity.User;
 import com.ssafy.db.repository.MeetingRepository;
@@ -99,4 +100,37 @@ public class MeetingServiceImpl implements MeetingService{
         meetingRepository.delete(meeting);
     }
 
+    // 신청한 팬미팅 목록 조회
+    @Override
+    public List<MyMeetingDetailGetRes> getAllMyMeeting(Long userId) {
+
+        List<Meeting> findMyMeetings = meetingRepository.findByUserId(userId);
+        List<MyMeetingDetailGetRes> myMeetingDetailGetResList = new ArrayList<>();
+        for (Meeting findMyMeeting : findMyMeetings) {
+            MyMeetingDetailGetRes myMeetingDetailGetRes = new MyMeetingDetailGetRes();
+            myMeetingDetailGetRes.setId(findMyMeeting.getId());
+            myMeetingDetailGetRes.setTitle(findMyMeeting.getTitle());
+            myMeetingDetailGetRes.setOpenDate(findMyMeeting.getOpenDate());
+            myMeetingDetailGetRes.setMaxUser(findMyMeeting.getMaxUser());
+            myMeetingDetailGetResList.add(myMeetingDetailGetRes);
+        }
+        return myMeetingDetailGetResList;
+    }
+
+    // 신청한 팬미팅 상세 조회
+    @Override
+    public MyMeetingDetailGetRes getMyMeetingDetail(Long meetingId, Long userId) {
+
+        try {
+            Meeting findMeeting = meetingRepository.findByIdAndUserId(meetingId, userId).get();
+            MyMeetingDetailGetRes myMeetingDetailGetRes = new MyMeetingDetailGetRes();
+            myMeetingDetailGetRes.setId(findMeeting.getId());
+            myMeetingDetailGetRes.setTitle(findMeeting.getTitle());
+            myMeetingDetailGetRes.setOpenDate(findMeeting.getOpenDate());
+            myMeetingDetailGetRes.setMaxUser(findMeeting.getMaxUser());
+            return myMeetingDetailGetRes;
+        } catch (Exception e) {
+            throw e;
+        }
+    }
 }
