@@ -14,6 +14,9 @@
 export default {
   name: 'CommunityListSearch',
   data: function () {
+    return {
+      
+    }
   },
 }
 </script>

@@ -13,7 +13,9 @@ export default {
   components: {
     Nav,
   },
-  data: () => ({
-  }),
-};
+  data: function() {
+  return {
+    }
+  },
+}
 </script>
