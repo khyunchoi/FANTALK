@@ -14,7 +14,7 @@ import java.util.Optional;
 @Repository
 public interface ArticleRepository extends JpaRepository<Article, Long> {
 
-    List<Article> findAllByCommunityId(Long communityId);
-    Optional<Article> findByIdAndCommunityId(Long id, Long communityId);
+    List<Article> findAllByCommunityIdOrderByIdDesc(Long communityId);
+    Optional<Article> findByIdAndCommunityIdOrderByIdDesc(Long id, Long communityId);
     Optional<Article> findById(Long id);
 }
