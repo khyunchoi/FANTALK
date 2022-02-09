@@ -6,7 +6,6 @@
       </h3>
       <div style="display: flex; justify-content: center;">
         <v-card
-          outlined
           style="padding: 20px; border: 1px solid #979797; width: 700px;"
         >
           <UpdateArticleForm />

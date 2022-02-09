@@ -1,5 +1,5 @@
 <template>
-	<div data-app>
+	<div>
     <template>
         <v-text-field
           v-model="title"
@@ -10,11 +10,12 @@
           required
         ></v-text-field>
 
-        <v-row>
+        <v-row style="border-bottom: 1px solid #979797; margin: 0px 0px 10px 0px;">
           <v-col
             cols="12"
             sm="6"
             md="6"
+            style="padding: 12px 12px 12px 0px;"
           >
             <h5>날짜/시간</h5>
             <v-card style="padding: 3px; height: 32px;">
@@ -27,6 +28,7 @@
             cols="12"
             sm="6"
             md="6"
+            style="padding: 12px 0px 12px 12px;"
           >
             <h5>인원</h5>
             <v-card style="padding: 3px; height: 32px;">
@@ -34,10 +36,22 @@
             </v-card>
           </v-col>
         </v-row>
+
+        <h3 style="color: #FF0000;">
+          **안내사항
+        </h3>
+        <ul style="list-style-type: square; color: #979797; margin-left: 20px; margin-top: 10px;">
+          <li>안내사항1</li>
+          <li>안내사항2</li>
+          <li>안내사항3</li>
+          <li>안내사항4</li>
+          <li>안내사항5</li>
+        </ul>
         
         <div style="display: flex; justify-content: center; margin-top: 30px;">
           <v-btn @click="goBack()" style="background-color: #979797; color: #FFFFFF; margin: 0 10px;">취소</v-btn>
           <v-btn @click="submit()" style="background-color: #797BF8; color: #FFFFFF; margin: 0 10px;">수정</v-btn>
+          <v-btn @click="deleteMeeting()" style="background-color: #FF6666; color: #FFFFFF; margin: 0 10px; position: absolute; right: 10px;">삭제</v-btn>
         </div>
     </template>
 	</div>
@@ -73,7 +87,7 @@
         }
         if (meetingItem.title) {
           this.$axios({
-            method: 'post',
+            method: 'put',
             url: `http://localhost:8080/api/v1/meetings/${this.meetingId}`,
             data: meetingItem,
           })
@@ -89,6 +103,19 @@
             console.log(err)
           })
         }
+      },
+      deleteMeeting () {
+        this.$axios({
+          method: 'delete',
+          url: `http://localhost:8080/api/v1/meetings/${this.meetingId}`,
+        })
+        .then(res => {
+          console.log(res)
+          this.$router.push({ name: 'MyMeetingList' })
+        })
+        .catch(err => {
+          console.log(err)
+        })
       }
     },
 
