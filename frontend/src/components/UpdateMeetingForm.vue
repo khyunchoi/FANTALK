@@ -73,7 +73,7 @@
         }
         if (meetingItem.title) {
           this.$axios({
-            method: 'post',
+            method: 'put',
             url: `http://localhost:8080/api/v1/meetings/${this.meetingId}`,
             data: meetingItem,
           })
