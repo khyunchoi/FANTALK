@@ -12,9 +12,9 @@
             class="elevation-1"
           >
             <template v-slot:items="props">
-              <td style="text-align: center;">{{ props.item.title }}</td>
-              <td style="text-align: center;">{{ props.item.openDate }}</td>
-              <td style="text-align: center;">{{ props.item.maxUser }}</td>
+              <td>{{ props.item.title }}</td>
+              <td>{{ props.item.openDate }}</td>
+              <td>{{ props.item.maxUser }}</td>
             </template>
           </v-data-table>
         </div>

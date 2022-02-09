@@ -28,7 +28,7 @@ public class ArticleDetailGetRes {
     String content;
 
     @ApiModelProperty(name="등록일자", example="2022-01-01 00:00")
-    LocalDateTime createdAt;
+    String createdAt;
 
     @ApiModelProperty(name="조회수", example="1")
     int hits;

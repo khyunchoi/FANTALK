@@ -24,7 +24,7 @@ public class CommentDetailGetRes {
     String content;
 
     @ApiModelProperty(name="등록일자", example="2022-01-01 00:00")
-    LocalDateTime createdAt;
+    String createdAt;
 
     @ApiModelProperty(name="작성자 이메일", example="xxxxxx@xxx.com")
     String email;

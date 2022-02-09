@@ -24,7 +24,7 @@ public class MyMeetingDetailGetRes {
     private String title;
 
     @ApiModelProperty(name="미팅 오픈일자", example="2022-02-11 14:00")
-    private LocalDateTime openDate;
+    private String openDate;
 
     @ApiModelProperty(name="제한 인원", example="100")
     private int maxUser;
