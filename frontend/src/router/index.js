@@ -8,6 +8,7 @@ import CreateArticle from '../views/CreateArticle.vue'
 import DetailArticle from '../views/DetailArticle.vue'
 import UpdateArticle from '../views/UpdateArticle.vue'
 import MeetingList from '../views/MeetingList.vue'
+import CheckManager from '../views/CheckManager.vue'
 import CreateMeeting from '../views/CreateMeeting.vue'
 import MyMeetingList from '../views/MyMeetingList.vue'
 import DetailMyMeeting from '../views/DetailMyMeeting.vue'
@@ -55,6 +56,11 @@ const routes = [
     path: '/meetings',
     name: 'MeetingList',
     component: MeetingList,
+  },
+  {
+    path: '/check-manager',
+    name: 'CheckManager',
+    component: CheckManager,
   },
   {
     path: '/meetings/create',

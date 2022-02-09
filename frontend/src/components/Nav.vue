@@ -8,7 +8,9 @@
       <router-link style="text-decoration: none; color: #000000; font-weight: bold" :to="{name: 'CommunityList'}">
         팬 커뮤니티
       </router-link>
-      <v-btn style="background-color: #FFFFFF;">팬미팅 신청</v-btn>
+      <router-link style="text-decoration: none; color: #000000; font-weight: bold" :to="{name: 'CheckManager'}">
+        팬미팅 신청
+      </router-link>
     </v-toolbar-items>
     <v-btn style="background-color: #FFFFFF; font-weight: bold">
       <div v-if="userId == 0" style="display: flex;">
