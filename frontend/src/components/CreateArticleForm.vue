@@ -72,7 +72,6 @@
             this.$router.push({ name: 'Index' })
           })
           .catch(err => {
-            console.log(localStorage)
             console.log(articleItem)
             console.log(err)
           })
