@@ -2,21 +2,26 @@
   <div>
 
     <div class="community-list-articles-container">
-      <h1>{{ communityId }}번 게시판</h1>
+      <h3>{{ communityId }}번 게시판</h3>
+      <br>
       <h3>커뮤니티 게시글 목록</h3>
+      <br>
       <hr>
 
       <button
         v-for="article in articles" :key="article"
-        style="padding: 3%; border-style: solid; border-width: 0px 0px 3px 0px"
+        style="padding: 1%; border-style: solid; border-width: 2px; margin: 5px"
         @click="enterDetailArticle(article.articleId)"
       >
-        {{ article.articleId }} | {{ article.title }}
+        {{ article.articleId }} | {{ article.title }} | {{ article.createdAt.slice(0,10) }} | 조회수 : {{ article.hits }}
       </button>
       <br>
-      <button @click="enterCreateArticle()" style="">
-        글쓰기
-      </button>
+      <div style="">
+        <button @click="enterCreateArticle()" style="padding: 3%; border-style: solid; border-width: 2px;">
+          글쓰기
+        </button>
+      </div>
+      
 
     </div>
 
