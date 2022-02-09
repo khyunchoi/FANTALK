@@ -1,9 +1,9 @@
 <template>
   <div>
 
-    <CommunityListSearch />
+    <!-- <CommunityListSearch />
 
-    <hr>
+    <hr> -->
 
     <div class="community-list-cards-container">
       <h1>커뮤니티 목록</h1>
