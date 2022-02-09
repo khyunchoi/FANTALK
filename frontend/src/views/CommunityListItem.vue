@@ -7,7 +7,7 @@
       <hr>
 
       <button
-        v-for="article in articles"
+        v-for="article in articles" :key="article"
         style="padding: 3%; border-style: solid; border-width: 0px 0px 3px 0px"
         @click="enterDetailArticle(article.articleId)"
       >

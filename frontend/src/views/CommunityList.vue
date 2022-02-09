@@ -2,22 +2,24 @@
   <div>
     <!-- <CommunityListSearch />
     <hr> -->
-
     <div class="community-list-cards-container">
-
       <div>
         <span>
           팬 커뮤니티 목록
         </span>
       </div>  
       <br>
+
       <div>
         <button
-          v-for="community in communityList"
-          style="padding: 3%; border-style: solid; border-width: 1px"
+          v-for="community in communityList" :key="community"
+          class="community-list-card"
           @click="enterCommunity(community.id)"
         >
-          {{ community.id }} | {{ community.name }} | {{ community.title }}
+          {{ community.id }} | {{ community.name }}
+          <br>
+          <br>
+          {{ community.title }}
           <!-- <router-link :to="{name:'CommunityListItem', params:{ communinityId:community.id }}">
             <button>입장</button>
           </router-link> -->
@@ -26,7 +28,6 @@
       
 
     </div>  
-
   </div>
 </template>
 
@@ -79,6 +80,15 @@
     padding: 10%;
     flex-direction: column;
     align-items: left;
+  }
+
+  .community-list-card {
+    width: 20%;
+    padding: 3%;
+    border-style: solid;
+    border-width: 1px;
+    margin: 10px;
+    background-color: grey;
   }
 
 </style>
