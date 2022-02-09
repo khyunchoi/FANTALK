@@ -19,7 +19,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: #BABACE;
+    /* background-color: #535353; */
     padding: 1%;
     color: #FFFFFF;
     max-width: 100%;
