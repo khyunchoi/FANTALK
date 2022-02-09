@@ -10,6 +10,8 @@ import com.ssafy.db.repository.ArticleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -56,7 +58,10 @@ public class ArticleServiceImpl implements ArticleService{
             ArticleListGetRes articleRes = new ArticleListGetRes();
             articleRes.setArticleId(article.getId());
             articleRes.setTitle(article.getTitle());
-            articleRes.setCreatedAt(article.getCreatedAt());
+            LocalDateTime localDateTime = article.getCreatedAt();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+            String formattedString = localDateTime.format(formatter);
+            articleRes.setCreatedAt(formattedString);
             articleRes.setHits(article.getHits());
             articleRes.setEmail(article.getUser().getEmail());
             articleListGetRes.add(articleRes);
@@ -79,7 +84,10 @@ public class ArticleServiceImpl implements ArticleService{
         articleDetailGetRes.setArticleId(article.getId());
         articleDetailGetRes.setTitle(article.getTitle());
         articleDetailGetRes.setContent(article.getContent());
-        articleDetailGetRes.setCreatedAt(article.getCreatedAt());
+        LocalDateTime localDateTime = article.getCreatedAt();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        String formattedString = localDateTime.format(formatter);
+        articleDetailGetRes.setCreatedAt(formattedString);
         articleDetailGetRes.setHits(article.getHits());
         articleDetailGetRes.setEmail(article.getUser().getEmail());
 
@@ -90,7 +98,10 @@ public class ArticleServiceImpl implements ArticleService{
             CommentDetailGetRes commentDetailGetRes = new CommentDetailGetRes();
             commentDetailGetRes.setCommentId(comment.getId());
             commentDetailGetRes.setContent(comment.getContent());
-            commentDetailGetRes.setCreatedAt(comment.getCreatedAt());
+            LocalDateTime localDateTimeComment = comment.getCreatedAt();
+            DateTimeFormatter formatterComment = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+            String formattedStringComment = localDateTimeComment.format(formatterComment);
+            commentDetailGetRes.setCreatedAt(formattedStringComment);
             commentDetailGetRes.setEmail(comment.getUser().getEmail());
             commentDetailGetResList.add(commentDetailGetRes);
         }
@@ -113,7 +124,10 @@ public class ArticleServiceImpl implements ArticleService{
             ArticleListGetRes articleRes = new ArticleListGetRes();
             articleRes.setArticleId(searchedArticle.getId());
             articleRes.setTitle(searchedArticle.getTitle());
-            articleRes.setCreatedAt(searchedArticle.getCreatedAt());
+            LocalDateTime localDateTime = searchedArticle.getCreatedAt();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+            String formattedString = localDateTime.format(formatter);
+            articleRes.setCreatedAt(formattedString);
             articleRes.setHits(searchedArticle.getHits());
             articleRes.setEmail(searchedArticle.getUser().getEmail());
             articleListGetRes.add(articleRes);

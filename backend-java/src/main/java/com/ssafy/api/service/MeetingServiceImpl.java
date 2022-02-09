@@ -55,7 +55,10 @@ public class MeetingServiceImpl implements MeetingService{
             MeetingDetailGetRes meeting = new MeetingDetailGetRes();
             meeting.setId(findMeeting.getId());
             meeting.setTitle(findMeeting.getTitle());
-            meeting.setOpenDate(findMeeting.getOpenDate());
+            LocalDateTime localDateTime = findMeeting.getOpenDate();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+            String formattedString = localDateTime.format(formatter);
+            meeting.setOpenDate(formattedString);
             meetings.add(meeting);
         }
         return meetings;
@@ -71,7 +74,10 @@ public class MeetingServiceImpl implements MeetingService{
             MeetingDetailGetRes meeting = new MeetingDetailGetRes();
             meeting.setId(findMeeting.getId());
             meeting.setTitle(findMeeting.getTitle());
-            meeting.setOpenDate(findMeeting.getOpenDate());
+            LocalDateTime localDateTime = findMeeting.getOpenDate();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+            String formattedString = localDateTime.format(formatter);
+            meeting.setOpenDate(formattedString);
             meetings.add(meeting);
         }
         return meetings;
@@ -83,6 +89,8 @@ public class MeetingServiceImpl implements MeetingService{
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         LocalDateTime dateTime = LocalDateTime.parse(meetingInfo.getOpenDate(), formatter);
+
+        System.out.println(dateTime);
 
         try {
             Meeting meeting = meetingRepository.findById(meetingId).get();
@@ -110,7 +118,10 @@ public class MeetingServiceImpl implements MeetingService{
             MyMeetingDetailGetRes myMeetingDetailGetRes = new MyMeetingDetailGetRes();
             myMeetingDetailGetRes.setId(findMyMeeting.getId());
             myMeetingDetailGetRes.setTitle(findMyMeeting.getTitle());
-            myMeetingDetailGetRes.setOpenDate(findMyMeeting.getOpenDate());
+            LocalDateTime localDateTime = findMyMeeting.getOpenDate();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+            String formattedString = localDateTime.format(formatter);
+            myMeetingDetailGetRes.setOpenDate(formattedString);
             myMeetingDetailGetRes.setMaxUser(findMyMeeting.getMaxUser());
             myMeetingDetailGetResList.add(myMeetingDetailGetRes);
         }
@@ -126,7 +137,10 @@ public class MeetingServiceImpl implements MeetingService{
             MyMeetingDetailGetRes myMeetingDetailGetRes = new MyMeetingDetailGetRes();
             myMeetingDetailGetRes.setId(findMeeting.getId());
             myMeetingDetailGetRes.setTitle(findMeeting.getTitle());
-            myMeetingDetailGetRes.setOpenDate(findMeeting.getOpenDate());
+            LocalDateTime localDateTime = findMeeting.getOpenDate();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+            String formattedString = localDateTime.format(formatter);
+            myMeetingDetailGetRes.setOpenDate(formattedString);
             myMeetingDetailGetRes.setMaxUser(findMeeting.getMaxUser());
             return myMeetingDetailGetRes;
         } catch (Exception e) {
