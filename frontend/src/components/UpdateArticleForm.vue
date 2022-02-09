@@ -78,13 +78,9 @@
         }
       },
       deleteArticle () {
-        const userId = {
-          userId: 1,
-        }
         this.$axios({
           method: 'delete',
           url: `http://localhost:8080/api/v1/communities/${this.communityId}/articles/${this.articleId}`,
-          data: userId,
         })
         .then(res => {
           console.log(res)

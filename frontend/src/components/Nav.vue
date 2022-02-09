@@ -19,6 +19,7 @@
       <div v-if="userId == 0" style="display: flex;">
         <img src="../assets/google.png" alt="logo" width="20px" height="20px">
         <a href="/oauth2/authorization/google" class="login" style="text-decoration: none;" hrefclass="login">로그인</a>
+        
       </div>
       <div v-else>
         <a href="/logout" style="text-decoration: none;">로그아웃</a>
