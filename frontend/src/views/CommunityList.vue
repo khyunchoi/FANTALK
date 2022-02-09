@@ -9,7 +9,7 @@
       <h1>커뮤니티 목록</h1>
       <hr>
       <button
-        v-for="community in communityList" :key="community.id"
+        v-for="community in communityList"
         style="padding: 3%; border-style: solid; border-width: 0px 0px 3px 0px"
         @click="enterCommunity(community.id)"
       >
@@ -38,6 +38,7 @@
     methods:{
       enterCommunity: function (idx) {
         this.$router.push({name:'CommunityListItem', params:{ communityId:idx }})
+        CommunityListItem.data.push({communityId:idx})
       }
 
     },
@@ -51,8 +52,8 @@
       })
       .then(response => {
         this.communityList = response
-        console.log(...this.communityList)
-        return
+        console.log(this.communityList)
+        return this.communityList
       })
       .catch(error => {
           console.log(error)
