@@ -39,6 +39,7 @@ public class Article {
     private String title;
 
     @NotNull
+    @Column(length=200000000)
     private String content;
 
     @NotNull

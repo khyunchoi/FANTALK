@@ -9,6 +9,7 @@ import com.ssafy.db.entity.User;
 
 import java.util.List;
 
+
 /**
  * 팬미팅 서비스 인터페이스 정의
  */
