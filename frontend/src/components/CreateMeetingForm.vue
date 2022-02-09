@@ -1,5 +1,5 @@
 <template>
-	<div data-app>
+	<div>
     <template>
         <v-text-field
           v-model="title"
@@ -10,16 +10,17 @@
           required
         ></v-text-field>
 
-        <v-row>
+        <v-row style="border-bottom: 1px solid #979797; margin: 0px 0px 10px 0px;">
           <v-col
             cols="12"
             sm="6"
             md="6"
+            style="padding: 12px 12px 12px 0px;"
           >
             <h5>날짜/시간</h5>
             <v-card style="padding: 3px; height: 32px;">
               <input style="border: 1px solid #979797;" type="date" v-model="date">
-              <input style="border: 1px solid #979797; margin-left: 5px;" type="time" step="3600000" v-model="time">
+              <input style="border: 1px solid #979797; margin-left: 4px;" type="time" step="3600000" v-model="time">
             </v-card>
           </v-col>
           
@@ -27,6 +28,7 @@
             cols="12"
             sm="6"
             md="6"
+            style="padding: 12px 0px 12px 12px;"
           >
             <h5>인원</h5>
             <v-card style="padding: 3px; height: 32px;">
@@ -34,6 +36,17 @@
             </v-card>
           </v-col>
         </v-row>
+
+        <h3 style="color: #FF0000;">
+          **안내사항
+        </h3>
+        <ul style="list-style-type: square; color: #979797; margin-left: 20px; margin-top: 10px;">
+          <li>안내사항1</li>
+          <li>안내사항2</li>
+          <li>안내사항3</li>
+          <li>안내사항4</li>
+          <li>안내사항5</li>
+        </ul>
         
         <div style="display: flex; justify-content: center; margin-top: 30px;">
           <v-btn @click="goBack()" style="background-color: #979797; color: #FFFFFF; margin: 0 10px;">취소</v-btn>
