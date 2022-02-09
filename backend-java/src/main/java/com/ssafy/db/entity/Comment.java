@@ -29,6 +29,7 @@ public class Comment {
     private LocalDateTime createdAt;
 
     @NotNull
+    @Column(length=200000000)
     private String content;
 
     @ManyToOne(fetch = FetchType.LAZY)

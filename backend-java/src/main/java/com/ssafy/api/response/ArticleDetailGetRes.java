@@ -5,7 +5,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
+import javax.persistence.Column;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +25,7 @@ public class ArticleDetailGetRes {
     String title;
 
     @ApiModelProperty(name="게시글 내용", example="내용1")
+    @Column(length=200000000)
     String content;
 
     @ApiModelProperty(name="등록일자", example="2022-01-01 00:00")
