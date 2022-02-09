@@ -75,7 +75,7 @@
             console.log(res)
             this.name = ''
             this.title = ''
-            this.$router.push({ name: 'Index' })
+            this.$router.push({ name: 'CommunityList' })
           })
           .catch(err => {
             console.log(communityItem)
