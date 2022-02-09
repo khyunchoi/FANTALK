@@ -11,10 +11,9 @@
       <router-link style="text-decoration: none; color: #000000; font-weight: bold" :to="{name: 'CommunityList'}">
         팬 커뮤니티
       </router-link>
-      <div style="text-decoration: none; color: #000000; font-weight: bold">
+      <router-link style="text-decoration: none; color: #000000; font-weight: bold" :to="{name: 'CheckManager'}">
         팬미팅 신청
-      </div>
-      <!-- <v-btn style="background-color: #FFFFFF;">팬미팅 신청</v-btn> -->
+      </router-link>
     </v-toolbar-items>
     <v-btn style="background-color: #FFFFFF; font-weight: bold">
       <div v-if="userId == 0" style="display: flex;">
