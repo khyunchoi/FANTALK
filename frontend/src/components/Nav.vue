@@ -4,11 +4,17 @@
         FANTALK
     </router-link>
     <v-toolbar-items class="container">
-      <v-btn style="background-color: #FFFFFF;">팬미팅 입장</v-btn>
+      <!-- <v-btn style="background-color: #FFFFFF;">팬미팅 입장</v-btn> -->
+      <div style="text-decoration: none; color: #000000; font-weight: bold">
+        팬미팅 입장
+      </div>
       <router-link style="text-decoration: none; color: #000000; font-weight: bold" :to="{name: 'CommunityList'}">
         팬 커뮤니티
       </router-link>
-      <v-btn style="background-color: #FFFFFF;">팬미팅 신청</v-btn>
+      <div style="text-decoration: none; color: #000000; font-weight: bold">
+        팬미팅 신청
+      </div>
+      <!-- <v-btn style="background-color: #FFFFFF;">팬미팅 신청</v-btn> -->
     </v-toolbar-items>
     <v-btn style="background-color: #FFFFFF; font-weight: bold">
       <div v-if="userId == 0" style="display: flex;">
