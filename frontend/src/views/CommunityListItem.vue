@@ -1,67 +1,41 @@
 <template>
   <div>
-    <!-- <img src="" alt=""> -->
-    <div>
-      <h2 style="padding: 2% 0 2% 16%; font-size: 1.5em;">커뮤니티 게시글 목록</h2>
 
-      <!-- <tr
-        v-for="article in articles" :key="article"
-        @click="enterDetailArticle(article.articleId)"
-      >
-        <td style="text-align: center;"></td>
-        <td style="text-align: center;"></td>
-        <td style="text-align: center;"></td>
-        <td style="text-align: center;"></td>
+    <div class="community-list-item">
 
+      <div class="community-list-item-title">
+        <h2>{{ communityId }}번 게시판</h2>
+      </div>
 
-      </tr> -->
-
-      <v-data-table
-        :headers="headers"
-        :items="articles"
-        :items-per-page="5"
-        class="elevation-1"
-        @click:row="enterDetailArticle()"
-      >
-        <template v-slot:items="props">
-          <td style="text-align: center;"></td>
-          <td style="text-align: center;">{{ props.item.title }}</td>
-          <td style="text-align: center;"></td>
-          <td style="text-align: center;"></td>
-        </template>
-      </v-data-table>
-      
-
-    </div>
-
-    <hr>
-
-    <div class="community-list-articles-container">
-
-      <h3>{{ communityId }}번 게시판</h3>
       <br>
-      <br>
-      <hr>
 
-      <!-- <button
-        v-for="article in articles" :key="article"
-        style="padding: 1%; border-style: solid; border-width: 2px; margin: 5px"
-        @click="enterDetailArticle(article.articleId)"
-      >
-        {{ article.articleId }} | {{ article.title }} | {{ article.createdAt.slice(0,10) }} | 조회수 : {{ article.hits }}
-      </button> -->
+      <div class="community-list-item-list">
+
+        <div class="community-list-item-list-articles" style="padding-bottom: 5px; border-style: solid; border-width: 0px 0px 2px 0px; border-color: gray;">
+          <span style="width: 10%" class="community-list-item-list-articles-elements">번호</span>
+          <span style="width: 50%" class="community-list-item-list-articles-elements">제목</span>
+          <span style="width: 30%" class="community-list-item-list-articles-elements">작성</span>
+          <span style="width: 10%" class="community-list-item-list-articles-elements">조회수</span>
+        </div>
+
+        <div class="community-list-item-list-articles" v-for="article in articles" :key="article">
+          <span style="width: 10%" class="community-list-item-list-articles-elements">{{ article.articleId }}</span>
+          <span style="width: 50%" class="community-list-item-list-articles-elements"><button @click="enterDetailArticle(article.articleId)">{{ article.title }}</button></span>
+          <span style="width: 30%" class="community-list-item-list-articles-elements">{{ article.createdAt.slice(0,19) }}</span>
+          <span style="width: 10%" class="community-list-item-list-articles-elements">{{ article.hits }}</span>
+        </div>
+
+      </div>
+
       <br>
-      <div style="">
-        <button @click="enterCreateArticle()" style="padding: 3%; border-style: solid; border-width: 2px;">
-          글쓰기
+
+      <div class="community-list-item-create">
+        <button @click="enterCreateArticle()" style="padding:5px;">
+          <img src="../assets/createArticleButton.png">
         </button>
       </div>
-      
 
     </div>
-
-
-    
 
   </div>
 </template>
@@ -142,11 +116,39 @@
 </script>
 
 <style>
-  .community-list-articles-container {
-    width: 100%;
+  .community-list-item {
     display: flex;
+    /* background-color: beige; */
+    width: 100%;
     padding: 5%;
     flex-direction: column;
-    align-items: left;
+  }
+  .community-list-item-title {
+    display: flex;
+    /* background-color: bisque; */
+    margin: 10px;
+  }
+  .community-list-item-list {
+    display: flex;
+    flex-direction: column;
+  }
+  .community-list-item-list-articles {
+    display: flex;
+    /* background-color: bisque; */
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 10px;
+  }
+  .community-list-item-list-articles-elements {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+  }
+  .community-list-item-create {
+    display: flex;
+    /* background-color: bisque; */
+    flex-direction: row-reverse;
+    margin: 10px;
   }
 </style>
