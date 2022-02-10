@@ -5,9 +5,9 @@
     </router-link>
     <v-toolbar-items class="container">
       <!-- <v-btn style="background-color: #FFFFFF;">팬미팅 입장</v-btn> -->
-      <div style="text-decoration: none; color: #000000; font-weight: bold">
+      <router-link style="text-decoration: none; color: #000000; font-weight: bold" :to="{name: 'MeetingList'}">
         팬미팅 입장
-      </div>
+      </router-link>
       <router-link style="text-decoration: none; color: #000000; font-weight: bold" :to="{name: 'CommunityList'}">
         팬 커뮤니티
       </router-link>
@@ -18,7 +18,7 @@
     <v-btn style="background-color: #FFFFFF; font-weight: bold">
       <div v-if="userId == 0" style="display: flex;">
         <img src="../assets/google.png" alt="logo" width="20px" height="20px">
-        <a href="/oauth2/authorization/google" class="login" style="text-decoration: none;" hrefclass="login">로그인</a>
+        <a href="http://localhost:8080/oauth2/authorization/google" class="login" style="text-decoration: none;" hrefclass="login">로그인</a>
         
       </div>
       <div v-else>
