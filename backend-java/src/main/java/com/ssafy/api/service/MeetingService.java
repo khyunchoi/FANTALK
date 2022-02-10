@@ -1,6 +1,7 @@
 package com.ssafy.api.service;
 
 
+import com.ssafy.api.request.EnterCodeEnterPutReq;
 import com.ssafy.api.request.MeetingRegisterPostReq;
 import com.ssafy.api.response.MeetingDetailGetRes;
 import com.ssafy.api.response.MyMeetingDetailGetRes;
@@ -22,4 +23,6 @@ public interface MeetingService {
     void deleteMeeting(Meeting meeting);
     List<MyMeetingDetailGetRes> getAllMyMeeting(Long userId);
     MyMeetingDetailGetRes getMyMeetingDetail(Long meetingId, Long userId);
+    String enterMeetingManager(EnterCodeEnterPutReq enterCodeInfo, User user);
+    String enterMeetingUser(EnterCodeEnterPutReq enterCodeInfo, Long meetingId);
 }

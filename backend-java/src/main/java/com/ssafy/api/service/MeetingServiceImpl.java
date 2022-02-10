@@ -1,12 +1,16 @@
 package com.ssafy.api.service;
 
+import com.ssafy.api.request.EnterCodeEnterPutReq;
 import com.ssafy.api.request.MeetingRegisterPostReq;
 import com.ssafy.api.response.MeetingDetailGetRes;
 import com.ssafy.api.response.MyMeetingDetailGetRes;
+import com.ssafy.db.entity.EnterCode;
 import com.ssafy.db.entity.Meeting;
 import com.ssafy.db.entity.User;
+import com.ssafy.db.repository.EnterCodeRepository;
 import com.ssafy.db.repository.MeetingRepository;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -23,6 +27,7 @@ import java.util.List;
 public class MeetingServiceImpl implements MeetingService{
 
     private final MeetingRepository meetingRepository;
+    private final EnterCodeRepository enterCodeRepository;
 
     // 팬미팅 등록
     @Override
@@ -36,10 +41,23 @@ public class MeetingServiceImpl implements MeetingService{
                     .title(meetingInfo.getTitle())
                     .maxUser(meetingInfo.getMaxUser())
                     .openDate(dateTime)
+                    .isInManager(false)
                     .isActive(false)
                     .user(user)
                     .build();
             meetingRepository.save(meeting);
+
+            // 해당 팬미팅의 입장 코드 생성
+            for (int i = 0; i < meeting.getMaxUser() + 1; i++) {
+                String ranDomCode = RandomStringUtils.random(12, true, true);
+                EnterCode enterCode = EnterCode.builder()
+                        .id(ranDomCode)
+                        .meeting(meeting)
+                        .checked(false)
+                        .build();
+                enterCodeRepository.save(enterCode);
+            }
+
         } catch (Exception e) {
             throw e;
         }
@@ -89,8 +107,6 @@ public class MeetingServiceImpl implements MeetingService{
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         LocalDateTime dateTime = LocalDateTime.parse(meetingInfo.getOpenDate(), formatter);
-
-        System.out.println(dateTime);
 
         try {
             Meeting meeting = meetingRepository.findById(meetingId).get();
@@ -146,5 +162,59 @@ public class MeetingServiceImpl implements MeetingService{
         } catch (Exception e) {
             throw e;
         }
+    }
+
+    // 기업회원 팬미팅 입장
+    @Override
+    public String enterMeetingManager(EnterCodeEnterPutReq enterCodeInfo, User user) {
+
+        try {
+            List<Meeting> meetings = meetingRepository.findByUserId(user.getId());
+            for (Meeting meeting : meetings) {
+                List<EnterCode> enterCodes = enterCodeRepository.findByMeetingId(meeting.getId());
+                for (EnterCode enterCode : enterCodes) {
+                    if (enterCode.getId().equals(enterCodeInfo.getEnterCode())) {
+                        return "SUCCESS";
+                    }
+                }
+            }
+            return "FAIL";
+        } catch (Exception e) {
+            System.out.println(e);
+            throw e;
+        }
+    }
+
+    // 일반회원 팬미팅 입장
+    @Override
+    public String enterMeetingUser(EnterCodeEnterPutReq enterCodeInfo, Long meetingId) {
+
+        try {
+            Meeting meeting = meetingRepository.findById(meetingId).get();
+            if (meeting.isInManager()) {
+                if (meeting.isActive()) {
+                    return "MEETING ING";
+                } else {
+                    List<EnterCode> enterCodes = enterCodeRepository.findByMeetingId(meetingId);
+                    for (EnterCode enterCode : enterCodes) {
+                        if (enterCode.getId().equals(enterCodeInfo.getEnterCode())) {
+                            if (enterCode.isChecked()) {
+                                return "NO ENTER TWICE";
+                            } else {
+                                enterCode.changeChecked();
+                                meeting.changeIsActive();
+                                return "SUCCESS";
+                            }
+                        }
+                    }
+                    return "Wrong EnterCode";
+                }
+            } else {
+                return "MANAGER NOT IN";
+            }
+            } catch (Exception e) {
+                System.out.println(e);
+                throw e;
+            }
     }
 }

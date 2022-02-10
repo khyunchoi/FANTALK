@@ -1,5 +1,6 @@
 package com.ssafy.api.controller;
 
+import com.ssafy.api.request.EnterCodeEnterPutReq;
 import com.ssafy.api.request.MeetingRegisterPostReq;
 import com.ssafy.api.response.MeetingDetailGetRes;
 import com.ssafy.api.response.MyMeetingDetailGetRes;
@@ -218,6 +219,59 @@ public class MeetingController {
             return new ResponseEntity<MyMeetingDetailGetRes>(myMeetingDetailGetRes, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<String>("FAIL", HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    // 팬미팅 입장
+    @PutMapping("/{meetingId}/enter")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "SUCCESS(성공)"),
+            @ApiResponse(code = 403, message = "NO ENTER TWICE(중복 입장 불가능)"),
+            @ApiResponse(code = 401, message = "MANAGER NOT IN(기업회원 입장 전 일반회원 입장 불가능"),
+            @ApiResponse(code = 406, message = "MEETING ING(일대일 미팅 진행중"),
+            @ApiResponse(code = 400, message = "Wrong EnterCode(잘못된 입장 코드")
+    })
+    @ApiOperation(value = "팬미팅 입장", notes = "기업회원과 일반회원의 팬미팅에 입장")
+    public ResponseEntity<String> enterMeeting(
+            @PathVariable("meetingId") @ApiParam(value="팬미팅 id", required = true) Long meetingId,
+            @RequestBody @ApiParam(value="입장 코드", required = true) EnterCodeEnterPutReq enterCodeInfo) {
+        logger.info("enterMeeting 호출");
+
+        SsafyUserDetails userDetails = (SsafyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = userService.getUserByUsername(userDetails.getUsername());
+
+        // 기업회원의 팬미팅 입장
+        if (user.getRole().equals("ROLE_MANAGER")) {
+            try {
+                String result = meetingService.enterMeetingManager(enterCodeInfo, user);
+                if (result.equals("SUCCESS")) {
+                    return new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
+                } else {
+                    return new ResponseEntity<String>("Wrong EnterCode", HttpStatus.BAD_REQUEST);
+                }
+            } catch (Exception e) {
+                System.out.println(e);
+                return new ResponseEntity<String>("Wrong EnterCode", HttpStatus.BAD_REQUEST);
+            }
+        // 일반회원의 팬미팅 입장
+        } else {
+            try {
+                String result = meetingService.enterMeetingUser(enterCodeInfo, meetingId);
+                if (result.equals("SUCCESS")) {
+                    return new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
+                } else if (result.equals("MEETING ING")) {
+                    return new ResponseEntity<String>("MEETING ING", HttpStatus.NOT_ACCEPTABLE);
+                } else if (result.equals(("NO ENTER TWICE"))) {
+                    return new ResponseEntity<String>("NO ENTER TWICE", HttpStatus.FORBIDDEN);
+                } else if (result.equals("MANAGER NOT IN")) {
+                    return new ResponseEntity<String>("MANAGER NOT IN", HttpStatus.UNAUTHORIZED);
+                } else {
+                    return new ResponseEntity<String>("Wrong EnterCode", HttpStatus.BAD_REQUEST);
+                }
+            } catch (Exception e) {
+                System.out.println(e);
+                return new ResponseEntity<String>("Wrong EnterCode", HttpStatus.BAD_REQUEST);
+            }
         }
     }
 }
