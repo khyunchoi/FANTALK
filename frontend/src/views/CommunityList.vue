@@ -4,9 +4,7 @@
     <hr> -->
     <div class="community-list-cards-container">
       <div>
-        <span>
-          팬 커뮤니티 목록
-        </span>
+        <h2 style="font-size: 1.5em;">팬 커뮤니티 목록</h2>
       </div>  
       <br>
 
@@ -86,9 +84,9 @@
     width: 20%;
     padding: 3%;
     border-style: solid;
-    border-width: 1px;
+    border-width: 5px;
+    border-color: #797BF8;
     margin: 10px;
-    background-color: grey;
   }
 
 </style>
