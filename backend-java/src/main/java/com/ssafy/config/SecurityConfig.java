@@ -64,7 +64,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .disable()
                 .authorizeRequests() //인증이 필요한 URL과 필요하지 않은 URL에 대하여 설정
                     .antMatchers("/communities").authenticated()
-                    .antMatchers("/meetings").access("hasRole('ROLE_MANAGER')")
                     .anyRequest().permitAll()
                     .and()
                 .logout()
