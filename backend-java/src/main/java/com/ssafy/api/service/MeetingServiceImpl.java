@@ -82,6 +82,25 @@ public class MeetingServiceImpl implements MeetingService{
         return meetings;
     }
 
+    // 팬미팅 상세 조회
+    @Override
+    public MeetingDetailGetRes getMeetingDetail(Long meetingId) {
+
+        try {
+            Meeting meeting = meetingRepository.findById(meetingId).get();
+            MeetingDetailGetRes meetingDetailGetRes = new MeetingDetailGetRes();
+            meetingDetailGetRes.setId(meeting.getId());
+            meetingDetailGetRes.setTitle(meeting.getTitle());
+            LocalDateTime localDateTime = meeting.getOpenDate();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+            String formattedString = localDateTime.format(formatter);
+            meetingDetailGetRes.setOpenDate(formattedString);
+            return meetingDetailGetRes;
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
     // 팬미팅 제목을 기반으로 검색
     @Override
     public List<MeetingDetailGetRes> searchMeeting(String searchWord) {
@@ -174,6 +193,7 @@ public class MeetingServiceImpl implements MeetingService{
                 List<EnterCode> enterCodes = enterCodeRepository.findByMeetingId(meeting.getId());
                 for (EnterCode enterCode : enterCodes) {
                     if (enterCode.getId().equals(enterCodeInfo.getEnterCode())) {
+                        meeting.changeIsInManager();
                         return "SUCCESS";
                     }
                 }
@@ -216,5 +236,21 @@ public class MeetingServiceImpl implements MeetingService{
                 System.out.println(e);
                 throw e;
             }
+    }
+
+    // 기업회원의 팬미팅 퇴장
+    @Override
+    public void exitMeetingManager(Long meetingId) {
+
+        Meeting meeting = meetingRepository.findById(meetingId).get();
+        meeting.changeIsInManager();
+    }
+
+    // 일반회원의 팬미팅 입장
+    @Override
+    public void exitMeetingUser(Long meetingId) {
+
+        Meeting meeting = meetingRepository.findById(meetingId).get();
+        meeting.changeIsActive();
     }
 }

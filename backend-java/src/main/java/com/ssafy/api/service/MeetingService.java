@@ -18,6 +18,7 @@ public interface MeetingService {
 
     void registerMeeting(MeetingRegisterPostReq meetingInfo, User user);
     List<MeetingDetailGetRes> getAllMeeting();
+    MeetingDetailGetRes getMeetingDetail(Long meetingId);
     List<MeetingDetailGetRes> searchMeeting(String searchWord);
     Meeting modifyMeeting(MeetingRegisterPostReq meetingInfo, Long meetingId);
     void deleteMeeting(Meeting meeting);
@@ -25,4 +26,6 @@ public interface MeetingService {
     MyMeetingDetailGetRes getMyMeetingDetail(Long meetingId, Long userId);
     String enterMeetingManager(EnterCodeEnterPutReq enterCodeInfo, User user);
     String enterMeetingUser(EnterCodeEnterPutReq enterCodeInfo, Long meetingId);
+    void exitMeetingManager(Long meetingId);
+    void exitMeetingUser(Long meetingId);
 }

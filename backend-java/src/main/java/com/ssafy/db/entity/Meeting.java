@@ -65,4 +65,13 @@ public class Meeting {
             this.isActive = true;
         }
     }
+
+    // 기업회원 입장 여부 변경을 위한 편의 함수
+    public void changeIsInManager() {
+        if (this.isInManager) {
+            this.isInManager = false;
+        } else {
+            this.isInManager = true;
+        }
+    }
 }
