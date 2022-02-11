@@ -14,6 +14,7 @@ import MyMeetingList from '../views/MyMeetingList.vue'
 import DetailMyMeeting from '../views/DetailMyMeeting.vue'
 import UpdateMeeting from '../views/UpdateMeeting.vue'
 import MeetingRoom from '../views/MeetingRoom.vue'
+import MeetingGuide from '../views/MeetingGuide.vue'
 
 Vue.use(VueRouter)
 
@@ -87,6 +88,11 @@ const routes = [
     path: '/meetings/:meetingId/update',
     name: 'UpdateMeeting',
     component: UpdateMeeting,
+  },
+  {
+    path: '/meetings/:meetingId/guide',
+    name: 'MeetingGuide',
+    component: MeetingGuide,
   },
 ]
 
