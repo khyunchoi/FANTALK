@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -28,7 +30,7 @@ public class Meeting {
     private boolean isActive;
 
     @NotNull
-    private int isInManager;
+    private boolean isInManager;
 
     @NotNull
     private int maxUser;
@@ -40,8 +42,11 @@ public class Meeting {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @OneToMany(mappedBy = "meeting", cascade = CascadeType.ALL)
+    private List<EnterCode> enterCodeList = new ArrayList<>();
+
     @Builder
-    public Meeting(String title, boolean isActive, int isInManager, int maxUser, LocalDateTime openDate, User user) {
+    public Meeting(String title, boolean isActive, boolean isInManager, int maxUser, LocalDateTime openDate, User user) {
         this.title = title;
         this.isActive = isActive;
         this.isInManager = isInManager;
@@ -67,7 +72,11 @@ public class Meeting {
     }
 
     // 기업회원 입장 여부 변경을 위한 편의 함수
-    public void changeIsInManager(int check) {
-        this.isInManager = check;
+    public void changeIsInManager() {
+        if (this.isActive) {
+            this.isActive = false;
+        } else {
+            this.isActive = true;
+        }
     }
 }

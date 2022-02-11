@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 유저 모델 정의.
@@ -36,6 +38,9 @@ public class User {
 
     @ColumnDefault("false")
     private boolean isDelete;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Meeting> meetingList = new ArrayList<>();
 
     @Builder
     public User(String username, String name, String email, String profileImage, String role){
