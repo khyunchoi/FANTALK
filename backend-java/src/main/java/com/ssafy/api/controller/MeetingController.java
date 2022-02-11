@@ -58,7 +58,7 @@ public class MeetingController {
         User user = userService.getUserByUsername(userDetails.getUsername());
 
         // 관리자 여부 확인
-        if (user.getRole().equals("ROLE_USER")) {
+        if (user.getRole().equals("ROLE_MANAGER")) {
             try {
                 meetingService.registerMeeting(meetingInfo, user);
                 return new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
@@ -71,7 +71,7 @@ public class MeetingController {
         }
     }
 
-    // 모든 팬미팅 조회
+    // 모든 팬미팅 목록 조회
     @GetMapping
     @ApiResponses({
             @ApiResponse(code = 200, message = "팬미팅 목록 리스트 반환, 없을 시 [] 반환"),
@@ -81,6 +81,25 @@ public class MeetingController {
         logger.info("getAllMeeting 호출");
 
         return new ResponseEntity<List<MeetingDetailGetRes>>(meetingService.getAllMeeting(), HttpStatus.OK);
+    }
+
+    // 팬미팅 상세 조회
+    @GetMapping("/{meetingId}")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공(SUCCESS)"),
+            @ApiResponse(code = 400, message = "팬미팅 조회 오류(FAIL)")
+    })
+    @ApiOperation(value = "팬미팅 상세 조회", notes = "팬미팅을 상세 조회")
+    public ResponseEntity<MeetingDetailGetRes> getMeetingDetail(
+            @PathVariable("meetingId") @ApiParam(value="팬미팅 id", required = true) Long meetingId) {
+        logger.info("exitMeeting 호출");
+
+        try {
+            return new ResponseEntity<MeetingDetailGetRes>(meetingService.getMeetingDetail(meetingId), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<MeetingDetailGetRes>(meetingService.getMeetingDetail(meetingId), HttpStatus.BAD_REQUEST);
+        }
+
     }
 
     // 팬미팅 제목을 기반으로 검색
@@ -112,7 +131,7 @@ public class MeetingController {
         User user = userService.getUserByUsername(userDetails.getUsername());
 
         // 관리자 여부 확인
-        if (user.getRole().equals("ROLE_USER")) {
+        if (user.getRole().equals("ROLE_MANAGER")) {
             try {
                 Meeting meeting = meetingRepository.findById(meetingId).get();
                 // 현재 로그인된 회원 id와 수정 요청한 팬미팅의 회원 id가 일치하는지 확인
@@ -146,7 +165,7 @@ public class MeetingController {
         User user = userService.getUserByUsername(userDetails.getUsername());
 
         // 관리자 여부 확인
-        if (user.getRole().equals("ROLE_USER")) {
+        if (user.getRole().equals("ROLE_MANAGER")) {
             try {
                 Meeting meeting = meetingRepository.findById(meetingId).get();
                 // 현재 로그인된 회원 id와 삭제 요청한 팬미팅의 회원 id가 일치하는지 확인
@@ -178,7 +197,7 @@ public class MeetingController {
         User user = userService.getUserByUsername(userDetails.getUsername());
 
         // 관리자 여부 확인
-        if (user.getRole().equals("ROLE_USER")) {
+        if (user.getRole().equals("ROLE_MANAGER")) {
             return new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
         } else {
             return new ResponseEntity<String>("FAIL", HttpStatus.BAD_REQUEST);
@@ -272,6 +291,30 @@ public class MeetingController {
                 System.out.println(e);
                 return new ResponseEntity<String>("Wrong EnterCode", HttpStatus.BAD_REQUEST);
             }
+        }
+    }
+
+    // 팬미팅 퇴장
+    @PutMapping("/{meetingId}/exit")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "SUCCESS(성공)"),
+    })
+    @ApiOperation(value = "팬미팅 퇴장", notes = "기업회원과 일반회원의 팬미팅 퇴장")
+    public ResponseEntity<String> exitMeeting(
+            @PathVariable("meetingId") @ApiParam(value="팬미팅 id", required = true) Long meetingId) {
+        logger.info("exitMeeting 호출");
+
+        SsafyUserDetails userDetails = (SsafyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = userService.getUserByUsername(userDetails.getUsername());
+
+        // 기업회원의 팬미팅 퇴장
+        if (user.getRole().equals("ROLE_MANAGER")) {
+            meetingService.exitMeetingManager(meetingId);
+            return new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
+        // 일반회원의 팬미팅 퇴장
+        } else {
+            meetingService.exitMeetingUser(meetingId);
+            return new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
         }
     }
 }
