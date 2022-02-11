@@ -41,7 +41,7 @@ public class MeetingServiceImpl implements MeetingService{
                     .title(meetingInfo.getTitle())
                     .maxUser(meetingInfo.getMaxUser())
                     .openDate(dateTime)
-                    .isInManager(0)
+                    .isInManager(false)
                     .isActive(false)
                     .user(user)
                     .build();
@@ -193,8 +193,8 @@ public class MeetingServiceImpl implements MeetingService{
                 List<EnterCode> enterCodes = enterCodeRepository.findByMeetingId(meeting.getId());
                 for (EnterCode enterCode : enterCodes) {
                     if (enterCode.getId().equals(enterCodeInfo.getEnterCode())) {
-                        if (meeting.getIsInManager() == 0) {
-                            meeting.changeIsInManager(1);
+                        if (meeting.isInManager()) {
+                            meeting.changeIsInManager();
                             meetingRepository.save(meeting);
                         }
                         return "SUCCESS";
@@ -214,7 +214,7 @@ public class MeetingServiceImpl implements MeetingService{
 
         try {
             Meeting meeting = meetingRepository.findById(meetingId).get();
-            if (meeting.getIsInManager() == 1) {
+            if (meeting.isInManager()) {
                 if (meeting.isActive()) {
                     return "MEETING ING";
                 } else {
@@ -248,8 +248,8 @@ public class MeetingServiceImpl implements MeetingService{
     public void exitMeetingManager(Long meetingId) {
 
         Meeting meeting = meetingRepository.findById(meetingId).get();
-        if (meeting.getIsInManager() == 1) {
-            meeting.changeIsInManager(0);
+        if (meeting.isInManager()) {
+            meeting.changeIsInManager();
             meetingRepository.save(meeting);
         }
     }
