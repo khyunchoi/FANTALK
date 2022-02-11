@@ -86,17 +86,6 @@ export default {
 			console.log(err)
 		})
 
-		// this.$axios({
-		// 	method: 'get',
-		// 	url: `http://localhost:8080/api/v1/users/me/${ this.$route.params.meetingId }`
-		// })
-		// .then(res => {
-		// 	this.title = res.data.title
-		// })
-		// .catch(res => {
-		// 	console.log(err)
-		// })
-
 		// --- Get an OpenVidu object ---
 		this.OV = new OpenVidu();
 
