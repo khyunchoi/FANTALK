@@ -41,7 +41,7 @@ public class MeetingServiceImpl implements MeetingService{
                     .title(meetingInfo.getTitle())
                     .maxUser(meetingInfo.getMaxUser())
                     .openDate(dateTime)
-                    .isInManager(false)
+                    .isInManager(0)
                     .isActive(false)
                     .user(user)
                     .build();
@@ -193,7 +193,10 @@ public class MeetingServiceImpl implements MeetingService{
                 List<EnterCode> enterCodes = enterCodeRepository.findByMeetingId(meeting.getId());
                 for (EnterCode enterCode : enterCodes) {
                     if (enterCode.getId().equals(enterCodeInfo.getEnterCode())) {
-                        meeting.changeIsInManager();
+                        if (meeting.getIsInManager() == 0) {
+                            meeting.changeIsInManager(1);
+                            meetingRepository.save(meeting);
+                        }
                         return "SUCCESS";
                     }
                 }
@@ -211,7 +214,7 @@ public class MeetingServiceImpl implements MeetingService{
 
         try {
             Meeting meeting = meetingRepository.findById(meetingId).get();
-            if (meeting.isInManager()) {
+            if (meeting.getIsInManager() == 1) {
                 if (meeting.isActive()) {
                     return "MEETING ING";
                 } else {
@@ -222,7 +225,9 @@ public class MeetingServiceImpl implements MeetingService{
                                 return "NO ENTER TWICE";
                             } else {
                                 enterCode.changeChecked();
+                                enterCodeRepository.save(enterCode);
                                 meeting.changeIsActive();
+                                meetingRepository.save(meeting);
                                 return "SUCCESS";
                             }
                         }
@@ -243,7 +248,10 @@ public class MeetingServiceImpl implements MeetingService{
     public void exitMeetingManager(Long meetingId) {
 
         Meeting meeting = meetingRepository.findById(meetingId).get();
-        meeting.changeIsInManager();
+        if (meeting.getIsInManager() == 1) {
+            meeting.changeIsInManager(0);
+            meetingRepository.save(meeting);
+        }
     }
 
     // 일반회원의 팬미팅 입장
@@ -252,5 +260,6 @@ public class MeetingServiceImpl implements MeetingService{
 
         Meeting meeting = meetingRepository.findById(meetingId).get();
         meeting.changeIsActive();
+        meetingRepository.save(meeting);
     }
 }

@@ -28,7 +28,7 @@ public class Meeting {
     private boolean isActive;
 
     @NotNull
-    private boolean isInManager;
+    private int isInManager;
 
     @NotNull
     private int maxUser;
@@ -41,7 +41,7 @@ public class Meeting {
     private User user;
 
     @Builder
-    public Meeting(String title, boolean isActive, boolean isInManager, int maxUser, LocalDateTime openDate, User user) {
+    public Meeting(String title, boolean isActive, int isInManager, int maxUser, LocalDateTime openDate, User user) {
         this.title = title;
         this.isActive = isActive;
         this.isInManager = isInManager;
@@ -67,11 +67,7 @@ public class Meeting {
     }
 
     // 기업회원 입장 여부 변경을 위한 편의 함수
-    public void changeIsInManager() {
-        if (this.isInManager) {
-            this.isInManager = false;
-        } else {
-            this.isInManager = true;
-        }
+    public void changeIsInManager(int check) {
+        this.isInManager = check;
     }
 }
