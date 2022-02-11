@@ -10,7 +10,7 @@
         <button
           v-for="meeting in meetingList" :key="meeting"
           class="meeting-list-card"
-          @click="enterMeeting(meeting.id)"
+          @click="enterMeetingGuide(meeting.id)"
         >
           {{ meeting.title }}
           <br>
@@ -33,8 +33,8 @@
       }
     },
     methods:{
-      enterMeeting: function (idx) {
-        this.$router.push({name:'MeetingRoom', params:{ meetingId:idx }})
+      enterMeetingGuide: function (idx) {
+        this.$router.push({name:'MeetingGuide', params:{ meetingId:idx }})
       }
     },
     created: function () {
