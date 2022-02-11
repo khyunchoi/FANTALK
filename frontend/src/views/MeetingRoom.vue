@@ -67,17 +67,20 @@ export default {
 			mySessionId: 'meetingId',
 			myUserName: '최강현',
 			title: '아이유 팬미팅',
+			meetingId: '',
 		}
 	},
 
 	created: function () {
+		this.meetingId = this.$route.params.meetingId
+
 		this.$axios({
 			method: 'get',
 			url: 'http://localhost:8080/api/v1/users/me'
 		})
 		.then(res => {
 			// this.myUserName = res.data.name
-			this.mySessionId = this.$route.params.meetingId
+			this.mySessionId = this.meetingId
 		})
 		.catch(res => {
 			console.log(err)
@@ -169,6 +172,15 @@ export default {
 			this.OV = undefined;
 
 			window.removeEventListener('beforeunload', this.leaveSession);
+
+			this.$axios({
+        method: 'put',
+        url: `http://localhost:8080/api/v1/meetings/${this.meetingId}/exit`,
+      })
+      .then(res => {
+        console.log(res)
+        this.$router.push({name:'MeetingList'})
+      })
 		},
 
 		getToken (mySessionId) {

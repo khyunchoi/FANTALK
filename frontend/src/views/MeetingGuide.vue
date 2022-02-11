@@ -63,15 +63,20 @@ export default {
         data: enterCodeItem,
       })
       .then(res => {
+        console.log(res)
         if (res.data === "SUCCESS") {
           this.$router.push({name:'MeetingRoom', params:{ meetingId: this.meetingId }})
-        } else if (res.data === "MEETING ING") {
+        }
+      })
+      .catch(err => {
+        console.log(err.response.data)
+        if (err.response.data === "MEETING ING") {
           alert('현재 팬미팅이 진행중입니다. 잠시만 기다려주세요.')
-        } else if (res.data === "NO ENTER TWICE") {
+        } else if (err.response.data === "NO ENTER TWICE") {
           alert('팬미팅을 중복해서 들어갈 수 없습니다.')
-        } else if (res.data === "MANAGER NOT IN") {
+        } else if (err.response.data === "MANAGER NOT IN") {
           alert('아직 팬미팅이 시작하지 않았습니다. 잠시만 기다려주세요.')
-        } else {
+        } else if (err.response.data === "Wrong EnterCode") {
           alert('코드를 다시 확인해 주세요.')
         }
       })
