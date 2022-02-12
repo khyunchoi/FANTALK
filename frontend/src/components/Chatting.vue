@@ -2,7 +2,7 @@
   <div>
     <div id='chat-area'>
       <div v-for="val in chat" v-bind:key="val.id">
-        <div v-if="val.user === myUserNick" class="mychat">
+        <div v-if="val.user === myUserName" class="mychat">
           {{ val.text }}
         </div>
          
@@ -31,6 +31,7 @@
     },
 		props:{
 			session: Object,
+      myUserName: String,
 		},
 		watch: {
 			chat() {
@@ -44,7 +45,6 @@
 			},
 		},
 		created: function () {
-			console.log(this.myUserNick)
 			// 방에 들어와 있는 모든 사람이 받는거
 			this.session.on('signal:my-chat', (event) => {
 				console.log(event)

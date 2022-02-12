@@ -1,43 +1,50 @@
 <template>
-	<div id="main-container" class="container">
-		<div style="display: flex; flex-flow: column; align-items: center;" id="session" v-if="session">
-			<!-- <div style="align-self: start;" id="session-header">
-				<h1 id="session-title">{{ title }}</h1>
-			</div> -->
-			<div style="display: flex; margin-top: 30px;">
-				<div id="main-video" style="margin-right: 30px;">
-					<user-video :stream-manager="publisher" />
+	<div class="main-container">
+		<div class="video-container" v-if="session">
+			<div>
+				<div>
+					<user-video :stream-manager="publisher" class="user-video"/>
 				</div>
-				<div id="video-container" v-if="subscribers.length != 0">
-					<user-video v-for="sub in subscribers" :key="sub.stream.connection.connectionId" :stream-manager="sub" />
+
+				<div v-if="subscribers.length != 0">
+					<user-video v-for="sub in subscribers" :key="sub.stream.connection.connectionId" :stream-manager="sub" class="sub-video" />
 				</div>
-				<div v-if="subscribers.length == 0">
+
+				<!-- <div v-if="subscribers.length == 0">
 					<img src="../assets/cam-alter.png" alt="cam-alter">
-				</div>
+				</div> -->
 			</div>
-			<div style="display: flex;">
+
+			<div class="button-container">
 				<span @click='muteAudio'>
 					<div v-if='publisher.stream.audioActive'>
-						<img src="../assets/mic-on.png" alt="mic-on" style="margin-right: 20px;">
+						<img src="../assets/mic-on.png" alt="mic-on" width="80%;">
 					</div>
+
 					<div v-else>
-						<img src="../assets/mic-off.png" alt="mic-off" style="margin-right: 20px;">
+						<img src="../assets/mic-off.png" alt="mic-off" width="80%;">
 					</div>
 				</span>
+
 				<span @click='muteVideo'>
 					<div v-if='publisher.stream.videoActive'>
-						<img src="../assets/cam-on.png" alt="cam-on">
+						<img src="../assets/cam-on.png" alt="cam-on" width="80%;">
 					</div>
+
 					<div v-else>
-						<img src="../assets/cam-off.png" alt="cam-off">
+						<img src="../assets/cam-off.png" alt="cam-off" width="80%;">
 					</div>
 				</span>
 				
-				<img src="../assets/exit.png" alt="Leave session" @click="leaveSession" style="position: absolute; right: 100px;">
+				<img src="../assets/exit.png" alt="Leave session" @click="leaveSession" style="padding: 0 2% 0 2%;" width="20%;">
 			</div>
-			<div>
-				<Chatting :session="session"/>
-			</div>
+
+		</div>
+		<div class="chat-container">
+			<Chatting
+				:session="session"
+				:myUserName="myUserName"
+			/>
 		</div>
 	</div>
 </template>
@@ -136,7 +143,7 @@ export default {
 						videoSource: undefined, // The source of video. If undefined default webcam
 						publishAudio: true,  	// Whether you want to start publishing with your audio unmuted or not
 						publishVideo: true,  	// Whether you want to start publishing with your video enabled or not
-						resolution: '640x480',  // The resolution of your video
+						resolution: '640x400',  // The resolution of your video
 						frameRate: 30,			// The frame rate of your video
 						insertMode: 'APPEND',	// How the video is inserted in the target element 'video-container'
 						mirror: false       	// Whether to mirror your local video or not
@@ -247,10 +254,61 @@ export default {
     muteVideo() {
       if (this.publisher.stream.videoActive) {
         this.publisher.publishVideo(false)
-      }else {
+      } else {
         this.publisher.publishVideo(true)
       }
     },
 	}
 }
 </script>
+
+<style scoped>
+	img:hover {
+		cursor: pointer;
+	}
+
+	.main-container {
+		padding: 2% 0 0 2%;
+		display: flex;
+		justify-content: center;
+	}
+
+	.video-container {
+		display: flex;
+		flex-direction: column;
+	}
+
+	.button-container {
+		display: flex;
+		justify-content: center;
+		padding: 2% 6% 0 6%;
+	}
+
+	.chat-container {
+		padding: 0 0 0 2%;
+	}
+
+	.user-video {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		font-size: 1.3em;
+		font-weight: bold;
+		color: #797BF8;
+		padding: 0 0 3% 0;
+	}
+	
+	.sub-video {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		font-size: 1.3em;
+		font-weight: bold;
+		color: #797BF8;
+		padding: 0 0 3% 0;
+	}
+
+	video {
+		width: 900px;
+	}
+</style>
