@@ -52,6 +52,7 @@ axios.defaults.headers.post['Content-Type'] = 'application/json';
 
 const OPENVIDU_SERVER_URL = "https://" + location.hostname + ":4443";
 const OPENVIDU_SERVER_SECRET = "MY_SECRET";
+const SERVER_URL = process.env.VUE_APP_API_URL
 
 export default {
 	name: 'App',
@@ -80,7 +81,7 @@ export default {
 
 		this.$axios({
 			method: 'get',
-			url: 'http://localhost:8080/api/v1/users/me',
+			url: `${SERVER_URL}/api/v1/users/me`,
 			headers: this.setToken(),
 		})
 		.then(res => {
@@ -179,7 +180,7 @@ export default {
 
 			this.$axios({
         method: 'put',
-        url: `http://localhost:8080/api/v1/meetings/${this.meetingId}/exit`,
+        url: `${SERVER_URL}/api/v1/meetings/${this.meetingId}/exit`,
 				headers: this.setToken(),
       })
       .then(res => {

@@ -58,6 +58,7 @@
 </template>
 
 <script>
+  const SERVER_URL = process.env.VUE_APP_API_URL
   export default {
     name: 'UpdateMeetingForm',
     data: function() {
@@ -95,7 +96,7 @@
         if (meetingItem.title) {
           this.$axios({
             method: 'put',
-            url: `http://localhost:8080/api/v1/meetings/${this.meetingId}`,
+            url: `${SERVER_URL}/api/v1/meetings/${this.meetingId}`,
             data: meetingItem,
             headers: this.setToken(),
           })
@@ -115,7 +116,7 @@
       deleteMeeting () {
         this.$axios({
           method: 'delete',
-          url: `http://localhost:8080/api/v1/meetings/${this.meetingId}`,
+          url: `${SERVER_URL}/api/v1/meetings/${this.meetingId}`,
           headers: this.setToken(),
         })
         .then(res => {
@@ -133,7 +134,7 @@
 
       this.$axios({
         method: 'get',
-        url: `http://localhost:8080/api/v1/meetings/me/${this.meetingId}`,
+        url: `${SERVER_URL}/api/v1/meetings/me/${this.meetingId}`,
         headers: this.setToken(),
       })
       .then(res => {

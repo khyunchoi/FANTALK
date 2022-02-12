@@ -34,6 +34,7 @@
 </template>
 
 <script>
+  const SERVER_URL = process.env.VUE_APP_API_URL
   export default {
     name: 'CreateArticleForm',
 
@@ -69,7 +70,7 @@
         if (articleItem.title) {
           this.$axios({
             method: 'post',
-            url: `http://localhost:8080/api/v1/communities/${this.communityId}/articles`,
+            url: `${SERVER_URL}/api/v1/communities/${this.communityId}/articles`,
             data: articleItem,
             headers: this.setToken(),
           })

@@ -9,6 +9,7 @@
 </template>
 
 <script>
+  const SERVER_URL = process.env.VUE_APP_API_URL
   export default {
     name: 'CheckManager',
     methods: {
@@ -22,7 +23,7 @@
       checkManager() {
         this.$axios({
           method: 'get',
-          url: `http://localhost:8080/api/v1/meetings/isManager`,
+          url: `${SERVER_URL}/api/v1/meetings/isManager`,
           headers: this.setToken(),
         })
         .then(res => {
@@ -37,7 +38,7 @@
             alert('기업회원이 아닙니다. 자세한 사항은 timeroom@ssafy.com에 문의해주세요.')
             this.$router.push({name: 'Index'})
           } else {
-            alert('구글 로그인을 해주세요.')
+            alert('로그인을 해주세요.')
             this.$router.push({name: 'Index'})
           }
         })

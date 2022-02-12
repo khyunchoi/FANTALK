@@ -57,6 +57,7 @@
 </template>
 
 <script>
+  const SERVER_URL = process.env.VUE_APP_API_URL
   export default {
     name: 'CreateMeetingForm',
     data: function() {
@@ -93,7 +94,7 @@
         if (meetingItem.title) {
           this.$axios({
             method: 'post',
-            url: `http://localhost:8080/api/v1/meetings`,
+            url: `${SERVER_URL}/api/v1/meetings`,
             data: meetingItem,
             headers: this.setToken(),
           })

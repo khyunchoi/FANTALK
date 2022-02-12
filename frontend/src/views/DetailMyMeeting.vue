@@ -69,6 +69,7 @@
 </template>
 
 <script>
+  const SERVER_URL = process.env.VUE_APP_API_URL
   export default {
     name: 'DetailMyMeeting',
     data: function() {
@@ -98,7 +99,7 @@
 
       this.$axios({
         method: 'get',
-        url: `http://localhost:8080/api/v1/meetings/me/${this.meetingId}`,
+        url: `${SERVER_URL}/api/v1/meetings/me/${this.meetingId}`,
         headers: this.setToken(),
       })
       .then(res => {
