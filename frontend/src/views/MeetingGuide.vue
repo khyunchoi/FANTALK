@@ -53,6 +53,13 @@ export default {
     }
   },
   methods:{
+    setToken () {
+      const token = localStorage.getItem('jwt')
+      const config = {
+        Authorization: `Bearer ${token}`
+      }
+      return config
+    },
     enterMeeting: function () {
       const enterCodeItem = {
         enterCode: this.enterCode,
@@ -61,6 +68,7 @@ export default {
         method: 'put',
         url: `http://localhost:8080/api/v1/meetings/${this.meetingId}/enter`,
         data: enterCodeItem,
+        headers: this.setToken(),
       })
       .then(res => {
         console.log(res)

@@ -1,16 +1,19 @@
 package com.ssafy.config;
 
+import com.ssafy.api.service.UserService;
+import com.ssafy.common.auth.JwtAuthenticationFilter;
 import com.ssafy.common.auth.SsafyUserDetailService;
-import com.ssafy.common.oauth.SsafyOauth2UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -23,12 +26,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private SsafyUserDetailService ssafyUserDetailService;
-    private SsafyOauth2UserService ssafyOauth2UserService;
+    private UserService userService;
 
     @Autowired
-    public SecurityConfig(SsafyUserDetailService ssafyUserDetailService, SsafyOauth2UserService ssafyOauth2UserService) {
+    public SecurityConfig(@Lazy SsafyUserDetailService ssafyUserDetailService, @Lazy UserService userService) {
         this.ssafyUserDetailService = ssafyUserDetailService;
-        this.ssafyOauth2UserService = ssafyOauth2UserService;
+        this.userService = userService;
     }
 
     // Password 인코딩 방식에 BCrypt 암호화 방식 사용
@@ -56,23 +59,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .httpBasic()
-                    .disable()
-                .csrf()
-                    .disable()
-                .formLogin()
-                    .disable()
-                .authorizeRequests() //인증이 필요한 URL과 필요하지 않은 URL에 대하여 설정
-                    .antMatchers("/communities").authenticated()
-                    .anyRequest().permitAll()
-                    .and()
-                .logout()
-                    .logoutSuccessUrl("/")
-                    .and()
-                .oauth2Login()
-                    .loginPage("/oauth2/authorization/google") // 구글 로그인이 완료된 뒤의 후처리가 필요함. Tip. 코드X (엑세스토큰+사용자프로필정보)
-                    .userInfoEndpoint()
-                    .userService(ssafyOauth2UserService)
-                .and().and().cors();
+                .httpBasic().disable()
+                .csrf().disable()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) // 토큰 기반 인증이므로 세션 사용 하지않음
+                .and()
+                .addFilter(new JwtAuthenticationFilter(authenticationManager(), userService)) //HTTP 요청에 JWT 토큰 인증 필터를 거치도록 필터를 추가
+                .authorizeRequests()
+                .antMatchers("/api/v1/users/me").authenticated()       //인증이 필요한 URL과 필요하지 않은 URL에 대하여 설정
+    	        	    .anyRequest().permitAll()
+                .and().cors();
     }
 }

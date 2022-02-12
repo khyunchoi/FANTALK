@@ -15,10 +15,13 @@ import io.swagger.annotations.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -35,17 +38,18 @@ public class ArticleController {
 
     private static final Logger logger = LoggerFactory.getLogger(CommunityController.class);
 
-    @Autowired
     private CommunityService communityService;
-
-    @Autowired
     private ArticleService articleService;
-
-    @Autowired
     private ArticleRepository articleRepository;
+    private UserService userService;
 
     @Autowired
-    private UserService userService;
+    public ArticleController(@Lazy CommunityService communityService, @Lazy ArticleService articleService, @Lazy ArticleRepository articleRepository, @Lazy UserService userService) {
+        this.communityService = communityService;
+        this.articleService = articleService;
+        this.articleRepository = articleRepository;
+        this.userService = userService;
+    }
 
     // 게시글 등록
     @PostMapping("/articles")
@@ -57,10 +61,11 @@ public class ArticleController {
     @ApiOperation(value = "게시글 등록", notes = "새로운 게시글을 등록")
     public ResponseEntity<String> registerArticle(
             @RequestBody @ApiParam(value="게시글 정보", required = true) ArticleRegisterPostReq articleInfo,
-            @PathVariable("communityId") @ApiParam(value="커뮤니티 id", required = true) Long communityId) {
+            @PathVariable("communityId") @ApiParam(value="커뮤니티 id", required = true) Long communityId,
+            @ApiIgnore Authentication authentication) {
         logger.info("registerArticle 호출");
 
-        SsafyUserDetails userDetails = (SsafyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        SsafyUserDetails userDetails = (SsafyUserDetails)authentication.getDetails();
         User user = userService.getUserByUsername(userDetails.getUsername());
 
         try {
@@ -133,10 +138,11 @@ public class ArticleController {
     public ResponseEntity<String> modifyArticle(
             @PathVariable("communityId") @ApiParam(value="커뮤니티 id", required = true) Long communityId,
             @PathVariable("articleId") @ApiParam(value="게시글 id", required = true) Long articleId,
-            @RequestBody @ApiParam(value="글 정보", required = true) ArticleRegisterPostReq articleInfo) {
+            @RequestBody @ApiParam(value="글 정보", required = true) ArticleRegisterPostReq articleInfo,
+            @ApiIgnore Authentication authentication) {
         logger.info("modifyArticle 호출");
 
-        SsafyUserDetails userDetails = (SsafyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        SsafyUserDetails userDetails = (SsafyUserDetails)authentication.getDetails();
         User user = userService.getUserByUsername(userDetails.getUsername());
 
         try {
@@ -163,10 +169,11 @@ public class ArticleController {
     @ApiOperation(value = "게시글 삭제", notes = "게시글을 삭제")
     public ResponseEntity<String> deleteArticle(
             @PathVariable("communityId") @ApiParam(value="커뮤니티 id", required = true) Long communityId,
-            @PathVariable("articleId") @ApiParam(value="게시글 id", required = true) Long articleId) {
+            @PathVariable("articleId") @ApiParam(value="게시글 id", required = true) Long articleId,
+            @ApiIgnore Authentication authentication) {
         logger.info("deleteArticle 호출");
 
-        SsafyUserDetails userDetails = (SsafyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        SsafyUserDetails userDetails = (SsafyUserDetails)authentication.getDetails();
         User user = userService.getUserByUsername(userDetails.getUsername());
 
         try {

@@ -15,8 +15,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.NoSuchElementException;
 
@@ -27,7 +29,7 @@ import java.util.NoSuchElementException;
 @Api(value = "댓글 API", tags = {"Comment"})
 @RestController
 @CrossOrigin(origins = {"*"})
-@RequestMapping("/api/v1/article/{articleId}/comments")
+@RequestMapping("/api/v1/articles/{articleId}/comments")
 public class CommentController {
 
     private static final Logger logger = LoggerFactory.getLogger(CommunityController.class);
@@ -53,10 +55,11 @@ public class CommentController {
     @ApiOperation(value = "댓글 등록", notes = "새로운 댓글을 등록")
     public ResponseEntity<String> registerComment(
             @RequestBody @ApiParam(value="댓글 정보", required = true) CommentRegisterPostReq commentInfo,
-            @PathVariable("articleId") @ApiParam(value="게시글 id", required = true) Long articleId) {
+            @PathVariable("articleId") @ApiParam(value="게시글 id", required = true) Long articleId,
+            @ApiIgnore Authentication authentication) {
         logger.info("registerComment 호출");
 
-        SsafyUserDetails userDetails = (SsafyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        SsafyUserDetails userDetails = (SsafyUserDetails)authentication.getDetails();
         User user = userService.getUserByUsername(userDetails.getUsername());
 
         try {
@@ -82,10 +85,11 @@ public class CommentController {
     @ApiOperation(value = "댓글 삭제", notes = "댓글을 삭제")
     public ResponseEntity<String> deleteArticle(
             @PathVariable("articleId") @ApiParam(value="게시글 id", required = true) Long articleId,
-            @PathVariable("commentId") @ApiParam(value="댓글 id", required = true) Long commentId) {
+            @PathVariable("commentId") @ApiParam(value="댓글 id", required = true) Long commentId,
+            @ApiIgnore Authentication authentication) {
         logger.info("deleteComment 호출");
 
-        SsafyUserDetails userDetails = (SsafyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        SsafyUserDetails userDetails = (SsafyUserDetails)authentication.getDetails();
         User user = userService.getUserByUsername(userDetails.getUsername());
 
         try {

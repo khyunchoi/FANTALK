@@ -18,11 +18,14 @@
     <v-btn style="background-color: #FFFFFF; font-weight: bold">
       <div v-if="userId == 0" style="display: flex;">
         <img src="../assets/google.png" alt="logo" width="20px" height="20px">
-        <a href="http://localhost:8080/oauth2/authorization/google" class="login" style="text-decoration: none;" hrefclass="login">로그인</a>
-        
+        <router-link :to="{name: 'Login'}">
+          로그인
+        </router-link>
       </div>
       <div v-else>
-        <a href="/logout" style="text-decoration: none;">로그아웃</a>
+        <router-link :to="{name: 'Login'}">
+          로그아웃
+        </router-link>
       </div>
     </v-btn>
   </v-toolbar>
@@ -36,20 +39,6 @@
         userId: 0
       }
     },
-
-    created: function () {
-      this.$axios({
-        method: 'get',
-        url: `http://localhost:8080/api/v1/users/me`
-      })
-      .then(res => {
-        console.log(res)
-        this.userId = res.data.id
-      })
-      .catch(err => {
-        console.log(err)
-      })
-    }
   }
 </script>
 

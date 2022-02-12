@@ -16,8 +16,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.List;
 
@@ -51,10 +53,11 @@ public class MeetingController {
     })
     @ApiOperation(value = "팬미팅 등록", notes = "팬미팅을 등록")
     public ResponseEntity<String> registerMeeting(
-            @RequestBody @ApiParam(value="팬미팅 정보", required = true) MeetingRegisterPostReq meetingInfo) {
+            @RequestBody @ApiParam(value="팬미팅 정보", required = true) MeetingRegisterPostReq meetingInfo,
+            @ApiIgnore Authentication authentication) {
         logger.info("registerMeeting 호출");
 
-        SsafyUserDetails userDetails = (SsafyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        SsafyUserDetails userDetails = (SsafyUserDetails)authentication.getDetails();
         User user = userService.getUserByUsername(userDetails.getUsername());
 
         // 관리자 여부 확인
@@ -124,10 +127,11 @@ public class MeetingController {
     @ApiOperation(value = "팬미팅 수정", notes = "팬미팅을 수정")
     public ResponseEntity<String> modifyMeeting(
             @PathVariable("meetingId") @ApiParam(value="팬미팅 id", required = true) Long meetingId,
-            @RequestBody @ApiParam(value="팬미팅 정보", required = true) MeetingRegisterPostReq meetingInfo) {
+            @RequestBody @ApiParam(value="팬미팅 정보", required = true) MeetingRegisterPostReq meetingInfo,
+            @ApiIgnore Authentication authentication) {
         logger.info("modifyMeeting 호출");
 
-        SsafyUserDetails userDetails = (SsafyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        SsafyUserDetails userDetails = (SsafyUserDetails)authentication.getDetails();
         User user = userService.getUserByUsername(userDetails.getUsername());
 
         // 관리자 여부 확인
@@ -158,10 +162,11 @@ public class MeetingController {
     })
     @ApiOperation(value = "팬미팅 삭제", notes = "팬미팅을 삭제")
     public ResponseEntity<String> deleteMeeting(
-            @PathVariable("meetingId") @ApiParam(value="팬미팅 id", required = true) Long meetingId) {
+            @PathVariable("meetingId") @ApiParam(value="팬미팅 id", required = true) Long meetingId,
+            @ApiIgnore Authentication authentication) {
         logger.info("deleteMeeting 호출");
 
-        SsafyUserDetails userDetails = (SsafyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        SsafyUserDetails userDetails = (SsafyUserDetails)authentication.getDetails();
         User user = userService.getUserByUsername(userDetails.getUsername());
 
         // 관리자 여부 확인
@@ -190,10 +195,10 @@ public class MeetingController {
             @ApiResponse(code = 400, message = "실패(Fail)"),
     })
     @ApiOperation(value = "기업회원 확인", notes = "기업회원 여부 확인")
-    public ResponseEntity<String> checkManager() {
+    public ResponseEntity<String> checkManager(@ApiIgnore Authentication authentication) {
         logger.info("checkManager 호출");
 
-        SsafyUserDetails userDetails = (SsafyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        SsafyUserDetails userDetails = (SsafyUserDetails)authentication.getDetails();
         User user = userService.getUserByUsername(userDetails.getUsername());
 
         // 관리자 여부 확인
@@ -210,10 +215,10 @@ public class MeetingController {
             @ApiResponse(code = 200, message = "팬미팅 목록 리스트 반환, 없을 시 [] 반환"),
     })
     @ApiOperation(value = "신청한 팬미팅 목록 조회", notes = "기업회원이 신청한 팬미팅 전체 목록 조회")
-    public ResponseEntity<List<MyMeetingDetailGetRes>> getAllMyMeeting() {
+    public ResponseEntity<List<MyMeetingDetailGetRes>> getAllMyMeeting(@ApiIgnore Authentication authentication) {
         logger.info("getAllMyMeeting 호출");
 
-        SsafyUserDetails userDetails = (SsafyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        SsafyUserDetails userDetails = (SsafyUserDetails)authentication.getDetails();
         User user = userService.getUserByUsername(userDetails.getUsername());
 
         return new ResponseEntity<List<MyMeetingDetailGetRes>>(meetingService.getAllMyMeeting(user.getId()), HttpStatus.OK);
@@ -227,10 +232,11 @@ public class MeetingController {
     })
     @ApiOperation(value = "신청한 팬미팅 상세 조회", notes = "기업회원이 신청한 특정 팬미팅 상세 조회")
     public ResponseEntity<?> getMyMeetingDetail(
-            @PathVariable("meetingId") @ApiParam(value="팬미팅 id", required = true) Long meetingId) {
+            @PathVariable("meetingId") @ApiParam(value="팬미팅 id", required = true) Long meetingId,
+            @ApiIgnore Authentication authentication) {
         logger.info("getMyMeetingDetail 호출");
 
-        SsafyUserDetails userDetails = (SsafyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        SsafyUserDetails userDetails = (SsafyUserDetails)authentication.getDetails();
         User user = userService.getUserByUsername(userDetails.getUsername());
 
         try {
@@ -253,10 +259,11 @@ public class MeetingController {
     @ApiOperation(value = "팬미팅 입장", notes = "기업회원과 일반회원의 팬미팅에 입장")
     public ResponseEntity<String> enterMeeting(
             @PathVariable("meetingId") @ApiParam(value="팬미팅 id", required = true) Long meetingId,
-            @RequestBody @ApiParam(value="입장 코드", required = true) EnterCodeEnterPutReq enterCodeInfo) {
+            @RequestBody @ApiParam(value="입장 코드", required = true) EnterCodeEnterPutReq enterCodeInfo,
+            @ApiIgnore Authentication authentication) {
         logger.info("enterMeeting 호출");
 
-        SsafyUserDetails userDetails = (SsafyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        SsafyUserDetails userDetails = (SsafyUserDetails)authentication.getDetails();
         User user = userService.getUserByUsername(userDetails.getUsername());
 
         // 기업회원의 팬미팅 입장
@@ -301,10 +308,11 @@ public class MeetingController {
     })
     @ApiOperation(value = "팬미팅 퇴장", notes = "기업회원과 일반회원의 팬미팅 퇴장")
     public ResponseEntity<String> exitMeeting(
-            @PathVariable("meetingId") @ApiParam(value="팬미팅 id", required = true) Long meetingId) {
+            @PathVariable("meetingId") @ApiParam(value="팬미팅 id", required = true) Long meetingId,
+            @ApiIgnore Authentication authentication) {
         logger.info("exitMeeting 호출");
 
-        SsafyUserDetails userDetails = (SsafyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        SsafyUserDetails userDetails = (SsafyUserDetails)authentication.getDetails();
         User user = userService.getUserByUsername(userDetails.getUsername());
 
         // 기업회원의 팬미팅 퇴장
