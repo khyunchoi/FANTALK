@@ -193,7 +193,7 @@ public class MeetingServiceImpl implements MeetingService{
                 List<EnterCode> enterCodes = enterCodeRepository.findByMeetingId(meeting.getId());
                 for (EnterCode enterCode : enterCodes) {
                     if (enterCode.getId().equals(enterCodeInfo.getEnterCode())) {
-                        if (meeting.isInManager()) {
+                        if (!meeting.isInManager()) {
                             meeting.changeIsInManager();
                             meetingRepository.save(meeting);
                             return "SUCCESS";
