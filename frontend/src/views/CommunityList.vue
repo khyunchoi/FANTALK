@@ -31,6 +31,7 @@
 
 <script>
   import CommunityListSearch from '../components/CommunityListSearch.vue'
+  const SERVER_URL = process.env.VUE_APP_API_URL
   export default {
     name: 'CommunityList',
     components: {
@@ -51,7 +52,7 @@
     created: function () {
       this.$axios({
         method: 'get',
-        url: 'http://localhost:8080/api/v1/communities'
+        url: `${SERVER_URL}/api/v1/communities`
       })
       .then(response => {
         return response.data

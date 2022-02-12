@@ -32,6 +32,7 @@
 </template>
 
 <script>
+  const SERVER_URL = process.env.VUE_APP_API_URL
   export default {
     name: 'DetailArticle',
 
@@ -50,7 +51,7 @@
       this.communityId = this.$route.params.communityId
       this.$axios({
         method:'get',
-        url: `http://localhost:8080/api/v1/communities/${this.communityId}/articles/${this.articleId}`
+        url: `${SERVER_URL}/api/v1/communities/${this.communityId}/articles/${this.articleId}`
       })
       .then(res => {
         console.log(res.data)

@@ -30,6 +30,7 @@
 </template>
 
 <script>
+  const SERVER_URL = process.env.VUE_APP_API_URL
   export default {
     name: 'Nav',
     data: function() {
@@ -52,9 +53,10 @@
       }
     },
     created: function () {
+      console.log(process.env)
       this.$axios({
         method: 'get',
-        url: `http://localhost:8080/api/v1/users/me`,
+        url: `${SERVER_URL}/api/v1/users/me`,
         headers: this.setToken(),
       })
       .then(res => {

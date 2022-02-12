@@ -37,6 +37,7 @@
 </template>
 
 <script>
+  const SERVER_URL = process.env.VUE_APP_API_URL
   export default {
     name: 'CreateCommunityForm',
 
@@ -75,7 +76,7 @@
         if (communityItem.name) {
           this.$axios({
             method: 'post',
-            url: `http://localhost:8080/api/v1/communities/`,
+            url: `${SERVER_URL}/api/v1/communities/`,
             data: communityItem,
             headers: this.setToken(),
           })

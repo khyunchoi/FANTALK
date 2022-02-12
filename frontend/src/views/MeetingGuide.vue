@@ -42,69 +42,70 @@
 </template>
 
 <script>
-export default {
-  name: 'MeetingGuide',
-  data: function() {
-    return {
-      meetingId: '',
-      title: '팬미팅!',
-      openDate: '2020.01.01 10:00',
-      enterCode: '',
-    }
-  },
-  methods:{
-    setToken () {
-      const token = localStorage.getItem('jwt')
-      const config = {
-        Authorization: `Bearer ${token}`
+  const SERVER_URL = process.env.VUE_APP_API_URL
+  export default {
+    name: 'MeetingGuide',
+    data: function() {
+      return {
+        meetingId: '',
+        title: '팬미팅!',
+        openDate: '2020.01.01 10:00',
+        enterCode: '',
       }
-      return config
     },
-    enterMeeting: function () {
-      const enterCodeItem = {
-        enterCode: this.enterCode,
+    methods:{
+      setToken () {
+        const token = localStorage.getItem('jwt')
+        const config = {
+          Authorization: `Bearer ${token}`
+        }
+        return config
+      },
+      enterMeeting: function () {
+        const enterCodeItem = {
+          enterCode: this.enterCode,
+        }
+        this.$axios({
+          method: 'put',
+          url: `${SERVER_URL}/api/v1/meetings/${this.meetingId}/enter`,
+          data: enterCodeItem,
+          headers: this.setToken(),
+        })
+        .then(res => {
+          console.log(res)
+          if (res.data === "SUCCESS") {
+            this.$router.push({name:'MeetingRoom', params:{ meetingId: this.meetingId }})
+          }
+        })
+        .catch(err => {
+          console.log(err.response.data)
+          if (err.response.data === "MEETING ING") {
+            alert('현재 팬미팅이 진행중입니다. 잠시만 기다려주세요.')
+          } else if (err.response.data === "NO ENTER TWICE") {
+            alert('팬미팅을 중복해서 들어갈 수 없습니다.')
+          } else if (err.response.data === "MANAGER NOT IN") {
+            alert('아직 팬미팅이 시작하지 않았습니다. 잠시만 기다려주세요.')
+          } else if (err.response.data === "Wrong EnterCode") {
+            alert('코드를 다시 확인해 주세요.')
+          }
+        })
+        
       }
+    },
+    created: function () {
+      this.meetingId = this.$route.params.meetingId
+
       this.$axios({
-        method: 'put',
-        url: `http://localhost:8080/api/v1/meetings/${this.meetingId}/enter`,
-        data: enterCodeItem,
-        headers: this.setToken(),
+        method: 'get',
+        url: `${SERVER_URL}/api/v1/meetings/${this.meetingId}`,
       })
       .then(res => {
-        console.log(res)
-        if (res.data === "SUCCESS") {
-          this.$router.push({name:'MeetingRoom', params:{ meetingId: this.meetingId }})
-        }
+        this.title = res.data.title
+        this.content = res.data.content
       })
       .catch(err => {
-        console.log(err.response.data)
-        if (err.response.data === "MEETING ING") {
-          alert('현재 팬미팅이 진행중입니다. 잠시만 기다려주세요.')
-        } else if (err.response.data === "NO ENTER TWICE") {
-          alert('팬미팅을 중복해서 들어갈 수 없습니다.')
-        } else if (err.response.data === "MANAGER NOT IN") {
-          alert('아직 팬미팅이 시작하지 않았습니다. 잠시만 기다려주세요.')
-        } else if (err.response.data === "Wrong EnterCode") {
-          alert('코드를 다시 확인해 주세요.')
-        }
+        console.log(err)
       })
-      
     }
-  },
-  created: function () {
-    this.meetingId = this.$route.params.meetingId
-
-    this.$axios({
-      method: 'get',
-      url: `http://localhost:8080/api/v1/meetings/${this.meetingId}`,
-    })
-    .then(res => {
-      this.title = res.data.title
-      this.content = res.data.content
-    })
-    .catch(err => {
-      console.log(err)
-    })
   }
-}
 </script>

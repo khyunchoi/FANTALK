@@ -35,6 +35,7 @@
 </template>
 
 <script>
+  const SERVER_URL = process.env.VUE_APP_API_URL
   export default {
     name: 'UpdateArticleForm',
 
@@ -70,7 +71,7 @@
         if (articleItem.title) {
           this.$axios({
             method: 'put',
-            url: `http://localhost:8080/api/v1/communities/${this.communityId}/articles/${this.articleId}`,
+            url: `${SERVER_URL}/api/v1/communities/${this.communityId}/articles/${this.articleId}`,
             data: articleItem,
             headers: this.setToken(),
           })
@@ -88,7 +89,7 @@
       deleteArticle () {
         this.$axios({
           method: 'delete',
-          url: `http://localhost:8080/api/v1/communities/${this.communityId}/articles/${this.articleId}`,
+          url: `${SERVER_URL}/api/v1/communities/${this.communityId}/articles/${this.articleId}`,
           headers: this.setToken(),
         })
         .then(res => {
@@ -107,7 +108,7 @@
 
       this.$axios({
         method: 'get',
-        url: `http://localhost:8080/api/v1/communities/${this.communityId}/articles/${this.articleId}`,
+        url: `${SERVER_URL}/api/v1/communities/${this.communityId}/articles/${this.articleId}`,
       })
       .then(res => {
         this.title = res.data.title
