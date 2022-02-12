@@ -3,6 +3,7 @@ package com.ssafy.api.controller;
 import com.ssafy.api.request.CommunityRegisterPostReq;
 import com.ssafy.api.service.CommunityService;
 import com.ssafy.db.entity.Community;
+import org.checkerframework.checker.units.qual.A;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,6 +69,25 @@ public class CommunityController {
         logger.info("getAllCommunity 호출");
 
         return new ResponseEntity<List<Community>>(communityService.getAllCommunity(), HttpStatus.OK);
+    }
+
+    // 팬 커뮤니티 상세 조회
+    @GetMapping("/{communityId}")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공(SUCCESS)"),
+            @ApiResponse(code = 400, message = "실패(FAIL)")
+    })
+    @ApiOperation(value = "팬 커뮤니티 상세 조회", notes = "팬 커뮤니티 상세 조회")
+    public ResponseEntity<?> getCommunityDetail(
+            @PathVariable("communityId") @ApiParam(value="커뮤니티 id", required = true) Long communityId) {
+        logger.info("getCommunityDetail 호출");
+
+        try {
+            Community community = communityService.findById(communityId);
+            return new ResponseEntity<Community>(community, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<String>("FAIL", HttpStatus.BAD_REQUEST);
+        }
     }
 
     // 팬 커뮤니티 이름을 기반으로 검색
