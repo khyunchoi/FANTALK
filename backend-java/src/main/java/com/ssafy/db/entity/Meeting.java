@@ -27,9 +27,11 @@ public class Meeting {
     private String title;
 
     @NotNull
+    @Column(name = "is_active")
     private boolean isActive;
 
     @NotNull
+    @Column(name = "is_in_manager")
     private boolean isInManager;
 
     @NotNull
@@ -73,10 +75,10 @@ public class Meeting {
 
     // 기업회원 입장 여부 변경을 위한 편의 함수
     public void changeIsInManager() {
-        if (this.isActive) {
-            this.isActive = false;
+        if (this.isInManager) {
+            this.isInManager = false;
         } else {
-            this.isActive = true;
+            this.isInManager = true;
         }
     }
 }

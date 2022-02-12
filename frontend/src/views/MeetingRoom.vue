@@ -80,9 +80,10 @@ export default {
 		})
 		.then(res => {
 			// this.myUserName = res.data.name
+			console.log(res)
 			this.mySessionId = this.meetingId
 		})
-		.catch(res => {
+		.catch(err => {
 			console.log(err)
 		})
 
