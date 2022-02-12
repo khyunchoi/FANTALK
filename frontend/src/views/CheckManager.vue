@@ -12,10 +12,18 @@
   export default {
     name: 'CheckManager',
     methods: {
+      setToken () {
+        const token = localStorage.getItem('jwt')
+        const config = {
+          Authorization: `Bearer ${token}`
+        }
+        return config
+      },
       checkManager() {
         this.$axios({
           method: 'get',
-          url: `http://localhost:8080/api/v1/meetings/isManager`
+          url: `http://localhost:8080/api/v1/meetings/isManager`,
+          headers: this.setToken(),
         })
         .then(res => {
           console.log(res)

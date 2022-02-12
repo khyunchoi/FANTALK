@@ -76,6 +76,13 @@
     },
 
     methods: {
+      setToken () {
+        const token = localStorage.getItem('jwt')
+        const config = {
+          Authorization: `Bearer ${token}`
+        }
+        return config
+      },
       goBack () {
         this.$router.push({ name: 'MyMeetingList' })
       },
@@ -90,6 +97,7 @@
             method: 'put',
             url: `http://localhost:8080/api/v1/meetings/${this.meetingId}`,
             data: meetingItem,
+            headers: this.setToken(),
           })
           .then(res => {
             console.log(res)

@@ -52,6 +52,13 @@
     },
 
     methods: {
+      setToken () {
+        const token = localStorage.getItem('jwt')
+        const config = {
+          Authorization: `Bearer ${token}`
+        }
+        return config
+      },
       goBack () {
         this.$router.push({ name: 'DetailArticle', params: {communityId: this.communityId, articleId: this.articleId} })
       },
@@ -65,6 +72,7 @@
             method: 'put',
             url: `http://localhost:8080/api/v1/communities/${this.communityId}/articles/${this.articleId}`,
             data: articleItem,
+            headers: this.setToken(),
           })
           .then(res => {
             console.log(res)

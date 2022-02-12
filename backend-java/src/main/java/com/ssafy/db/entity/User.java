@@ -1,8 +1,11 @@
 package com.ssafy.db.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
@@ -14,6 +17,7 @@ import java.util.List;
  */
 @Entity
 @Getter
+@Setter
 @NoArgsConstructor
 public class User {
 
@@ -24,6 +28,8 @@ public class User {
     @Column(nullable = false)
     private String username;
 
+    @JsonIgnore
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
     private String name;
@@ -31,30 +37,21 @@ public class User {
     @Column(nullable = false)
     private String email;
 
-    @Column
-    private String profileImage;
-
     private String role; // ROLE_USER, ROLE_MANAGER
-
-    @ColumnDefault("false")
-    private boolean isDelete;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Meeting> meetingList = new ArrayList<>();
 
     @Builder
-    public User(String username, String name, String email, String profileImage, String role){
+    public User(String username, String name, String email, String role){
         this.username = username;
         this.name = name;
         this.email = email;
-        this.profileImage = profileImage;
         this.role = role;
     }
 
-    public User update(String username, String profileImage, boolean isDelete){
+    public User update(String username){
         this.username = username;
-        this.profileImage = profileImage;
-        this.isDelete = isDelete;
         return this;
     }
 }

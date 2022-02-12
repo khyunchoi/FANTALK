@@ -150,6 +150,13 @@ export default {
 	},
 
 	methods: {
+		setToken () {
+      const token = localStorage.getItem('jwt')
+      const config = {
+        Authorization: `Bearer ${token}`
+      }
+      return config
+    },
 		leaveSession () {
 			// --- Leave the session by calling 'disconnect' method over the Session object ---
 			if (this.session) this.session.disconnect();
@@ -165,6 +172,7 @@ export default {
 			this.$axios({
         method: 'put',
         url: `http://localhost:8080/api/v1/meetings/${this.meetingId}/exit`,
+				headers: this.setToken(),
       })
       .then(res => {
         console.log(res)

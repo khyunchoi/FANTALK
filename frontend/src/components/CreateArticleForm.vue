@@ -54,6 +54,13 @@
       goBack () {
         this.$router.push({ name: 'CommunityListItem', params: {communityId: this.communityId} })
       },
+      setToken () {
+        const token = localStorage.getItem('jwt')
+        const config = {
+          Authorization: `Bearer ${token}`
+        }
+        return config
+      },
       submit () {
         const articleItem = {
           title: this.title,
@@ -64,6 +71,7 @@
             method: 'post',
             url: `http://localhost:8080/api/v1/communities/${this.communityId}/articles`,
             data: articleItem,
+            headers: this.setToken(),
           })
           .then(res => {
             console.log(res)

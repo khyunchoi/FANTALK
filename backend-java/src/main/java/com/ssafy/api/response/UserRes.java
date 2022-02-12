@@ -18,6 +18,4 @@ public class UserRes{
     String name;
     @ApiModelProperty(name="email")
     String email;
-    @ApiModelProperty(name="profileImage")
-    String profileImage;
 }

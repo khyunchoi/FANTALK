@@ -57,6 +57,13 @@
     },
 
     methods: {
+      setToken () {
+        const token = localStorage.getItem('jwt')
+        const config = {
+          Authorization: `Bearer ${token}`
+        }
+        return config
+      },
       goBack() {
         this.$router.push({ name: 'Index' })
       },
@@ -70,6 +77,7 @@
             method: 'post',
             url: `http://localhost:8080/api/v1/communities/`,
             data: communityItem,
+            headers: this.setToken(),
           })
           .then(res => {
             console.log(res)

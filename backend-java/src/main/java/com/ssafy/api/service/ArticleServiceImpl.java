@@ -25,7 +25,6 @@ import java.util.List;
 public class ArticleServiceImpl implements ArticleService{
 
     private final ArticleRepository articleRepository;
-    private final UserService userService;
     private final JPAQueryFactory jpaQueryFactory;
     private final CommunityService communityService;
 
