@@ -196,8 +196,8 @@ public class MeetingServiceImpl implements MeetingService{
                         if (meeting.isInManager()) {
                             meeting.changeIsInManager();
                             meetingRepository.save(meeting);
+                            return "SUCCESS";
                         }
-                        return "SUCCESS";
                     }
                 }
             }
