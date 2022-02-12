@@ -53,6 +53,13 @@
       }
     },
     methods : {
+      setToken () {
+        const token = localStorage.getItem('jwt')
+        const config = {
+          Authorization: `Bearer ${token}`
+        }
+        return config
+      },
       moveMyMeetingList: function () {
         this.$router.push({name: 'MyMeetingList'})
       },
@@ -64,6 +71,7 @@
       this.$axios({
         method: 'get',
         url: `http://localhost:8080/api/v1/meetings/me`,
+        headers: this.setToken(),
       })
       .then(res => {
         console.log(res)

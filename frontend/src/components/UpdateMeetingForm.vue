@@ -116,6 +116,7 @@
         this.$axios({
           method: 'delete',
           url: `http://localhost:8080/api/v1/meetings/${this.meetingId}`,
+          headers: this.setToken(),
         })
         .then(res => {
           console.log(res)

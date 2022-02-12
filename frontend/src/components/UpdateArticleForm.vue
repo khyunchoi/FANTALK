@@ -89,6 +89,7 @@
         this.$axios({
           method: 'delete',
           url: `http://localhost:8080/api/v1/communities/${this.communityId}/articles/${this.articleId}`,
+          headers: this.setToken(),
         })
         .then(res => {
           console.log(res)
