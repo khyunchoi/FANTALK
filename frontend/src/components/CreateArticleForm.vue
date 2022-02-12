@@ -87,7 +87,7 @@
       },
     },
 
-    created() {
+    created: function () {
       this.communityId = this.$route.params.communityId
     }
   }
