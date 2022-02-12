@@ -53,6 +53,7 @@ export default {
         localStorage.setItem('jwt', res.data.accessToken)
         this.credentials.accessToken = res.data.accessToken
         this.$router.push({ name: 'Index' })
+        location.reload();
       })
       .catch((err) => {
         console.log(err)
