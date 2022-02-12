@@ -35,6 +35,9 @@
 				
 				<img src="../assets/exit.png" alt="Leave session" @click="leaveSession" style="position: absolute; right: 100px;">
 			</div>
+			<div>
+				<Chatting :session="session"/>
+			</div>
 		</div>
 	</div>
 </template>
@@ -43,6 +46,7 @@
 import axios from 'axios';
 import { OpenVidu } from 'openvidu-browser';
 import UserVideo from '../components/UserVideo';
+import Chatting from '../components/Chatting.vue';
 
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 
@@ -53,7 +57,7 @@ export default {
 	name: 'App',
 
 	components: {
-		UserVideo,
+		UserVideo, Chatting
 	},
 
 	data () {
