@@ -1,11 +1,15 @@
 <template>
-  <div>
+  <div style="display:flex; flex-direction: row">
 
-    <div class="community-list-item">
-
+    <div class="community-list-item-category">
+      <br><br><br>
       <div class="community-list-item-title">
         <h2>{{ communityId }}번 게시판</h2>
       </div>
+    </div>
+
+    <div class="community-list-item">
+
 
       <br>
 
@@ -116,10 +120,17 @@
 </script>
 
 <style>
+  .community-list-item-category {
+    display: flex;
+    /* background-color: beige; */
+    width: 20%;
+    padding: 5%;
+    flex-direction: column;
+  }
   .community-list-item {
     display: flex;
     /* background-color: beige; */
-    width: 100%;
+    width: 80%;
     padding: 5%;
     flex-direction: column;
   }

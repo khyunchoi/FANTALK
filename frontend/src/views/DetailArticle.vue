@@ -1,16 +1,33 @@
 <template>
   <div>
+    <div class="detail-article">
 
-    <div class="detail-article-container">
-      <br>
-      제목 : {{ title }}
-      <br><br>
-      내용 :
-      <br>
-      {{ content }}
-      <br>
+      <div>
+        <h2>{{ communityId }}번 게시판</h2>
+        <br>
+      </div>
+
+      <div class="detail-article-box">
+
+        <div class="detail-article-box-content">
+          <br>
+          <h3>{{ title }}</h3>
+          <br>
+          <div style="display: flex; justify-content: space-between">
+            <span>{{ email }} | {{ createdAt.slice(0, 19) }}</span><span>조회수 {{ hits }}</span>
+          </div>
+        </div>
+
+        <hr>
+
+        <div class="detail-article-box-content">
+          <br>
+          {{ content }}
+        </div>
+
+      </div>
+
     </div>
-
   </div>
 </template>
 
@@ -23,13 +40,14 @@
         articleId: null,
         title: '',
         content: '',
+        email: '',
+        createdAt: '',
+        hits: '',
       }
     },
     created: function () {
       this.articleId = this.$route.params.articleId
       this.communityId = this.$route.params.communityId
-      console.log(this.articleId)
-      console.log(this.communityId)
       this.$axios({
         method:'get',
         url: `http://localhost:8080/api/v1/communities/${this.communityId}/articles/${this.articleId}`
@@ -41,6 +59,9 @@
       .then(res => {
         this.title = res.title
         this.content = res.content
+        this.email = res.email
+        this.createdAt = res.createdAt
+        this.hits = res.hits
         return res
       })
       .catch(error => {
@@ -54,11 +75,25 @@
 </script>
 
 <style>
-  .detail-article-container {
-    width: 100%;
+  .detail-article {
     display: flex;
+    /* background-color: whitesmoke; */
+    width: 100%;
     padding: 5%;
     flex-direction: column;
-    align-items: left;
+  }
+  .detail-article-box {
+    display: flex;
+    /* background-color: beige; */
+    border-style: solid;
+    border-width: 1px;
+    border-color: gray;
+    flex-direction: column;
+  }
+  .detail-article-box-content {
+    display: flex;
+    /* background-color: lightpink; */
+    padding: 20px;
+    flex-direction: column;
   }
 </style>
