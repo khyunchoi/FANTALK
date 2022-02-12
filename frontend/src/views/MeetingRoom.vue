@@ -69,7 +69,7 @@ export default {
 			subscribers: [],
 
 			mySessionId: 'meetingId',
-			myUserName: '최강현',
+			myUserName: '',
 			title: '아이유 팬미팅',
 			meetingId: '',
 		}
@@ -80,12 +80,15 @@ export default {
 
 		this.$axios({
 			method: 'get',
-			url: 'http://localhost:8080/api/v1/users/me'
+			url: 'http://localhost:8080/api/v1/users/me',
+			headers: this.setToken(),
 		})
 		.then(res => {
 			// this.myUserName = res.data.name
+			console.log("내 정보")
 			console.log(res)
 			this.mySessionId = this.meetingId
+			this.myUserName = res.data.name
 		})
 		.catch(err => {
 			console.log(err)

@@ -17,7 +17,6 @@
       <div class='chat_input'>
          <input v-model='chattings' @keyup.enter='sendMessage' placeholder="input message.." type="text" class="message_input"/>
          <button :disabled="!chattings" @click='sendMessage' type="submit" class="message_submit">Send</button>
-
       </div>
 
   </div>
