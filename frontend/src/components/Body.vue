@@ -1,8 +1,25 @@
 <template>
   <div class="big-container">
     <div class="first-small-container">
-      <h2>당신의 연예인과</h2>
-      <h2>지금 바로 만나보세요!</h2>
+      <div>
+        <h2
+          v-for="(t, index) in text1"
+          :key="index"
+          class="item"
+          :style="{animationDelay: index*100+'ms'}"
+          v-text="t"
+        >
+        </h2>
+      </div>
+      <div>
+        <h2
+          v-for="(t, index) in text2"
+          :key="index"
+          class="item"
+          :style="{animationDelay: index*100+'ms'}"
+          v-text="t"
+        ></h2>
+      </div>
     </div>
 
     <div class="second-small-container">
@@ -52,6 +69,8 @@
     name: 'Body',
 
     data: () => ({
+      text1: '당신의 연예인과',
+      text2: '지금 바로 만나보세요!',
     }),
   }
 </script>
@@ -65,12 +84,13 @@
 
   .first-small-container {
     width: 100%;
-    display: flex;
     padding: 6%;
+    display: flex;
     flex-direction: column;
     align-items: center;
     color: #535353;
     background-image: url("../assets/main.svg");
+    background-size: cover;
     font-size: 1.5em;
   }
 
@@ -112,5 +132,18 @@
     background-color: #ACAEFF;
     color: #FFD98E;
     font-size: 1.1em;
+  }
+
+  @keyframes text-in {
+    0% {
+      transform: translate(0, -20px);
+      opacity: 0;
+    }
+  }
+  .item {
+    display: inline-block;
+    min-width: 0.3em;
+    font-size: 2rem;
+    animation: text-in .8s cubic-bezier(0.22, 0.15, 0.25, 1.43) 0s backwards;
   }
 </style>
