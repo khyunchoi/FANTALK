@@ -1,39 +1,43 @@
 <template>
-  <div style="display: flex; flex-flow: column; align-items: center;">
+  <div class="main-container">
     <v-card
-      style="width: 1000px; margin-top: 50px;"
+      style="width: 60%; margin-top: 8%;"
+      class="guide-container"
     >
-      <div>
+      <div id="title">
         {{ title }}
       </div>
-      <div>
-        {{ openDate }}
+      <div id="open-date">
+        팬미팅 날짜/시간: {{ openDate }}
       </div>
-      <div>
-        미팅 안내사항!
-      </div>
-      <div>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-        Aliquid tempora dolores ullam dicta quibusdam, modi dignissimos eos,
-        nam maxime odio aliquam enim commodi, id ipsum minima explicabo. Veniam, error minus.
-        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-        Aliquid tempora dolores ullam dicta quibusdam, modi dignissimos eos,
-        nam maxime odio aliquam enim commodi, id ipsum minima explicabo. Veniam, error minus.
-        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-        Aliquid tempora dolores ullam dicta quibusdam, modi dignissimos eos,
-        nam maxime odio aliquam enim commodi, id ipsum minima explicabo. Veniam, error minus.
+      <div class="notification-container">
+        <div id="notification">
+          <팬미팅 안내사항>
+        </div>
+        <div>
+          <div id="first">
+            1. 본인의 미팅 시간에 맞춰 입장해 주세요.
+          </div>
+          <div id="second">
+            2. 사전에 받은 입장 코드를 입력해 주세요. (주의!! 한번 사용하신 입장 코드는 재사용할 수 없습니다.)
+          </div>
+          <div id="third">
+            3. 팬미팅 중 비속어, 성희롱 등 팬미팅 에티켓에 어긋나는 행동은 삼가해 주세요.
+          </div>
+        </div>
       </div>
 
       <v-text-field
         v-model="enterCode"
-        label="입장 코드"
+        label="입장 코드를 입력해 주세요."
         solo
         required
+        style="width: 60%; color: #DFDFDF; margin-left: 20%;"
       ></v-text-field>
 
       <v-btn
         @click="enterMeeting()"
-        style="background-color: #797BF8; color: #FFFFFF;"
+        style="width: 25%; background-color: #797BF8; color: #FFFFFF; margin-left: 38%;"
       >
         입장
       </v-btn>
@@ -109,3 +113,65 @@
     }
   }
 </script>
+
+<style scoped>
+  .main-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .guide-container {
+    padding: 3%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  #title {
+    font-size: 1.6em;
+    padding: 0 0 1% 0;
+    font-weight: bold;
+    color: #797BF8;
+  }
+
+  #open-date {
+    font-size: 1em;
+    padding: 0 0 3% 65%;
+    color: #797BF8;
+    font-weight: bold;
+  }
+
+  .notification-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  #notification {
+    font-size: 1.4em;
+    padding: 0 0 3% 0;
+    color: #FF6666;
+    font-weight: bold;
+  }
+
+  #first {
+    font-size: 1.1em;
+    padding: 0 0 1% 0;
+    color: #979797;
+    font-weight: bold;
+  }
+
+  #second {
+    font-size: 1.1em;
+    padding: 0 0 1% 0;
+    color: #979797;
+    font-weight: bold;
+  }
+
+  #third {
+    font-size: 1.1em;
+    padding: 0 0 3% 0;
+    color: #979797;
+    font-weight: bold;
+  }
+</style>
