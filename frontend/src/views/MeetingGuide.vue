@@ -91,6 +91,8 @@
             alert('아직 팬미팅이 시작하지 않았습니다. 잠시만 기다려주세요.')
           } else if (err.response.data === "Wrong EnterCode") {
             alert('코드를 다시 확인해 주세요.')
+          } else {
+            alert('로그인을 해주세요.')
           }
         })
         
