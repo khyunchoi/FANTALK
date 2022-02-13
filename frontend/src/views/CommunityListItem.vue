@@ -2,13 +2,30 @@
   <div style="display:flex; flex-direction: row">
 
     <div class="community-list-item-category">
-      <br><br><br>
+      <br><br><br><br>
       <div class="community-list-item-title">
-        <h2>{{ communityId }}번 게시판</h2>
+        <h3>{{ communityName }} 팬 커뮤니티</h3>
+        <br>
+        <h5>{{ communityTitle }}</h5>
       </div>
     </div>
 
     <div class="community-list-item">
+
+      <div>
+        search
+          <div style="width: 100%; margin-right: 10px;">
+            <v-text-field
+              label="제목"
+              dense
+              solo
+              v-model="q"
+              @keyup.enter="search()"
+            >
+            
+            </v-text-field>
+          </div>
+      </div>
 
 
       <br>
@@ -93,6 +110,21 @@
       enterCreateArticle: function () {
         this.$router.push({name: 'CreateArticle'})
 
+      },
+      search() {
+        this.$axios({
+          method: 'get',
+          url: `${SERVER_URL}/api/v1/meetings/search`,
+          params: {
+            q: this.q,
+          }
+        })
+        .then(res => {
+          this.meetingList = res.data
+        })
+        .catch(err => {
+          console.log(err)
+        })
       }
     },
     created: function () {

@@ -2,12 +2,31 @@
   <div>
     <!-- <CommunityListSearch />
     <hr> -->
-    <div class="community-list-cards-container">
-      <div>
-        <h2 style="font-size: 1.5em;">팬 커뮤니티 목록</h2>
-      </div>  
+    <div class="community-list">
+
+      <div class="community-list-title">
+        <h2>팬 커뮤니티 목록</h2>
+        <h4>(검색창)</h4>
+      </div>
+
       <br>
 
+      <div class="community-list-cards">
+
+
+      </div>
+
+    </div>  
+
+
+
+
+
+
+
+    
+    <div class="community-list-cards-container">
+      <br>
       <div>
         <button
           v-for="community in communityList" :key="community"
@@ -18,14 +37,12 @@
           <br>
           <br>
           {{ community.title }}
-          <!-- <router-link :to="{name:'CommunityListItem', params:{ communinityId:community.id }}">
-            <button>입장</button>
-          </router-link> -->
         </button>
       </div>
-      
-
     </div>  
+
+
+
   </div>
 </template>
 
@@ -73,6 +90,36 @@
 </script>
 
 <style>
+  .community-list {
+    display: flex;
+    width: 100%;
+    padding: 5%;
+    flex-direction: column;
+    align-items: left;
+  }
+  .community-list-title {
+    display: flex;
+    /* flex-direction: column;
+    align-items: left; */
+  }
+  .community-list-cards {
+    display: flex;
+    /* flex-direction: column;
+    align-items: left; */
+  }
+  .community-list-cards-column {
+    display: flex
+  }
+  
+
+
+
+
+
+
+
+
+
   .community-list-cards-container {
     width: 100%;
     display: flex;
