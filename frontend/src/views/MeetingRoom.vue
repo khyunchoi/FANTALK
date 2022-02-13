@@ -286,7 +286,7 @@ export default {
 	}
 
 	.chat-container {
-		padding: 0 0 0 2%;
+		padding: 0 0 0 10%;
 	}
 
 	.user-video {
