@@ -3,7 +3,7 @@
     <div class="detail-article">
 
       <div>
-        <h2>{{ communityId }}번 게시판</h2>
+        <h2>{{communityName}} 팬 커뮤니티</h2>
         <br>
       </div>
 
@@ -38,6 +38,7 @@
 
     data: function() {
       return {
+        communityName: '',
         articleId: null,
         title: '',
         content: '',
@@ -70,6 +71,21 @@
       })
       .finally(function () {
         console.log('done')
+      })
+      this.$axios({
+        method:'get',
+        url: `${SERVER_URL}/api/v1/communities/${this.communityId}`
+      })
+      .then(res => {
+        console.log(res.data)
+        return res.data
+      })
+      .then(res => {
+        this.communityName = res.name
+        return res.name
+      })
+      .catch(error => {
+          console.log(error)
       })
     }
   }
