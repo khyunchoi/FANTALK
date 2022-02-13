@@ -43,10 +43,10 @@
         <img src="../assets/2.png" alt="2" width="80%;">
       </div>
       <div style="text-align: center;">
-        <h2 style="padding: 0 0 5% 0;">팬미팅 대기방 입장</h2>
+        <h2 style="padding: 0 0 5% 0;">1:1 팬미팅 방 입장</h2>
         <h4>팬미팅 입장을 클릭하고</h4>
         <h4>입장코드를 입력하여</h4>
-        <h4>팬미팅 대기방으로 입장해주세요.</h4>
+        <h4>1:1 팬미팅 방으로 입장해주세요.</h4>
       </div>
     </div>
 
@@ -56,9 +56,9 @@
       </div>
       <div style="text-align: center;">
         <h2 style="padding: 0 0 5% 0;">연예인과 팬미팅</h2>
-        <h4>본인의 순서가 되면</h4>
-        <h4>1:1 연예인 팬미팅 방으로</h4>
-        <h4>자동 이동하게 됩니다.</h4>
+        <h4>팬미팅 에티켓을 지키며</h4>
+        <h4>연예인과 1:1 팬미팅을</h4>
+        <h4>즐겨주세요.</h4>
       </div>
     </div>
   </div>
