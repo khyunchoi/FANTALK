@@ -14,6 +14,7 @@
               v-model="q"
               @keyup.enter="search()"
             >
+            
             </v-text-field>
           </div>
           <v-btn
