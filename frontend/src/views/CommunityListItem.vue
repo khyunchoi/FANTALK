@@ -114,8 +114,6 @@
         console.log('aa')
         this.$router.push({name: 'DetailArticle', params:{ articleId:idx }})
         this.$router.push({name: 'DetailArticle', params:{ communityId:this.communityId }})
-        DetailArticle.data.push({articleId:idx})
-        DetailArticle.data.push({communityId:this.communityId})
       },
       enterCreateArticle: function () {
         this.$router.push({name: 'CreateArticle'})

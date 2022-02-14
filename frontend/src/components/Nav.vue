@@ -86,7 +86,7 @@
     display: flex-start;
     justify-content: space-between;
     align-items: center;
-    padding: 1.2% 15%;
+    padding: 1.2% 17%;
   }
   
   .login {
