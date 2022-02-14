@@ -16,6 +16,7 @@
           label="비밀번호"
           v-model="credentials.password"
           type="password"
+          @keyup.enter="login()"
         >
         </v-text-field>
       </div>
