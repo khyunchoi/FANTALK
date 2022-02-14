@@ -75,7 +75,6 @@ export default {
 			mainStreamManager: undefined,
 			publisher: undefined,
 			subscribers: [],
-
 			mySessionId: '',
 			myUserName: '',
 			title: '',

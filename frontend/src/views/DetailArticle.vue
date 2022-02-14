@@ -97,7 +97,11 @@
         return config
       },
       submitComment() {
-        if (this.commentContent.length >= 1) {
+        if (this.userEmail === '') {
+          alert('로그인 후 이용해주세요 :)')
+          this.$router.push({name: 'Index'})
+        } else {
+          if (this.commentContent.length >= 1) {
           const commentItem = {
             content: this.commentContent
           }
@@ -114,8 +118,9 @@
           .catch(err => {
             console.log(err)
           })
-        } else {
-          alert('댓글은 1자 이상 작성해야 합니다.')
+          } else {
+            alert('댓글은 1자 이상 작성해야 합니다.')
+          }
         }
       },
       deleteComment (commentId) {
