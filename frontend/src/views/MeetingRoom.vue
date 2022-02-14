@@ -85,7 +85,7 @@ export default {
 
 	created: function () {
 		this.meetingId = this.$route.params.meetingId
-		this.mySessionId = this.meetingId
+		this.mySessionId = this.meetingId.toString()
 
 		this.$axios({
 			method: 'get',
