@@ -32,13 +32,6 @@
         </v-btn>
       </div>
 
-      <div>
-          <v-btn v-for="searchResult in searchResults" :key="searchResult" @click="enterDetailArticle(searchResult.articleId)" style="margin: 0px 10px 0px 0px;">
-            {{ searchResult.title }}
-          </v-btn>
-      </div>
-
-
       <br>
       <div class="community-list-item-list">
         <div class="community-list-item-list-articles-1" style="padding-bottom: 5px; border-style: solid; border-width: 0px 0px 2px 0px; border-color: gray;">
@@ -88,7 +81,6 @@
         communityId: null,
         communityName: null,
         communityTitle: null,
-        searchResults: null,
         articles: [],
         headers: [
           { 
@@ -138,8 +130,7 @@
           }
         })
         .then(res => {
-          this.searchResults = res.data
-          console.log(this.searchResults)
+          this.articles = res.data
         })
         .catch(err => {
           console.log(err)
