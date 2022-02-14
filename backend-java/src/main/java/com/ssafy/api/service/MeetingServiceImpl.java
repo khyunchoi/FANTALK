@@ -11,6 +11,7 @@ import com.ssafy.db.repository.EnterCodeRepository;
 import com.ssafy.db.repository.MeetingRepository;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -67,7 +68,7 @@ public class MeetingServiceImpl implements MeetingService{
     @Override
     public List<MeetingDetailGetRes> getAllMeeting() {
 
-        List<Meeting> findMeetings = meetingRepository.findAll();
+        List<Meeting> findMeetings = meetingRepository.findAll(Sort.by(Sort.Direction.ASC, "openDate"));
         List<MeetingDetailGetRes> meetings = new ArrayList<>();
         for (Meeting findMeeting : findMeetings) {
             MeetingDetailGetRes meeting = new MeetingDetailGetRes();
@@ -105,7 +106,7 @@ public class MeetingServiceImpl implements MeetingService{
     @Override
     public List<MeetingDetailGetRes> searchMeeting(String searchWord) {
 
-        List<Meeting> findMeetings = meetingRepository.findByTitleContaining(searchWord);
+        List<Meeting> findMeetings = meetingRepository.findByTitleContainingOrderByOpenDateAsc(searchWord);
         List<MeetingDetailGetRes> meetings = new ArrayList<>();
         for (Meeting findMeeting : findMeetings) {
             MeetingDetailGetRes meeting = new MeetingDetailGetRes();

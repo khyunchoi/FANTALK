@@ -14,7 +14,7 @@ import java.util.Optional;
 @Repository
 public interface MeetingRepository extends JpaRepository<Meeting, Long> {
 
-    List<Meeting> findByTitleContaining(String searchWord);
+    List<Meeting> findByTitleContainingOrderByOpenDateAsc(String searchWord);
     Optional<Meeting> findById(Long id);
     List<Meeting> findByUserId(Long userId);
     Optional<Meeting> findByIdAndUserId(Long id, Long userId);
