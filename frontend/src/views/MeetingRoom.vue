@@ -77,12 +77,14 @@ export default {
 			subscribers: [],
 			mySessionId: '',
 			myUserName: '',
+			title: '',
 			meetingId: '',
 		}
 	},
 
 	created: function () {
 		this.meetingId = this.$route.params.meetingId
+		this.mySessionId = this.meetingId.toString()
 
 		this.$axios({
 			method: 'get',
@@ -93,7 +95,6 @@ export default {
 			// this.myUserName = res.data.name
 			console.log("내 정보")
 			console.log(res)
-			this.mySessionId = this.meetingId
 			this.myUserName = res.data.name
 		})
 		.catch(err => {
