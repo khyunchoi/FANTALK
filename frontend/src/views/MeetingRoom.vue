@@ -75,10 +75,8 @@ export default {
 			mainStreamManager: undefined,
 			publisher: undefined,
 			subscribers: [],
-
 			mySessionId: '',
 			myUserName: '',
-			title: '아이유 팬미팅',
 			meetingId: '',
 		}
 	},
