@@ -1,14 +1,14 @@
 <template>
   <div>
-    <img src="../assets/sidemymeetinglist.png" alt="check-manager" style="padding: 6% 0 2% 2%;">
+    <img src="../assets/sidemymeetinglist.png" alt="check-manager" style="padding: 6% 0 2% 2%;" @click="moveMyMeetingList">
     <div style="display: flex; justify-content: center;">
-      <div style="margin: 20px; padding: 20px; width: 700px;">
-        <h3 style="margin-bottom: 20px; padding-bottom: 10px;">
+      <div style="margin: 20px; padding: 20px; width: 70%;">
+        <h2 style="margin-bottom: 20px; padding-bottom: 10px; color: #797BF8;">
           팬미팅 상세 조회
-        </h3>
+        </h2>
         <div style="display: flex; justify-content: center;">
           <v-card
-            style="padding: 20px; border: 1px solid #979797; width: 700px;"
+            style="padding: 20px; border: 1px solid #979797; width: 100%;"
           >
             <template>
               <h3 style="margin-top: 10px; margin-bottom: 10px;">
@@ -45,15 +45,17 @@
                 </v-col>
               </v-row>
               
-              <h3 style="color: #FF0000;">
-                **안내사항
-              </h3>
-              <ul style="list-style-type: square; color: #979797; margin-left: 20px; margin-top: 10px;">
-                <li>안내사항1</li>
-                <li>안내사항2</li>
-                <li>안내사항3</li>
-                <li>안내사항4</li>
-                <li>안내사항5</li>
+              <div style="color: #FF0000; font-size: 1.2em; font-weight: bold; padding: 1% 0 0 0;">
+                팬미팅 신청 안내 사항
+              </div>
+              <ul style="list-style-type: square; color: #979797; font-weight: bold; margin-left: 20px; margin-top: 10px;">
+                <li>팬미팅 제목을 지정해 주세요. ex) 'TIMEROOM'의 올해 첫 1:1 팬미팅</li>
+                <li>1:1 팬미팅 시작 날짜와 시간을 지정해 주세요. ex) 2022-01-01 15:00</li>
+                <li>위 항목들을 입력 후 제출하시면, 본 기업회원의 이메일로 기업회원의 입장 코드를 포함한 전체 입장 코드 목록을 제공합니다.</li>
+                <li>팬미팅에 참여하는 인원들에게 각 입장 코드와 입장 시간을 배부하면, 원활한 팬미팅 진행을 할 수 있습니다.</li>
+                <li>팬미팅을 주관하는 기업회원은 시작 시간 전에 미리 리허설을 진행할 수 있습니다.</li>
+                <li>기업회원이 팬미팅 방에 들어가 있지 않으면 팬들이 입장하지 못하니 이 점 꼭 유의해 주세요.</li>
+                <li>이후 문의사항은 timeroom@ssafy.com으로 문의해주시면 감사하겠습니다.</li>
               </ul>
               
               <div style="display: flex; justify-content: end; margin-top: 30px;">
@@ -91,7 +93,10 @@
       },
       edit () {
         this.$router.push({ name: 'UpdateMeeting' })
-      }
+      },
+      moveMyMeetingList: function () {
+        this.$router.push({name: 'MyMeetingList'})
+      },
     },
 
     created: function () {
@@ -113,3 +118,9 @@
     }
   }
 </script>
+
+<style scoped>
+  img:hover {
+    cursor: pointer
+  }
+</style>
