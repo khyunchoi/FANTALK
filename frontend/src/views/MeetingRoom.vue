@@ -76,7 +76,7 @@ export default {
 			publisher: undefined,
 			subscribers: [],
 
-			mySessionId: 'meetingId',
+			mySessionId: '',
 			myUserName: '',
 			title: '아이유 팬미팅',
 			meetingId: '',
