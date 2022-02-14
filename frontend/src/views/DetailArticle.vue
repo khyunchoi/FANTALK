@@ -13,7 +13,7 @@
         </div>
 
         <div id="etc-container">
-          <div>{{ email }} | {{ createdAt }}</div>
+          <div>{{ secretEmail }} | {{ createdAt }}</div>
           <div>조회수 {{ hits }}</div>
         </div>
 
@@ -22,14 +22,16 @@
         </div>
       </div>
 
-    <v-btn @click="updateArticle()" id="update-btn">수정</v-btn>
+    <div v-if="userEmail == email">
+      <v-btn @click="updateArticle()" id="update-btn">수정</v-btn>
+    </div>
 
     <div class="comment-container">
-      <div>
+      <div id="comment-notification">
         총 {{ commentCnt }}건의 댓글이 있습니다.
       </div>
 
-      <div>
+      <div id="comment-input-container">
         <v-text-field
           v-model="commentContent"
           label="댓글을 입력하세요."
@@ -37,11 +39,21 @@
           solo
           required
         ></v-text-field>
-        <v-btn @click="submitComment()" style="background-color: #797BF8; color: #FFFFFF; margin: 0 10px;">등록</v-btn>
+        <v-btn @click="submitComment()" style="background-color: #797BF8; color: #FFFFFF; margin-left: 3%; margin-top: 0.5%;">등록</v-btn>
       </div>
 
-      <div v-for="comment in commentList" :key="comment">
-        {{ comment.content }}
+      <div v-for="comment in commentList" :key="comment.id">
+        <div id="comment-author">
+          <div>
+            ***{{ comment.email.slice(3) }} | {{ comment.createdAt}}
+          </div>
+          <button v-if="comment.email == userEmail" @click="deleteComment(comment.commentId)" style="background-color: #FF6666; color: #FFFFFF; font-size: 0.5em; height: 15%; width: 4%; margin-left: 1%; margin-top: 0.3%; border-radius: 5px;">
+            삭제
+          </button>
+        </div>
+        <div id="comment-content">
+          {{ comment.content }}
+        </div>
       </div>
     </div>
     </div>
@@ -57,9 +69,11 @@
       return {
         communityName: '',
         articleId: null,
+        userEmail: '',
         title: '',
         content: '',
         email: '',
+        secretEmail: '',
         createdAt: '',
         hits: '',
         commentList: [],
@@ -103,7 +117,24 @@
         } else {
           alert('댓글은 1자 이상 작성해야 합니다.')
         }
-      }
+      },
+      deleteComment (commentId) {
+        this.$axios({
+            method: 'delete',
+            url: `${SERVER_URL}/api/v1/articles/${this.articleId}/comments/${commentId}`,
+            headers: this.setToken(),
+        })
+        .then(res => {
+          console.log(res)
+          location.reload()
+        })
+        .catch(err => {
+          console.log(err)
+        })
+      },
+      updateArticle () {
+        this.$router.push({name: 'UpdateArticle', params: {communityId: this.communityId, articleId: this.articleId}})
+      },
     },
     created: function () {
       this.articleId = this.$route.params.articleId
@@ -122,6 +153,7 @@
         this.hits = res.data.hits
         this.commentList = res.data.commentList
         this.commentCnt = this.commentList.length
+        this.secretEmail = '***' + this.email.slice(3)
       })
       .catch(err => {
           console.log(err)
@@ -138,6 +170,19 @@
       })
       .catch(err => {
           console.log(err)
+      })
+
+      this.$axios({
+        method: 'get',
+        url: `${SERVER_URL}/api/v1/users/me`,
+        headers: this.setToken(),
+      })
+      .then(res => {
+        console.log(res)
+        this.userEmail = res.data.email
+      })
+      .catch(err => {
+        console.log(err)
       })
     }
   }
@@ -187,7 +232,7 @@
     width: 100%;
     height: 60%;
     overflow: auto;
-    word-break:break-all;
+    word-break: break-all;
   }
 
   #update-btn {
@@ -196,6 +241,29 @@
     width: 3%;
     margin-left: 98.5%;
     margin-top: 1%;
+  }
+
+  #comment-notification {
+    padding: 0 0 1% 0;
+    font-weight: bold;
+  }
+
+  #comment-input-container {
+    display: flex;
+    width: 70%;
+  }
+
+  #comment-author {
+    padding: 0 0 0.5% 0;
+    font-size: 0.8em;
+    font-weight: bold;
+    color: #BABACE;
+    display: flex;
+  }
+
+  #comment-content {
+    padding: 0 0 2% 0;
+    font-weight: bold;
   }
 
   img:hover {
