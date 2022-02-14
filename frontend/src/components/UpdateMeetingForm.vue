@@ -87,7 +87,7 @@
         return config
       },
       goBack () {
-        this.$router.push({ name: 'MyMeetingList' })
+        this.$router.push({ name: 'DetailMyMeeting', params:{ meetingId: this.meetingId }})
       },
       submit () {
         const meetingItem = {
@@ -107,7 +107,7 @@
             this.title = ''
             this.openDate = ''
             this.maxUser = ''
-            this.$router.push({ name: 'MyMeetingList' })
+            this.$router.push({ name: 'DetailMyMeeting', params:{ meetingId: this.meetingId }})
           })
           .catch(err => {
             console.log(meetingItem)

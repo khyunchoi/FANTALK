@@ -84,7 +84,7 @@
         meetingList2: [],
         meetingList3: [],
         meetingList4: [],
-        q: ''
+        q: '',
       }
     },
     methods:{
@@ -163,14 +163,15 @@
 
   .meeting-list-cards {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
+    margin: 0 10% 0 10%;
   }
 
   .meeting-list-cards-column {
     display: flex;
     flex-direction: column;
-    width: 25%;
-    margin: 3%;
+    width: 20%;
+    margin: 1%;
   }
 
   .meeting-list-card {
@@ -180,14 +181,21 @@
     justify-content: center;
     padding: 5%;
     margin: 10px 10px 30px 10px;
-    height: 13vw;
+    height: 11vw;
     color: white;
     border-radius: 15px;
   }
 
+  .meeting-list-card:hover {
+    transition: 0.3s;
+    transform: translateY(-5px);
+    opacity: 0.8;
+  }
+
   .meeting-list-card-title {
     margin: 10px;
-    font-size: 1.6vw;
+    font-size: 1.4vw;
+    font-weight: bold;
   }
 
   .meeting-list-card-openDate {

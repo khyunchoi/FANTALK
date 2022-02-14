@@ -1,6 +1,6 @@
 <template>
   <v-toolbar>
-    <router-link style="text-decoration: none; color: #797BF8; font-size: 1.2em; font-weight: bold;" :to="{name: 'Index'}">
+    <router-link style="text-decoration: none; color: #797BF8; font-size: 1.2em; font-weight: bold; position: absolute;" :to="{name: 'Index'}">
         FANTALK
     </router-link>
     <v-toolbar-items class="container">
@@ -14,18 +14,26 @@
         팬미팅 신청
       </router-link>
     </v-toolbar-items>
-    <v-btn style="background-color: #FFFFFF; font-weight: bold">
-      <div v-if="userId == 0">
-        <router-link style="text-decoration: none; color: #000000;" :to="{name: 'Login'}">
-          로그인
-        </router-link>
+    <div style="position: absolute; right: 10px; display: flex; align-items: center;">
+      <div v-if="userId != 0" style="margin-right: 10px; font-size: 12px;">
+        <span style="font-weight: bold;">
+          {{ username }}
+        </span>        
+        님 환영합니다.
       </div>
-      <div v-else>
-        <div @click="logout()">
-          로그아웃
+      <v-btn style="background-color: #FFFFFF; font-weight: bold;">
+        <div v-if="userId == 0">
+          <router-link style="text-decoration: none; color: #000000;" :to="{name: 'Login'}">
+            로그인
+          </router-link>
         </div>
-      </div>
-    </v-btn>
+        <div v-else>
+          <div @click="logout()">
+            로그아웃
+          </div>
+        </div>
+      </v-btn>
+    </div>
   </v-toolbar>
 </template>
 
@@ -35,7 +43,8 @@
     name: 'Nav',
     data: function() {
       return {
-        userId: 0
+        userId: 0,
+        username: '',
       }
     },
     methods: {
@@ -62,6 +71,7 @@
       .then(res => {
         console.log(res)
         this.userId = res.data.id
+        this.username = res.data.name
       })
       .catch(err => {
         console.log(err)
@@ -72,7 +82,7 @@
 
 <style scoped>
   .container {
-    width: 90%;
+    width: 80%;
     display: flex-start;
     justify-content: space-between;
     align-items: center;
