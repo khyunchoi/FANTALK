@@ -14,7 +14,6 @@
               v-model="q"
               @keyup.enter="search()"
             >
-            
             </v-text-field>
           </div>
           <v-btn
@@ -27,22 +26,49 @@
         </div>
         <div></div>
       </div>
-      
 
-      <div>
-        <button
-          v-for="meeting in meetingList" :key="meeting"
-          class="meeting-list-card"
-          @click="enterMeetingGuide(meeting.id)"
-        >
-          {{ meeting.title }}
-          <br>
-          <br>
-          {{ meeting.openDate }}
-        </button>
+      <div class="meeting-list-cards">
+        <div class="meeting-list-cards-column">
+          <button v-for="meeting in meetingList1" :key="meeting.id" class="meeting-list-card" @click="enterMeetingGuide(meeting.id)" style="background-color: #FF6666;">
+            <div class="meeting-list-card-title">
+              {{ meeting.title }}
+            </div>
+            <div class="meeting-list-card-openDate">
+              {{ meeting.openDate }}
+            </div>
+          </button>
+        </div>
+        <div class="meeting-list-cards-column">
+          <button v-for="meeting in meetingList2" :key="meeting.id" class="meeting-list-card" @click="enterMeetingGuide(meeting.id)" style="background-color: #F7A400;">
+            <div class="meeting-list-card-title">
+              {{ meeting.title }}
+            </div>
+            <div class="meeting-list-card-openDate">
+              {{ meeting.openDate }}
+            </div>
+          </button>
+        </div>
+        <div class="meeting-list-cards-column">
+          <button v-for="meeting in meetingList3" :key="meeting.id" class="meeting-list-card" @click="enterMeetingGuide(meeting.id)" style="background-color: #03B962;">
+            <div class="meeting-list-card-title">
+              {{ meeting.title }}
+            </div>
+            <div class="meeting-list-card-openDate">
+              {{ meeting.openDate }}
+            </div>
+          </button>
+        </div>
+        <div class="meeting-list-cards-column">
+          <button v-for="meeting in meetingList4" :key="meeting.id" class="meeting-list-card" @click="enterMeetingGuide(meeting.id)" style="background-color: #ACAEFF;">
+            <div class="meeting-list-card-title">
+              {{ meeting.title }}
+            </div>
+            <div class="meeting-list-card-openDate">
+              {{ meeting.openDate }}
+            </div>
+          </button>
+        </div>
       </div>
-      
-
     </div>
 	</div>
 </template>
@@ -53,7 +79,11 @@
     name: 'MeetingList',
     data: function() {
       return {
-        meetingList: {},
+        meetingList: [],
+        meetingList1: [],
+        meetingList2: [],
+        meetingList3: [],
+        meetingList4: [],
         q: ''
       }
     },
@@ -71,6 +101,22 @@
         })
         .then(res => {
           this.meetingList = res.data
+          this.meetingList1 = []
+          this.meetingList2 = []
+          this.meetingList3 = []
+          this.meetingList4 = []
+
+          for (var i = 0; i < this.meetingList.length; i++) {
+            if (i % 4 === 0){
+              this.meetingList1.push(res.data[i])
+            }else if (i % 4 === 1){
+              this.meetingList2.push(res.data[i])
+            }else if (i % 4 === 2){
+              this.meetingList3.push(res.data[i])
+            }else if (i % 4 === 3){
+              this.meetingList4.push(res.data[i])
+            }
+          }
         })
         .catch(err => {
           console.log(err)
@@ -84,7 +130,19 @@
       })
       .then(res => {
         this.meetingList = res.data
-        console.log(this.meetingList)
+
+        for (var i = 0; i < this.meetingList.length; i++) {
+          if (i % 4 === 0){
+            this.meetingList1.push(res.data[i])
+          }else if (i % 4 === 1){
+            this.meetingList2.push(res.data[i])
+          }else if (i % 4 === 2){
+            this.meetingList3.push(res.data[i])
+          }else if (i % 4 === 3){
+            this.meetingList4.push(res.data[i])
+          }
+        }
+
         return this.meetingList
       })
       .catch(err => {
@@ -98,17 +156,42 @@
   .meeting-list-cards-container {
     width: 100%;
     display: flex;
-    padding: 10%;
+    padding: 5%;
     flex-direction: column;
     align-items: left;
   }
 
+  .meeting-list-cards {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .meeting-list-cards-column {
+    display: flex;
+    flex-direction: column;
+    width: 25%;
+    margin: 3%;
+  }
+
   .meeting-list-card {
-    width: 20%;
-    padding: 3%;
-    border-style: solid;
-    border-width: 5px;
-    border-color: #797BF8;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;
+    padding: 5%;
+    margin: 10px 10px 30px 10px;
+    height: 13vw;
+    color: white;
+    border-radius: 15px;
+  }
+
+  .meeting-list-card-title {
     margin: 10px;
+    font-size: 1.6vw;
+  }
+
+  .meeting-list-card-openDate {
+    margin: 10px;
+    font-size: 1.2vw;
   }
 </style>
