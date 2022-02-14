@@ -1,79 +1,83 @@
 <template>
   <div>
-    <!-- <CommunityListSearch />
-    <hr> -->
-    <div class="community-list">
-
-      <div class="community-list-title">
-        <h2>팬 커뮤니티 목록</h2>
+    <div class="community-list-cards-container">
+      <div style="display: flex; justify-content: space-between; width: 100%;">
+        <div style="">
+          <h2 style="font-size: 1.5em;">팬 커뮤니티 목록</h2>
+        </div>
+        <div style="display: flex; width: 60%;">
+          <div style="width: 100%; margin-right: 10px;">
+            <v-text-field
+              label="제목"
+              dense
+              solo
+              v-model="q"
+              @keyup.enter="search()"
+            >
+            </v-text-field>
+          </div>
+          <v-btn
+            rounded
+            @click="search()"
+            style="background-color: #797BF8; color: white; height: 38px;"
+          >
+            검색
+          </v-btn>
+        </div>
+        <div></div>
       </div>
-
-      <br><br>
 
       <div class="community-list-cards">
         <div class="community-list-cards-column">
           <button v-for="community in communityList1" :key="community" class="community-list-card" @click="enterCommunity(community.id)" style="background-color: #FF6666;">
-            {{ community.id }} | {{ community.name }}<br><br>{{ community.title }}
+            <div class="community-list-card-circle" style="background-color: #FF8C8C;">
+              <div class="community-list-card-name">
+                {{ community.name }}
+              </div>
+            </div>
+            <div class="community-list-card-title">
+              {{ community.title }}
+            </div>
           </button>
         </div>
         <div class="community-list-cards-column">
           <button v-for="community in communityList2" :key="community" class="community-list-card" @click="enterCommunity(community.id)" style="background-color: #F7A400;">
-            {{ community.id }} | {{ community.name }}<br><br>{{ community.title }}
+            <div class="community-list-card-circle" style="background-color: #FFC85C;">
+              <div class="community-list-card-name">
+                {{ community.name }}
+              </div>
+            </div>
+            <div class="community-list-card-title">
+              {{ community.title }}
+            </div>
           </button>
         </div>
         <div class="community-list-cards-column">
           <button v-for="community in communityList3" :key="community" class="community-list-card" @click="enterCommunity(community.id)" style="background-color: #03B962;">
-            {{ community.id }} | {{ community.name }}<br><br>{{ community.title }}
+            <div class="community-list-card-circle" style="background-color: #14D076;">
+              <div class="community-list-card-name">
+                {{ community.name }}
+              </div>
+            </div>
+            <div class="community-list-card-title">
+              {{ community.title }}
+            </div>
           </button>
         </div>
         <div class="community-list-cards-column">
           <button v-for="community in communityList4" :key="community" class="community-list-card" @click="enterCommunity(community.id)" style="background-color: #ACAEFF;">
-            {{ community.id }} | {{ community.name }}<br><br>{{ community.title }}
+            <div class="community-list-card-circle" style="background-color: #D3D3FF;">
+              <div class="community-list-card-name">
+                {{ community.name }}
+              </div>
+            </div>
+            <div class="community-list-card-title">
+              {{ community.title }}
+            </div>
           </button>
         </div>
       </div>
-
-
-      <br><br><br>
-
-
-
-      
-      <!-- <div class="community-list-cards">
-        <div>
-          <button v-for="community in communityList" :key="community" class="community-list-card" @click="enterCommunity(community.id)">
-            {{ community.id }} | {{ community.name }}<br><br>{{ community.title }}
-          </button>
-        </div>
-      </div> -->
-
     </div>  
-
-
-
-
-
-
-
-    
-    <!-- <div class="community-list-cards-container">
-      <br><br><br><br>
-      <div>
-        <button
-          v-for="community in communityList" :key="community"
-          class="community-list-card"
-          @click="enterCommunity(community.id)"
-        >
-          {{ community.id }} | {{ community.name }}
-          <br>
-          <br>
-          {{ community.title }}
-        </button>
-      </div>
-    </div>   -->
-
-
-
   </div>
 </template>
 
@@ -92,6 +96,7 @@
         communityList2: [],
         communityList3: [],
         communityList4: [],
+        q: '',
       }
     },
     methods:{
@@ -99,8 +104,36 @@
         this.$router.push({name:'CommunityListItem', params:{ communityId:idx }})
         CommunityListItem.data.push({communityId:idx})
       },
-      communityNum: function (idx) {
-        return idx % 4
+      search() {
+        this.$axios({
+          method: 'get',
+          url: `${SERVER_URL}/api/v1/communities/search`,
+          params: {
+            q: this.q,
+          }
+        })
+        .then(res => {
+          this.communityList = res.data
+          this.communityList1 = []
+          this.communityList2 = []
+          this.communityList3 = []
+          this.communityList4 = []
+
+          for (var i = 0; i < this.communityList.length; i++) {
+            if (i % 4 === 0){
+              this.communityList1.push(res.data[i])
+            }else if (i % 4 === 1){
+              this.communityList2.push(res.data[i])
+            }else if (i % 4 === 2){
+              this.communityList3.push(res.data[i])
+            }else if (i % 4 === 3){
+              this.communityList4.push(res.data[i])
+            }
+          }
+        })
+        .catch(err => {
+          console.log(err)
+        })
       }
     },
     created: function () {
@@ -113,7 +146,6 @@
       })
       .then(response => {
         this.communityList = response
-        // console.log(this.communityList)
 
         for (var i = 0; i < this.communityList.length; i++) {
           if (i % 4 === 0){
@@ -125,92 +157,78 @@
           }else if (i % 4 === 3){
             this.communityList4.push(response[i])
           }
-          
         }
-        // console.log(this.communityList1)
-        
-
 
         return this.communityList
       })
       .catch(error => {
           console.log(error)
       })
-      .finally(function () {
-        console.log('파이팅!')
-      })
     }
   }
 </script>
 
 <style>
-  .community-list {
-    display: flex;
+  .community-list-cards-container {
     width: 100%;
+    display: flex;
     padding: 5%;
     flex-direction: column;
     align-items: left;
   }
+
   .community-list-title {
     display: flex;
-    /* background-color: antiquewhite; */
-    /* flex-direction: column;
-    align-items: left; */
   }
+
   .community-list-cards {
     display: flex;
-    justify-content: space-between;
-    /* background-color: antiquewhite; */
-    /* flex-direction: column;
-    align-items: left; */
+    justify-content: center;
+    margin: 0 10% 0 10%;
   }
+
   .community-list-cards-column {
     display: flex;
     flex-direction: column;
-    width: 25%;
-    padding: 5px;
-    margin: 5px;
-    /* background-color: white; */
+    width: 20%;
+    margin: 1%;
   }
-  
-
-
-
 
   .community-list-card {
     display: flex;
+    flex-flow: column;
+    align-items: center;
     justify-content: center;
-    padding: 20% 5% 5% 5%;
-    margin: 10px;
-    height: 300px;
+    padding: 5%;
+    margin: 10px 10px 30px 10px;
     color: white;
-    /* border-style: solid;
-    border-width: 5px;
-    border-color: #797BF8; */
     border-radius: 15px;
-    
-    /* background-color: #FFACAC"
-    background-color: #FFD98E"
-    background-color: #14D076"
-    background-color: #EBEBFF" */
-    
-    
-    
   }
 
+  .community-list-card:hover {
+    transition: 0.3s;
+    transform: translateY(-5px);
+    opacity: 0.8;
+  }
 
-
-
-
-
-
-  .community-list-cards-container {
-    width: 100%;
+  .community-list-card-circle {
+    border:1px;
+    border-radius: 5vw;
+    width: 10vw;
+    height: 10vw;
     display: flex;
-    padding: 10%;
-    flex-direction: column;
-    align-items: left;
+    justify-content: center;
+    align-items: center;
   }
 
+  .community-list-card-name {
+    margin: 10px;
+    font-size: 2.0vw;
+    font-weight: bold;
+  }
 
+  .community-list-card-title {
+    margin: 30px;
+    font-size: 1.2vw;
+  }
 </style>

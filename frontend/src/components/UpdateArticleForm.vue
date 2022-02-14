@@ -79,7 +79,7 @@
             console.log(res)
             this.title = ''
             this.content = ''
-            this.$router.push({name:'CommunityListItem', params:{ communityId: this.communityId }})
+            this.$router.push({ name: 'DetailArticle', params: {communityId: this.communityId, articleId: this.articleId} })
           })
           .catch(err => {
             console.log(err)
