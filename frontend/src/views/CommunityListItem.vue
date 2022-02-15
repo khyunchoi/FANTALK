@@ -49,9 +49,7 @@
           </button>
         </div>
       </div>
-
       <br>
-
       <div class="community-list-item-create">
         <v-btn
           rounded
@@ -61,28 +59,9 @@
           글쓰기
         </v-btn>
       </div>
-
-      <div>
-        <div id="pages"></div>
-        <br><br><br><br><br><br>
-        <button @click="paginationMove(1)">[ 1페이지로 가봅시다. ]</button><br>
-        <button @click="paginationMove(2)">[ 2페이지로 가봅시다. ]</button><br>
-        <button @click="paginationMove(3)">[ 3페이지로 가봅시다. ]</button><br>
-        <button @click="paginationMove(4)">[ 4페이지로 가봅시다. ]</button><br>
-        <button @click="paginationMove(5)">[ 5페이지로 가봅시다. ]</button><br>
-        <button @click="paginationMove(6)">[ 6페이지로 가봅시다. ]</button><br>
-        <button @click="paginationMove(7)">[ 7페이지로 가봅시다. ]</button><br>
-        <button @click="paginationMove(8)">[ 8페이지로 가봅시다. ]</button><br>
-        <button @click="paginationMove(9)">[ 9페이지로 가봅시다. ]</button><br>
-      </div>
-
-
     </div>
-
     <div class="community-list-item-side" style="width: 15%;">
-
     </div>
-
   </div>
 </template>
 
@@ -122,6 +101,7 @@
             sortable: false,
           },
         ],
+        q: '',
         totalArticleCount: null,
         dataPerPage: dataPerPage,
         pageCount: pageCount,
@@ -146,7 +126,7 @@
       },
 
       paginationChange: function (currentPage) {
-
+        var self = this;
         // event.preventDefault()
 
         const pageGroup = Math.ceil(currentPage / pageCount) // pageGroup : 현재 몇 번째 페이지 묶음에 있는지
@@ -178,6 +158,9 @@
             pageBtn.setAttribute("class", "pagination-btn")
           }
           pageBtn.setAttribute("id", `page(${j})`)
+          pageBtn.addEventListener('click', function(){
+            self.paginationMove(j);
+          })
           pages.appendChild(pageBtn)
         }
         if (first < Math.ceil(this.totalPage / pageCount) * pageCount - (pageCount - 1)) {
@@ -197,11 +180,8 @@
       },
 
       enterDetailArticle: function (idx) {
-        console.log('aa')
         this.$router.push({name: 'DetailArticle', params:{ articleId:idx }})
         this.$router.push({name: 'DetailArticle', params:{ communityId:this.communityId }})
-        DetailArticle.data.push({articleId:idx})
-        DetailArticle.data.push({communityId:this.communityId})
       },
 
       enterCreateArticle: function () {
