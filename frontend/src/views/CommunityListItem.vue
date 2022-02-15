@@ -1,16 +1,23 @@
 <template>
+<div>
+    <img src="../assets/sidecommunitylistitem.png" alt="check-manager" style="padding: 6% 0 2% 2%;">
+    <div class="meeting-list-item" style="width: 80%;">
+      <h2 style="padding: 0% 20%; font-size: 1.5em;">{{ communityName }} 팬 커뮤니티</h2>
+    </div>
+
+
   <div style="display:flex; flex-direction: row">
 
-    <div class="community-list-item-side" style="width: 25%;">
-      <br><br><br><br>
+    <div class="community-list-item-side" style="width: 10%;">
+      <!-- <br><br><br><br>
       <div class="community-list-item-title">
         <h3>{{ communityName }} 팬 커뮤니티</h3>
         <br><br>
         <div style="background-color: #797BF8; color: white; width: 70%; text-align: left; padding: 3% 3% 3% 12%; border-radius: 0px 20px 20px 0px;">자유게시판</div>
-      </div>
+      </div> -->
     </div>
 
-    <div class="community-list-item" style="width: 60%;">
+    <div class="community-list-item" style="width: 85%;">
       <br><br>
       <div style="display: flex; width: 60%;">
         <div style="width: 100%; margin-right: 10px;">
@@ -61,9 +68,10 @@
       </div>
       <div id="pages"></div>
     </div>
-    <div class="community-list-item-side" style="width: 15%;">
+    <div class="community-list-item-side" style="width: 5%;">
     </div>
   </div>
+</div>
 </template>
 
 <script>
