@@ -7,56 +7,57 @@
     </div>
 
     <div class="article-comment-container">
+
       <div class="article-container">
+
         <div id="title">
           {{ title }}
         </div>
-
         <div id="etc-container">
           <div>{{ secretEmail }} | {{ createdAt }}</div>
           <div>조회수 {{ hits }}</div>
         </div>
-
         <div id="content">
           <p>{{ content }}</p>
         </div>
+        
       </div>
 
-    <div v-if="userEmail == email">
-      <v-btn @click="updateArticle()" id="update-btn">수정</v-btn>
-    </div>
-
-    <div class="comment-container">
-      <div id="comment-notification">
-        총 {{ commentCnt }}건의 댓글이 있습니다.
+      <div v-if="userEmail == email">
+        <v-btn @click="updateArticle()" id="update-btn">수정</v-btn>
       </div>
 
-      <div id="comment-input-container">
-        <v-text-field
-          v-model="commentContent"
-          label="댓글을 입력하세요."
-          :rules="contentRules"
-          solo
-          @keyup.enter="submitComment()"
-          required
-        ></v-text-field>
-        <v-btn @click="submitComment()" style="background-color: #797BF8; color: #FFFFFF; margin-left: 3%; margin-top: 0.5%;">등록</v-btn>
-      </div>
+      <div class="comment-container">
 
-      <div v-for="comment in commentList" :key="comment.id">
-        <div id="comment-author">
-          <div>
-            ***{{ comment.email.slice(3) }} | {{ comment.createdAt}}
+        <div id="comment-notification">
+          총 {{ commentCnt }}건의 댓글이 있습니다.
+        </div>
+        <div id="comment-input-container">
+          <v-text-field
+            v-model="commentContent"
+            label="댓글을 입력하세요."
+            :rules="contentRules"
+            solo
+            @keyup.enter="submitComment()"
+            required
+          ></v-text-field>
+          <v-btn @click="submitComment()" style="background-color: #797BF8; color: #FFFFFF; margin-left: 3%; margin-top: 0.5%;">등록</v-btn>
+        </div>
+        <div v-for="comment in commentList" :key="comment.id">
+          <div id="comment-author">
+            <div>
+              ***{{ comment.email.slice(3) }} | {{ comment.createdAt}}
+            </div>
+            <button v-if="comment.email == userEmail" @click="deleteComment(comment.commentId)" style="background-color: #FF6666; color: #FFFFFF; font-size: 0.5em; height: 15%; width: 4%; margin-left: 1%; margin-top: 0.3%; border-radius: 5px;">
+              삭제
+            </button>
           </div>
-          <button v-if="comment.email == userEmail" @click="deleteComment(comment.commentId)" style="background-color: #FF6666; color: #FFFFFF; font-size: 0.5em; height: 15%; width: 4%; margin-left: 1%; margin-top: 0.3%; border-radius: 5px;">
-            삭제
-          </button>
+          <div id="comment-content">
+            {{ comment.content }}
+          </div>
         </div>
-        <div id="comment-content">
-          {{ comment.content }}
-        </div>
+
       </div>
-    </div>
     </div>
   </div>
 </template>
