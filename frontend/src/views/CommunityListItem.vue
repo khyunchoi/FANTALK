@@ -59,6 +59,7 @@
           글쓰기
         </v-btn>
       </div>
+      <div id="pages"></div>
     </div>
     <div class="community-list-item-side" style="width: 15%;">
     </div>
