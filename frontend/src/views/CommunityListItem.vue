@@ -68,7 +68,7 @@
 
 <script>
   const SERVER_URL = process.env.VUE_APP_API_URL
-  const dataPerPage = 5
+  const dataPerPage = 10
   const pageCount = 3
   export default {
     name: 'CommunityListItem',
@@ -79,6 +79,7 @@
         communityId: null,
         communityName: null,
         communityTitle: null,
+        userEmail: '',
         articles: [],
         headers: [
           { 
@@ -136,7 +137,7 @@
         if (last > this.totalPage) {last = this.totalPage}
         if (first < 1) {first = 1}
         if (this.totalPage <= 1) {first = last}
-        this.articleAtTop = dataPerPage * currentPage - (dataPerPage - 1) // 현재 보여지는 페이지의 제일 상단에 위치한 게시물의 전체 순번
+        this.articleAtTop = dataPerPage * currentPage - dataPerPage // 현재 보여지는 페이지의 제일 상단에 위치한 게시물의 전체 순번
         const next = last + 1 // 다음 묶음의 첫 번째 페이지
         const prev = first - 1 // 이전 묶음의 마지막 페이지
 
@@ -148,6 +149,9 @@
           prevBtn.append("<")
           prevBtn.setAttribute("class", "pagination-btn-prev-next")
           prevBtn.setAttribute("id", `page(${prev})`)
+          prevBtn.addEventListener('click', function() {
+            self.paginationMove(prev)
+          })
           pages.appendChild(prevBtn)
         }
         for (let j = first; j <= last; j++) {
@@ -169,6 +173,9 @@
           nextBtn.setAttribute("class", "pagination-btn-prev-next")
           nextBtn.setAttribute("id", `page(${next})`)
           nextBtn.append(">")
+          nextBtn.addEventListener('click', function() {
+            self.paginationMove(next);
+          })
           pages.appendChild(nextBtn)
         }
 
@@ -186,8 +193,13 @@
       },
 
       enterCreateArticle: function () {
-        this.$router.push({name: 'CreateArticle'})
-
+        if (this.userEmail === '') {
+          alert('로그인 후 이용해 주세요 :)')
+          this.$router.push({name: 'Login'})
+        }
+        else {
+          this.$router.push({name: 'CreateArticle'})
+        }
       },
       search() {
         this.$axios({
@@ -198,16 +210,22 @@
           }
         })
         .then(res => {
-          this.articles = res.data
-        })
-        .catch(err => {
-          console.log(err)
-        })
-        .finally(() => {
           const pagination = document.querySelector("#pages")
-          pagination.remove()
-          
+          pagination.innerHTML = ''
+          this.articles = res.data
+          this.totalArticleCount = this.articles.length
+          this.paginationSet()
+          this.paginationChange(1)
         })
+        .catch(() => {
+        })
+      },
+      setToken () {
+        const token = localStorage.getItem('jwt')
+        const config = {
+          Authorization: `Bearer ${token}`
+        }
+        return config
       },
     },
     created: function () {
@@ -222,21 +240,14 @@
       })
       .then(res => {
         this.articles = res
-        console.log(this.articles)
-        console.log(this.articles.length)
         this.totalArticleCount = this.articles.length
         
-        this.paginationSet(1)
+        this.paginationSet()
         this.paginationChange(1)
+      })
+      .catch(() => {
+      })
 
-        return
-      })
-      .catch(error => {
-          console.log(error)
-      })
-      .finally(function () {
-        console.log('done')
-      })
       this.$axios({
         method:'get',
         url: `${SERVER_URL}/api/v1/communities/${this.communityId}`
@@ -249,8 +260,18 @@
         this.communityTitle = res.title
         return res
       })
-      .catch(error => {
-          console.log(error)
+      .catch(() => {
+      })
+
+      this.$axios({
+        method: 'get',
+        url: `${SERVER_URL}/api/v1/users/me`,
+        headers: this.setToken(),
+      })
+      .then(res => {
+        this.userEmail = res.data.email
+      })
+      .catch(() => {
       })
     }
   }

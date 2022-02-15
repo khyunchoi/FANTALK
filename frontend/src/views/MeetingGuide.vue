@@ -33,6 +33,7 @@
         solo
         required
         style="width: 60%; color: #DFDFDF; margin-left: 20%;"
+        @keyup.enter="enterMeeting()"
       ></v-text-field>
 
       <v-btn

@@ -37,6 +37,7 @@
           label="댓글을 입력하세요."
           :rules="contentRules"
           solo
+          @keyup.enter="submitComment()"
           required
         ></v-text-field>
         <v-btn @click="submitComment()" style="background-color: #797BF8; color: #FFFFFF; margin-left: 3%; margin-top: 0.5%;">등록</v-btn>
