@@ -8,7 +8,7 @@
         <div style="display: flex; width: 60%;">
           <div style="width: 100%; margin-right: 10px;">
             <v-text-field
-              label="제목"
+              label="이름"
               dense
               solo
               v-model="q"
