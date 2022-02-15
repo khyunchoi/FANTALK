@@ -41,7 +41,7 @@
         <div v-for="(article, key) in articles" :key="article.key">
           <button v-if="key >= articleAtTop && key < articleAtTop + dataPerPage" @click="enterDetailArticle(article.articleId)" class="community-list-item-list-articles-2">
             <span style="width: 10%" class="community-list-item-list-articles-elements">{{ article.hits }}</span>
-            <span style="width: 35%" class="community-list-item-list-articles-elements">{{ article.title }} (작성 최신순: {{ key }})</span>
+            <span style="width: 35%" class="community-list-item-list-articles-elements">{{ article.title }}</span>
             <span style="width: 20%" class="community-list-item-list-articles-elements">{{ article.createdAt.slice(0,19) }}</span>
             <span style="width: 35%" class="community-list-item-list-articles-elements">***{{ article.email.slice(3) }}</span>
           </button>
