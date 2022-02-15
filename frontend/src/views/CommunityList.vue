@@ -24,8 +24,16 @@
             검색
           </v-btn>
         </div>
-        <div>
-          
+        <div v-if="userId == 1 || userId == 2 || userId == 3 || userId == 4">
+          <v-btn
+          rounded
+          @click="createCommunity"
+          style="background-color: #797BF8; color: white; height: 30px;"
+          >
+          등록
+          </v-btn>
+        </div>
+        <div v-else>
         </div>
       </div>
 
@@ -139,6 +147,10 @@
         }
         return config
       },
+
+      createCommunity () {
+        this.$router.push({name: 'CreateCommunity'})
+      }
     },
     created: function () {
       this.$axios({
