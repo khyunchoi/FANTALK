@@ -1,16 +1,14 @@
 <template>
-  <div style="display:flex; flex-direction: row">
+<div class="main-container">
 
-    <div class="community-list-item-side" style="width: 25%;">
-      <br><br><br><br>
-      <div class="community-list-item-title">
-        <h3>{{ communityName }} 팬 커뮤니티</h3>
-        <br><br>
-        <div style="background-color: #797BF8; color: white; width: 70%; text-align: left; padding: 3% 3% 3% 12%; border-radius: 0px 20px 20px 0px;">자유게시판</div>
-      </div>
-    </div>
+  <div class="main-container" style="display:flex;">
 
-    <div class="community-list-item" style="width: 60%;">
+    <div style="padding: 6% 0 2% 2%;">
+      <h2 style="padding: 0 0 0 3%;">{{communityName}} 팬 커뮤니티</h2>
+      <img src="../assets/boardsidebar.png" style="padding: 10% 0 0 0;">
+    </div>    
+
+    <div class="community-list-item" style="width: 80%;">
       <br><br>
       <div style="display: flex; width: 60%;">
         <div style="width: 100%; margin-right: 10px;">
@@ -61,9 +59,12 @@
       </div>
       <div id="pages"></div>
     </div>
-    <div class="community-list-item-side" style="width: 15%;">
+    <div class="community-list-item-side">
     </div>
   </div>
+
+
+</div>
 </template>
 
 <script>
@@ -281,7 +282,7 @@
   .community-list-item-side {
     display: flex;
     /* background-color: beige; */
-    padding: 4%;
+    /* padding: 4%; */
     flex-direction: column;
   }
   .community-list-item {
