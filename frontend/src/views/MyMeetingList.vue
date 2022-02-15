@@ -75,11 +75,9 @@
         headers: this.setToken(),
       })
       .then(res => {
-        console.log(res)
         this.meetings = res.data
       })
-      .catch(err => {
-        console.log(err)
+      .catch(() => {
       })
     },
   }

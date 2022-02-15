@@ -100,16 +100,13 @@
             data: meetingItem,
             headers: this.setToken(),
           })
-          .then(res => {
-            console.log(res)
+          .then(() => {
             this.title = ''
             this.openDate = ''
             this.maxUser = ''
             this.$router.push({ name: 'MyMeetingList' })
           })
-          .catch(err => {
-            console.log(meetingItem)
-            console.log(err)
+          .catch(() => {
           })
         }
       }

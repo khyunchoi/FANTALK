@@ -9,10 +9,6 @@
 				<div v-if="subscribers.length != 0">
 					<user-video v-for="sub in subscribers" :key="sub.stream.connection.connectionId" :stream-manager="sub" class="sub-video" />
 				</div>
-
-				<!-- <div v-if="subscribers.length == 0">
-					<img src="../assets/cam-alter.png" alt="cam-alter">
-				</div> -->
 			</div>
 
 			<div class="button-container">
@@ -92,13 +88,9 @@ export default {
 			headers: this.setToken(),
 		})
 		.then(res => {
-			// this.myUserName = res.data.name
-			console.log("내 정보")
-			console.log(res)
 			this.myUserName = res.data.name
 		})
-		.catch(err => {
-			console.log(err)
+		.catch(() => {
 		})
 
 		// --- Get an OpenVidu object ---
@@ -189,8 +181,7 @@ export default {
         url: `${SERVER_URL}/api/v1/meetings/${this.meetingId}/exit`,
 				headers: this.setToken(),
       })
-      .then(res => {
-        console.log(res)
+      .then(() => {
         this.$router.push({name:'MeetingList'})
       })
 		},

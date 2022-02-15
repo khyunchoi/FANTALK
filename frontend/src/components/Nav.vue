@@ -62,19 +62,16 @@
       }
     },
     created: function () {
-      console.log(process.env)
       this.$axios({
         method: 'get',
         url: `${SERVER_URL}/api/v1/users/me`,
         headers: this.setToken(),
       })
       .then(res => {
-        console.log(res)
         this.userId = res.data.id
         this.username = res.data.name
       })
-      .catch(err => {
-        console.log(err)
+      .catch(() => {
       })
     }
   }

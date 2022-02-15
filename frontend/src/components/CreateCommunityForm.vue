@@ -80,15 +80,12 @@
             data: communityItem,
             headers: this.setToken(),
           })
-          .then(res => {
-            console.log(res)
+          .then(() => {
             this.name = ''
             this.title = ''
             this.$router.push({ name: 'CommunityList' })
           })
-          .catch(err => {
-            console.log(communityItem)
-            console.log(err)
+          .catch(() => {
           })
         }
       },

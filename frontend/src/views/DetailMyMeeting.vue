@@ -112,8 +112,7 @@
         this.openDate = res.data.openDate.slice(0, 16)
         this.maxUser = res.data.maxUser
       })
-      .catch(err => {
-        console.log(err)
+      .catch(() => {
       })
     }
   }

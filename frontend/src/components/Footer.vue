@@ -21,7 +21,7 @@
     align-items: center;
     background-color: #BABACE;
     padding: 1%;
-    color: #FFFFFF;
+    color: #F6EFEF;
     max-width: 100%;
   }
 </style>

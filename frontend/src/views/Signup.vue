@@ -92,15 +92,13 @@
           url: `${SERVER_URL}/api/v1/users`,
           data: signUpItem,
         })
-        .then(res => {
-          console.log(res)
+        .then(() => {
           this.$router.push({ name: 'Index' })
         })
         .catch(err => {
           if (err.response.status === 403) {
             alert('아이디가 존재합니다.')
           }
-          console.log(err)
         })
       },
     }
