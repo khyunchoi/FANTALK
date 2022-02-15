@@ -66,7 +66,7 @@
         return config
       },
       goBack() {
-        this.$router.push({ name: 'Index' })
+        this.$router.push({ name: 'CommunityList' })
       },
       submit () {
         const communityItem = {
