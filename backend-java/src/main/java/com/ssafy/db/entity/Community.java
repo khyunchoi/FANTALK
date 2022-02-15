@@ -10,6 +10,8 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -39,6 +41,9 @@ public class Community {
 
     @NotNull
     private String title;
+
+    @OneToMany(mappedBy = "community", cascade = CascadeType.ALL)
+    private List<Article> articleList = new ArrayList<>();
 
     @Builder
     public Community(String name, String title) {
