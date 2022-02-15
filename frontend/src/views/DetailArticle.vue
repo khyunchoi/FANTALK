@@ -18,7 +18,7 @@
           <div>조회수 {{ hits }}</div>
         </div>
         <div id="content">
-          <p>{{ content }}</p>
+          <p style="white-space:pre-wrap">{{ content }}</p>
         </div>
         
       </div>
