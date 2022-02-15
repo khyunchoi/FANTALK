@@ -47,13 +47,8 @@
 		created: function () {
 			// 방에 들어와 있는 모든 사람이 받는거
 			this.session.on('signal:my-chat', (event) => {
-				console.log(event)
-				console.log(event.data); // Message
 				const content = event.data.slice(1, -1) // Message
-				console.log(event.from.data); // Message
 				const chatting_user = event.from.data.slice(15, -2)
-				console.log(chatting_user)
-				console.log("여기")
 				this.chat.push({
 					user: chatting_user,
 					text: content
@@ -69,10 +64,8 @@
 				})
 				.then(() => {
 					this.chattings = '';
-					console.log('Message success');
 				})
-				.catch(err => {
-					console.log(err);
+				.catch(() => {
 				})
 			},
 		},

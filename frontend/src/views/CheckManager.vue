@@ -27,19 +27,17 @@
           headers: this.setToken(),
         })
         .then(res => {
-          console.log(res)
           if (res.data === "SUCCESS") {
             this.$router.push({name: 'MyMeetingList'})
           }
         })
         .catch(err => {
-          console.log(err.response.data)
           if (err.response.status === 400) {
             alert('기업회원이 아닙니다. 자세한 사항은 timeroom@ssafy.com에 문의해주세요.')
             this.$router.push({name: 'Index'})
           } else {
-            alert('로그인을 해주세요.')
-            this.$router.push({name: 'Index'})
+            alert('로그인 후 이용해 주세요 :)')
+            this.$router.push({name: 'Login'})
           }
         })
       },

@@ -74,15 +74,12 @@
             data: articleItem,
             headers: this.setToken(),
           })
-          .then(res => {
-            console.log(res)
+          .then(() => {
             this.title = ''
             this.content = ''
             this.$router.push({name:'CommunityListItem', params:{ communityId: this.communityId }})
           })
-          .catch(err => {
-            console.log(articleItem)
-            console.log(err)
+          .catch(() => {
           })
         }
       },

@@ -85,11 +85,18 @@
         meetingList3: [],
         meetingList4: [],
         q: '',
+        userEmail: '',
       }
     },
     methods:{
       enterMeetingGuide: function (idx) {
-        this.$router.push({name:'MeetingGuide', params:{ meetingId:idx }})
+        if (this.userEmail === '') {
+          alert('로그인 후 이용해 주세요 :)')
+          this.$router.push({name: 'Login'})
+        }
+        else {
+          this.$router.push({name:'MeetingGuide', params:{ meetingId:idx }})
+        }
       },
       search() {
         this.$axios({
@@ -118,10 +125,16 @@
             }
           }
         })
-        .catch(err => {
-          console.log(err)
+        .catch(() => {
         })
-      }
+      },
+      setToken () {
+        const token = localStorage.getItem('jwt')
+        const config = {
+          Authorization: `Bearer ${token}`
+        }
+        return config
+      },
     },
     created: function () {
       this.$axios({
@@ -145,8 +158,18 @@
 
         return this.meetingList
       })
-      .catch(err => {
-          console.log(err)
+      .catch(() => {
+      })
+
+      this.$axios({
+        method: 'get',
+        url: `${SERVER_URL}/api/v1/users/me`,
+        headers: this.setToken(),
+      })
+      .then(res => {
+        this.userEmail = res.data.email
+      })
+      .catch(() => {
       })
     }
   }

@@ -3,7 +3,6 @@ package com.ssafy.api.controller;
 import com.ssafy.api.request.CommunityRegisterPostReq;
 import com.ssafy.api.service.CommunityService;
 import com.ssafy.db.entity.Community;
-import org.checkerframework.checker.units.qual.A;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

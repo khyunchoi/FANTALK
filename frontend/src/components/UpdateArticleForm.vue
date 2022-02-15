@@ -75,8 +75,7 @@
             data: articleItem,
             headers: this.setToken(),
           })
-          .then(res => {
-            console.log(res)
+          .then(() => {
             this.title = ''
             this.content = ''
             this.$router.push({ name: 'DetailArticle', params: {communityId: this.communityId, articleId: this.articleId} })
@@ -92,8 +91,7 @@
           url: `${SERVER_URL}/api/v1/communities/${this.communityId}/articles/${this.articleId}`,
           headers: this.setToken(),
         })
-        .then(res => {
-          console.log(res)
+        .then(() => {
           this.$router.push({name:'CommunityListItem', params:{ communityId: this.communityId }})
         })
         .catch(err => {
@@ -114,8 +112,7 @@
         this.title = res.data.title
         this.content = res.data.content
       })
-      .catch(err => {
-        console.log(err)
+      .catch(() => {
       })
     }
   }

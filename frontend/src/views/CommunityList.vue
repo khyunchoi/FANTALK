@@ -24,7 +24,9 @@
             검색
           </v-btn>
         </div>
-        <div></div>
+        <div>
+          
+        </div>
       </div>
 
       <div class="community-list-cards">
@@ -82,13 +84,9 @@
 </template>
 
 <script>
-  import CommunityListSearch from '../components/CommunityListSearch.vue'
   const SERVER_URL = process.env.VUE_APP_API_URL
   export default {
     name: 'CommunityList',
-    components: {
-      CommunityListSearch
-    },
     data: function() {
       return {
         communityList: [],
@@ -97,12 +95,12 @@
         communityList3: [],
         communityList4: [],
         q: '',
+        userId: '',
       }
     },
     methods:{
       enterCommunity: function (idx) {
         this.$router.push({name:'CommunityListItem', params:{ communityId:idx }})
-        CommunityListItem.data.push({communityId:idx})
       },
       search() {
         this.$axios({
@@ -122,19 +120,25 @@
           for (var i = 0; i < this.communityList.length; i++) {
             if (i % 4 === 0){
               this.communityList1.push(res.data[i])
-            }else if (i % 4 === 1){
+            } else if (i % 4 === 1) {
               this.communityList2.push(res.data[i])
-            }else if (i % 4 === 2){
+            } else if (i % 4 === 2) {
               this.communityList3.push(res.data[i])
-            }else if (i % 4 === 3){
+            } else if (i % 4 === 3) {
               this.communityList4.push(res.data[i])
             }
           }
         })
-        .catch(err => {
-          console.log(err)
+        .catch(() => {
         })
-      }
+      },
+      setToken () {
+        const token = localStorage.getItem('jwt')
+        const config = {
+          Authorization: `Bearer ${token}`
+        }
+        return config
+      },
     },
     created: function () {
       this.$axios({
@@ -158,11 +162,20 @@
             this.communityList4.push(response[i])
           }
         }
-
         return this.communityList
       })
-      .catch(error => {
-          console.log(error)
+      .catch(() => {
+      })
+
+      this.$axios({
+        method: 'get',
+        url: `${SERVER_URL}/api/v1/users/me`,
+        headers: this.setToken(),
+      })
+      .then(res => {
+        this.userId = res.data.id
+      })
+      .catch(() => {
       })
     }
   }

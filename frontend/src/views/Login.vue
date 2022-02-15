@@ -62,15 +62,13 @@
             data: loginItem,
           })
         .then((res) => {
-          console.log(res.data)
           localStorage.setItem('jwt', res.data.accessToken)
           this.credentials.accessToken = res.data.accessToken
           this.$router.push({ name: 'Index' })
           location.reload();
         })
-        .catch((err) => {
+        .catch(() => {
           alert('아이디나 비밀번호를 다시 확인해주세요.')
-          console.log(err)
         })
       }
     }

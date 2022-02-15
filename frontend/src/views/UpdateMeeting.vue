@@ -42,6 +42,6 @@
 
 <style scoped>
   img:hover {
-    cursor: pointer
+    cursor: pointer;
   }
 </style>

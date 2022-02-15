@@ -98,8 +98,8 @@
       },
       submitComment() {
         if (this.userEmail === '') {
-          alert('로그인 후 이용해주세요 :)')
-          this.$router.push({name: 'Index'})
+          alert('로그인 후 이용해 주세요 :)')
+          this.$router.push({name: 'Login'})
         } else {
           if (this.commentContent.length >= 1) {
           const commentItem = {
@@ -111,12 +111,10 @@
             headers: this.setToken(),
             data: commentItem,
           })
-          .then(res => {
-            console.log(res)
+          .then(() => {
             location.reload()
           })
-          .catch(err => {
-            console.log(err)
+          .catch(() => {
           })
           } else {
             alert('댓글은 1자 이상 작성해야 합니다.')
@@ -129,12 +127,10 @@
             url: `${SERVER_URL}/api/v1/articles/${this.articleId}/comments/${commentId}`,
             headers: this.setToken(),
         })
-        .then(res => {
-          console.log(res)
+        .then(() => {
           location.reload()
         })
-        .catch(err => {
-          console.log(err)
+        .catch(() => {
         })
       },
       updateArticle () {
@@ -149,7 +145,6 @@
         url: `${SERVER_URL}/api/v1/communities/${this.communityId}/articles/${this.articleId}`
       })
       .then(res => {
-        console.log(res)
         this.articleId = res.data.articleId
         this.title = res.data.title
         this.content = res.data.content
@@ -160,8 +155,7 @@
         this.commentCnt = this.commentList.length
         this.secretEmail = '***' + this.email.slice(3)
       })
-      .catch(err => {
-          console.log(err)
+      .catch(() => {
       })
 
       this.$axios({
@@ -169,12 +163,10 @@
         url: `${SERVER_URL}/api/v1/communities/${this.communityId}`
       })
       .then(res => {
-        console.log(res)
         this.communityId = res.data.id
         this.communityName = res.data.name
       })
-      .catch(err => {
-          console.log(err)
+      .catch(() => {
       })
 
       this.$axios({
@@ -183,11 +175,9 @@
         headers: this.setToken(),
       })
       .then(res => {
-        console.log(res)
         this.userEmail = res.data.email
       })
-      .catch(err => {
-        console.log(err)
+      .catch(() => {
       })
     }
   }

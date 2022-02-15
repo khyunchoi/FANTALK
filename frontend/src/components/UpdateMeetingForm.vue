@@ -102,16 +102,13 @@
             data: meetingItem,
             headers: this.setToken(),
           })
-          .then(res => {
-            console.log(res)
+          .then(() => {
             this.title = ''
             this.openDate = ''
             this.maxUser = ''
             this.$router.push({ name: 'DetailMyMeeting', params:{ meetingId: this.meetingId }})
           })
-          .catch(err => {
-            console.log(meetingItem)
-            console.log(err)
+          .catch(() => {
           })
         }
       },
@@ -121,12 +118,10 @@
           url: `${SERVER_URL}/api/v1/meetings/${this.meetingId}`,
           headers: this.setToken(),
         })
-        .then(res => {
-          console.log(res)
+        .then(() => {
           this.$router.push({ name: 'MyMeetingList' })
         })
-        .catch(err => {
-          console.log(err)
+        .catch(() => {
         })
       }
     },
@@ -145,8 +140,7 @@
         this.time = res.data.openDate.slice(11, 16)
         this.maxUser = res.data.maxUser
       })
-      .catch(err => {
-        console.log(err)
+      .catch(() => {
       })
     }
   }

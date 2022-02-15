@@ -76,13 +76,11 @@
           headers: this.setToken(),
         })
         .then(res => {
-          console.log(res)
           if (res.data === "SUCCESS") {
             this.$router.push({name:'MeetingRoom', params:{ meetingId: this.meetingId }})
           }
         })
         .catch(err => {
-          console.log(err.response.data)
           if (err.response.data === "MEETING ING") {
             alert('현재 팬미팅이 진행중입니다. 잠시만 기다려주세요.')
           } else if (err.response.data === "NO ENTER TWICE") {
@@ -109,8 +107,7 @@
         this.title = res.data.title
         this.content = res.data.content
       })
-      .catch(err => {
-        console.log(err)
+      .catch(() => {
       })
     }
   }
@@ -131,15 +128,16 @@
 
   #title {
     font-size: 1.6em;
-    padding: 0 0 1% 0;
+    padding: 0 0 2% 0%;
     font-weight: bold;
     color: #797BF8;
+    text-align: center;
   }
 
   #open-date {
     font-size: 1em;
     padding: 0 0 3% 65%;
-    color: #797BF8;
+    color: #ACAEFF;
     font-weight: bold;
   }
 

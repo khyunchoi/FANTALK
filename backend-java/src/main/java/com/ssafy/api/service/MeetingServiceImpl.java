@@ -204,7 +204,6 @@ public class MeetingServiceImpl implements MeetingService{
             }
             return "FAIL";
         } catch (Exception e) {
-            System.out.println(e);
             throw e;
         }
     }
@@ -239,7 +238,6 @@ public class MeetingServiceImpl implements MeetingService{
                 return "MANAGER NOT IN";
             }
             } catch (Exception e) {
-                System.out.println(e);
                 throw e;
             }
     }
