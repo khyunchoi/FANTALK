@@ -1,9 +1,6 @@
 <template>
-	<div style="display:flex; flex-direction: row">
-    <div class="meeting-list-item-side">
-      <img src="../assets/sidemymeetinglist.png" alt="mymeetinglist" style="padding: 6% 0 2% 2%;" @click="moveMyMeetingList()">
-      <img src="../assets/meetingapply.png" alt="meetingapply" style="padding: 0% 0 2% 2%;" @click="moveCreateMeeting()">
-    </div>
+	<div>
+    <img src="../assets/sidemymeetinglist.png" alt="check-manager" style="padding: 6% 0 2% 2%;" @click="moveMyMeetingList()">
     <div class="meeting-list-item" style="width: 80%;">
       <h2 style="padding: 2% 0; font-size: 1.5em;">신청한 팬미팅 목록</h2>
 
@@ -22,6 +19,13 @@
         </div>
       </div>
       <div id="pages"></div>
+      <v-btn
+        rounded
+        @click="moveCreateMeeting()"
+        style="background-color: #797BF8; color: white; height: 30px; width: 30px; margin-left: 95%;"
+      >
+        신청
+      </v-btn>
     </div>
 	</div>
 </template>
@@ -178,17 +182,10 @@
     cursor: pointer;
   }
 
-  .meeting-list-item-side {
-    /* background-color: beige; */
-    padding: 4% 0 4% 4%;
-    width: 30%;
-  }
-
   .meeting-list-item {
     display: flex;
-    /* background-color: beige; */
-    padding: 4% 4% 4% 0;
     flex-direction: column;
+    margin-left: 14%;
   }
 
   .community-list-item-list-meetings-1 {

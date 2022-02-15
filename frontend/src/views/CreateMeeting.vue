@@ -1,6 +1,6 @@
 <template>
   <div>
-    <img src="../assets/sidemymeetinglist.png" alt="check-manager" style="padding: 6% 0 2% 2%;" @click="moveMyMeetingList">
+    <img src="../assets/sidemymeetinglist.png" alt="check-manager" style="padding: 6% 0 2% 2%;" @click="moveMyMeetingList()">
     <div style="display: flex; justify-content: center;">
       <div style="margin: 20px; padding: 20px; width: 70%;">
         <h2 style="margin-bottom: 20px; padding-bottom: 10px; color: #797BF8;">
