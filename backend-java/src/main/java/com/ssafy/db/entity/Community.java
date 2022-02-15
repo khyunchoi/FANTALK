@@ -42,9 +42,6 @@ public class Community {
     @NotNull
     private String title;
 
-    @OneToMany(mappedBy = "community", cascade = CascadeType.ALL)
-    private List<Article> articleList = new ArrayList<>();
-
     @Builder
     public Community(String name, String title) {
         this.name = name;
