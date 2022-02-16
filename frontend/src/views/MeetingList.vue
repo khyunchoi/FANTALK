@@ -19,7 +19,7 @@
           <v-btn
             rounded
             @click="search()"
-            style="background-color: #797BF8; color: white; height: 38px;"
+            style="background-color: gray; color: white; height: 38px;"
           >
             검색
           </v-btn>
