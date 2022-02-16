@@ -93,7 +93,7 @@
           data: signUpItem,
         })
         .then(() => {
-          this.$router.push({ name: 'Index' })
+          this.$router.push({ name: 'Login' })
         })
         .catch(err => {
           if (err.response.status === 403) {
