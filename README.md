@@ -168,7 +168,7 @@
 
 ### 포팅 매뉴얼
 
-- [포팅 매뉴얼](https://lab.ssafy.com/s06-webmobile1-sub2/S06P12C105/exec)
+- [포팅 매뉴얼](https://lab.ssafy.com/s06-webmobile1-sub2/S06P12C105/-/tree/master/exec)
 - 설치 가이드
 
 ````
