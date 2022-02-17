@@ -156,7 +156,7 @@
 
 <br>
 
-### 📄 REST API
+### REST API
 
 - **Swagger을 이용하여 REST API 설계 및 정리**
 
