@@ -23,12 +23,12 @@
 
 <br>
 
-## 목차
+## 📌목차
 
 - [프로젝트 소개](#프로젝트-소개)
   - [기획 의도](#기획-의도)
   - [팀원 및 역할](#팀원-및-역할)
-  - [서비스 개요](#서비스-개요)
+  - [서비스 소개](#서비스-소개)
   - [개발 그라운드 룰](#개발-그라운드-룰)
 - [프로젝트 디자인](#프로젝트-디자인)
   - [Service Architecture](#service-architecture)
@@ -45,17 +45,58 @@
 
 ### 기획 의도
 
+- **코로나 19 확산으로 인한 오프라인 팬미팅의 대체재로써 온라인 팬미팅이 필요!**
+
+![1](README.assets/1.PNG)
+
+- **팬미팅 니즈를 중심으로한 STP 분석**
+
+![2](README.assets/2-16450736353511.PNG)
+
 <br>
 
 ### 팀원 및 역할
 
+![3](README.assets/3.PNG)
+
 <br>
 
-### 서비스 개요
+### 서비스 소개
+
+#### 📡 연예인과의 '1:1 실시간 팬미팅'
+
+- **사전에 부여받은 입장코드를 통해 연예인과 1:1 실시간 팬미팅**
+
+#### 📒 팬들끼리의 소통창구 '팬 커뮤니티'
+
+- **팬미팅 후기 공유 및 같은 연예인을 좋아하는 팬들을 위한 팬 커뮤니티**
 
 <br>
 
 ### 개발 그라운드 룰
+
+#### 🌿 Git branch 전략
+
+- **master** : 라이브 서버에 제품으로 출시되는 브랜치
+- **name** : 현재 작업하고 있는 팀원의 브랜치
+  - ex) hongjung
+- **hotfix** : master 브랜치에서 발생한 버그를 수정하는 브랜치
+- **commit message rule**
+  - '날짜 기능명-작업종류 [간단한 작업 내용]'
+    - ex) '0119 signup-create [...]'
+    - ex) '0120 signup-hotfix [...]'
+- 한번 merge된 브랜치는 삭제하고 재생성해서 작업
+
+#### 🌱 BE
+
+- SOLID를 기반으로 객체 지향 설계 추구
+- DAO는 JPA Repository를 사용, DTO를 만들어 Entity로 직접 API 통신을 송수신 하지 않음
+- 주석을 통해 개발 내용을 공유
+
+#### 🌺 FE
+
+- 사용자 경험을 최우선시함
+- 일관된 색과 디자인을 추구
 
 <br>
 
@@ -79,13 +120,47 @@
 
 ### UI Design
 
+#### 🎨 Color Palette
+
+- **22년 올해의 팬톤 컬러인 '베리 페리'를 중심으로 Color Palette 설계**
+
+![4](README.assets/4.PNG)
+
+#### 📐 UI
+
+- **Figma를 이용하여 UI Design**
+
+- **메인 페이지 & 회원 관리 페이지**
+
+![6](README.assets/6-16450746642512.PNG)
+
+- **팬 커뮤니티 페이지**
+
+![7](README.assets/7.PNG)
+
+- **팬미팅 신청 페이지**
+
+![8](README.assets/8.PNG)
+
+- **팬미팅 페이지**
+
+![9](README.assets/9.PNG)
+
 <br>
 
 ### ERD Design
 
+- **ERD Cloud를 이용하여 ERD 설계**
+
+![5](README.assets/5.PNG)
+
 <br>
 
-### REST API
+### 📄 REST API
+
+- **Swagger을 이용하여 REST API 설계 및 정리**
+
+![10](README.assets/10.png)
 
 <br>
 
@@ -93,56 +168,65 @@
 
 ### 포팅 매뉴얼
 
+- [포팅 매뉴얼](https://lab.ssafy.com/s06-webmobile1-sub2/S06P12C105/exec)
+- 설치 가이드
+
+````
+#git clone
+
+#backend
+cd backend-java
+sudo chmod +x ./gradlew
+sudo ./gradlew clean build
+cd ..
+sudo docker run -d --name timeroom-backend --network host timeroom/backend-spring-boot-docker
+
+# openvidu-server
+cd /opt/openvidu
+/sudo openvidu start
+```
+````
+
+- 포트 설정
+
+```
+ufw allow ssh
+ufw allow 80/tcp
+ufw allow 443/tcp
+ufw allow 3478/tcp
+ufw allow 3478/udp
+ufw allow 5044/tcp
+ufw allow 9200/tcp
+ufw allow 40000:65535/tcp
+ufw allow 40000:65535/udp
+ufw allow 9090/tcp # 젠킨스
+ufw enable
+```
+
 <br>
 
 ### 주요 기능 목록 및 설명
 
-<br>
+#### 🎈 팬 커뮤니티
 
-- 기획 및 설계
-  - [기획안](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/ea428f2f-7001-4c17-92aa-6059a6bfcae7/%EA%B4%91%EC%A3%BC_1%EB%B0%98_5%ED%8C%80.pdf?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220216%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220216T192624Z&X-Amz-Expires=86400&X-Amz-Signature=81e8eb8626b128beb1f254550198e3cdca8fc352bcae11d5d76770b224abb8e9&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22%25EA%25B4%2591%25EC%25A3%25BC_1%25EB%25B0%2598_5%25ED%258C%2580.pdf%22&x-id=GetObject)
-  - [기능 요구사항](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/1a3a5a42-5269-46ff-8b3e-5a2302e1eacb/%EA%B8%B0%EB%8A%A5%EC%9A%94%EA%B5%AC%EC%82%AC%ED%95%AD%EC%A0%95%EC%9D%98%EC%84%9C.md?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220216%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220216T192353Z&X-Amz-Expires=86400&X-Amz-Signature=5370d1c9a4741a01da23afcb8f815cc0e02ff5b221e46c2cab47952dee7f1f2e&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22%25EA%25B8%25B0%25EB%258A%25A5%2526%25EC%259A%2594%25EA%25B5%25AC%25EC%2582%25AC%25ED%2595%25AD%25EC%25A0%2595%25EC%259D%2598%25EC%2584%259C.md%22&x-id=GetObject)
-  - [Wireframe](https://www.figma.com/file/uqk1vMFdSWYdZBB8WKEOvc/TIMEROOM)
-  - [ERD](https://www.erdcloud.com/d/pwrvaA9xfHJFnyYNi)
-  - [API 설계서](https://www.notion.so/3e4605c453934dfb8346cbda5edac187#f93837ee850847768bd847fe40b805e2)
+- 올바른 팬덤 문화 형성과 기획사의 개입 최소화를 위해 FANTALK 운영진이 생성, 수정, 삭제를 관리
+- 각 게시글과 댓글에 대한 수정, 삭제는 작성한 회원만 보이고 가능
 
+#### 🎭 1:1 실시간 팬미팅
 
-
----
-
-## How to Start
-
-- [Detail](https://lab.ssafy.com/s06-webmobile1-sub2/S06P12C105/exec)
-- 설치가이드
-    ```
-    #git clone
-    
-    #backend
-    cd backend-java
-    sudo chmod +x ./gradlew
-    sudo ./gradlew clean build
-    cd ..
-    sudo docker run -d --name timeroom-backend --network host timeroom/backend-spring-boot-docker
+- 사전에 권한을 받은 기업회원만 팬미팅 신청 가능(FANTALK 운영진이 따로 권한을 부여)
+- 팬미팅은 해당 팬미팅을 신청한 기업회원만 수정, 삭제 가능
+- 팬미팅 신청이 완료되면 기업회원에게 입장 코드 목록을 제공 (FANTALK 운영진이 따로 메일을 통해 전달)
+- 팬미팅은 기업회원이 먼저 입장한 후에 일반회원이 입장 가능
+- 일반회원은 현재 진행 중인 팬미팅에는 입장이 불가능
+- 일반회원은 한번 사용한 입장코드 재사용 불가
+- OpenVidu API(Signal)를 이용하여 실시간 채팅 가능
 
 
-    # openvidu-server
-    cd /opt/openvidu
-    /sudo openvidu start
-    ```
-- 포트 설정
-    ```
-    ufw allow ssh
-    ufw allow 80/tcp
-    ufw allow 443/tcp
-    ufw allow 3478/tcp
-    ufw allow 3478/udp
-    ufw allow 5044/tcp
-    ufw allow 9200/tcp
-    ufw allow 40000:65535/tcp
-    ufw allow 40000:65535/udp
-    ufw allow 9090/tcp # 젠킨스
-    ufw enable
-    ```
+
+
+
+
 
 
 
