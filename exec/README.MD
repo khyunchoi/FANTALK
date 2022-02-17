@@ -385,17 +385,21 @@ ufw enable
 ><br>
 >
 >**Credential 추가**<br>
->![jenkins-cre](README.assets/jenkins-cre.png)<br>
+>
+>![jenkins-cre](README.assets/jenkins-cre.PNG)
+>
+><br>
 >Dashboard > Jenkins 관리 > Manage Credentials > 이후로 위의 바에서 System > Global Credentials 순으로 타고 들어갑니다.
+>
 >>**Gitlab API Token**
 >>![jenkins-gitlabcre](README.assets/jenkins-gitlabcre.PNG)
 >>Gitlab에서 생성한 API Token을 입력합니다.
 >><br>
 >
 >>**SSH Credential**
->>
+>
 >>![jenkins-sshcre](README.assets/jenkins-sshcre.PNG)
->>
+>
 >><br>
 >>**Username을 ubuntu로 설정합니다.<br>
 >>ubuntu@~ 로 접근하기 때문에 ubuntu로만 가능합니다.<br>
@@ -403,9 +407,9 @@ ufw enable
 >><br>
 >
 >>**Gitlab Access Credential**
->>
+>
 >>![jenkins-accesscre](README.assets/jenkins-accesscre.PNG)
->>
+>
 >><br>
 >>Username, password : 깃랩 아이디와 패스워드 입력
 >
