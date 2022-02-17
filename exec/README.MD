@@ -1,24 +1,17 @@
 ## 빌드 및 실행
-<br>
-
 ***Jenkins를 사용하여 자동으로 빌드 및 배포가 되도록 설정이 되어있습니다.***
 <br>
 
 ***수동 배포는 아래에서 다루겠습니다***
 
-
 <br>
 
 ### 시스템 아키텍처
-<br>
-
-![service_architecture](README.assets/service_architecture.png)
+![service_architecture](README.assets/service_architecture.PNG)
 
 <br>
 
 ### 기술 스택 및 버전
-<br>
-
 |  설치 목록  | version
 |-----------|--------------|
 | Ubuntu | 20.04 LTS|
@@ -36,12 +29,14 @@
 <br>
 
 ---
-### 수동 배포<br>
 <br>
+
+## 수동 배포
 
 ## 1. EC2 설정
 
 **방화벽 설치 및 활성화**
+
 ```
 sudo apt install ufw # 설치
 sudo ufw enable # 활성화
@@ -65,14 +60,13 @@ ufw allow 40000:65535/udp
 ufw allow 9090/tcp # 젠킨스
 ufw enable
 ```
-관리자 권한으로 실행합니다.
+**관리자 권한으로 실행합니다.**
 
 <br>
 
+**openvidu docs 참고**
 
-openvidu docs 참고<br>
-
-![ufw](README.assets/ufw.png)
+![ufw](README.assets/ufw.PNG)
 
 <br>
 
@@ -80,43 +74,39 @@ openvidu docs 참고<br>
 ## 2. Openvidu 설치
 > Openvidu Docs : https://docs.openvidu.io/en/stable/
 >
->**/opt 에 설치합니다**
->```
->sudo su
->cd /opt
->curl https://s3-eu-west-1.amazonaws.com/aws.openvidu.io/install_openvidu_pro_latest.sh | bash
->```
+> **/opt 에 설치합니다**
+> ```
+> sudo su
+> cd /opt
+> curl https://s3-eu-west-1.amazonaws.com/aws.openvidu.io/install_openvidu_pro_latest.sh | bash
+> ```
 >
->**설치 후에 openvidu-server의 설정을 바꿔 줍니다.**
->```
->cd /opt/openvidu
->sudo vi .env
->```
->[.env]
-><br>
->![openvidu-env](README.assets/openvidu-env.png)
->```
->DOMAIN_OR_PUBLIC_IP=i6c105.p.ssafy.io
->OPENVIDU_SECRET=MY_SECRET
->CERTIFICATE_TYPE=letsencrypt
->LETSENCRYPT_EMAIL=dhwlgns7028@naver.com
->HTTP_PORT=8081
->HTTPS_PORT=8443
->```
->. . 위와 같이 세팅합니다.<br>
->ESC +  :wq + Enter<Br>
+> **설치 후에 openvidu-server의 설정을 바꿔 줍니다.**
+> ```
+> cd /opt/openvidu
+> sudo vi .env
+> ```
+> [.env]
 >
+> ![openvidu-env](README.assets/openvidu-env.PNG)
+>
+> ```
+> DOMAIN_OR_PUBLIC_IP=i6c105.p.ssafy.io
+> OPENVIDU_SECRET=MY_SECRET
+> CERTIFICATE_TYPE=letsencrypt
+> LETSENCRYPT_EMAIL=dhwlgns7028@naver.com
+> HTTP_PORT=8081
+> HTTPS_PORT=8443
+> ```
+> . . 위와 같이 세팅합니다.<br>
+> ESC +  :wq + Enter<Br>
 
-<br> 
-
-## 3. Openvidu 시작하기
 <br>
 
+## 3. Openvidu 시작하기
 >/opt/openvidu 에서 openvidu 쉘 스크립트를 사용합니다.<br>
 >
 >## ** 주의사항 : sudo su로 변경 후, 혹은 sudo를 사용하여 실행해야 합니다.
->
-><br>
 >
 >**openvidu 실행**
 >
@@ -125,19 +115,17 @@ openvidu docs 참고<br>
 >sudo ./openvidu restart # 재실행
 >sudo ./openvidu stop # 중지
 >```
+>**실행 화면**
 ><br>
 >
->**실행 화면**
-><Br>
->
->![openvidu-start](README.assets/openvidu-start.png)
+>![openvidu-start](README.assets/openvidu-start.PNG)
 >
 ><br>
 >
 >
 >터미널이 종료된 후에도 서버를 살려두기 위해 tmux를 사용하였습니다.
 >
-><Br>
+><br>
 >
 >**tmux 설치**
 >```
@@ -175,7 +163,7 @@ openvidu docs 참고<br>
 >프론트 정적 파일 : backend-java/dist
 >백 jar 파일 : backend-java/build/libs
 >에 생성된다.
-><Br>
+><br>
 >
 >정적 파일을 서비스화하기 위해서는 웹 서버가 필요합니다.<br> 
 >저희 팀은 nginx를 사용합니다.<br>
@@ -212,7 +200,6 @@ openvidu docs 참고<br>
 ><br>
 >
 >docker ps 명령어로 실행중인 컨테이너 정보를 확인할 수 있습니다.<Br>
-><br>
 >
 
 
@@ -267,8 +254,8 @@ openvidu docs 참고<br>
 >
 >	access_log /var/log/nginx/access.log;
 >	error_log /var/log/nginx/error.log;
->	    
->    listen [::]:443 ssl ipv6only=on; # managed by Certbot
+>
+>listen [::]:443 ssl ipv6only=on; # managed by Certbot
 >	listen 443 ssl; # managed by Certbot
 >	ssl_certificate /etc/letsencrypt/live/i6c105.p.ssafy.io/fullchain.pem; # managed by Certbot
 >	ssl_certificate_key /etc/letsencrypt/live/i6c105.p.ssafy.io/privkey.pem; # managed by Certbot
@@ -278,52 +265,52 @@ openvidu docs 참고<br>
 >
 >	## backend
 >	location /api {
->                proxy_pass http://backend/api;
->                proxy_redirect off;
->                charset utf-8;
+>           proxy_pass http://backend/api;
+>           proxy_redirect off;
+>           charset utf-8;
 >
->                proxy_set_header X-Real-IP $remote_addr;
->                proxy_set_header X-Forwarded-For 
->                $proxy_add_x_forwarded_for;
->                proxy_set_header X-Forwarded-Proto $scheme;
->                proxy_set_header X-Forwarded-Host $host;
->                proxy_set_header X-Forwarded-Port $server_port;
+>           proxy_set_header X-Real-IP $remote_addr;
+>           proxy_set_header X-Forwarded-For 
+>           $proxy_add_x_forwarded_for;
+>           proxy_set_header X-Forwarded-Proto $scheme;
+>           proxy_set_header X-Forwarded-Host $host;
+>           proxy_set_header X-Forwarded-Port $server_port;
 >		        proxy_set_header X-NginX-Proxy true;
 >		        proxy_http_version 1.1;
 >		        proxy_set_header Connection "";
 >		        proxy_set_header    Upgrade $http_upgrade;
 >		        proxy_set_header Connection "upgrade";
 >	}
->	
+>
 >}
 >
 >#redirect
 >server {
->    if ($host = i6c105.p.ssafy.io) {
->        return 301 https://$host$request_uri;
->    } # managed by Certbot
+>if ($host = i6c105.p.ssafy.io) {
+>   return 301 https://$host$request_uri;
+>} # managed by Certbot
 >
 >
->        listen 80;
->        listen [::]:80;
+>   listen 80;
+>   listen [::]:80;
 >
->        server_name i6c105.p.ssafy.io www.i6c105.p.ssafy.io;
->    return 404; # managed by Certbot
+>   server_name i6c105.p.ssafy.io www.i6c105.p.ssafy.io;
+>return 404; # managed by Certbot
 >}
 >```
 >
 >- server
->    - server_name에 설정한(i6c105.p.ssafy.io)에 오는 요청을 처리합니다.
->    
->    - root에 프론트 엔드의 정적 파일이 존재하는 폴더로 설정합니다.
->    - https 설정을 하고 http를 https로 리다이렉트 해주도록 설정합니다<br>
->        . . . Certbot 자동 생성
->- upstream
->    - 백 엔드 서버가 사용하는 8080포트로 설정합니다.(변경 가능).
+>   - server_name에 설정한(i6c105.p.ssafy.io)에 오는 요청을 처리합니다.
 >
->    - 8080 포트를 사용중인 백 엔드 서버로 매핑됩니다.
+>   - root에 프론트 엔드의 정적 파일이 존재하는 폴더로 설정합니다.
+>   - https 설정을 하고 http를 https로 리다이렉트 해주도록 설정합니다<br>
+>       . . . Certbot 자동 생성
+>- upstream
+>   - 백 엔드 서버가 사용하는 8080포트로 설정합니다.(변경 가능).
+>
+>   - 8080 포트를 사용중인 백 엔드 서버로 매핑됩니다.
 >- backend
->    - location /api 부분을 통해<br> /api로 들어오는 요청(백 엔드)에 대하여 localhost:8080으로 매핑합니다.
+>   - location /api 부분을 통해<br> /api로 들어오는 요청(백 엔드)에 대하여 localhost:8080으로 매핑합니다.
 >
 ><br>
 >
@@ -340,11 +327,12 @@ openvidu docs 참고<br>
 >Let's Encrtpy로 ssl 인증서를 발급 받습니다.<br>
 >
 >** 참고 - cerbot 홈페이지 : https://certbot.eff.org
->![certbot](README.assets/certbot.png)
+>![certbot](README.assets/certbot.PNG)
+>
 >- software : nginx
 >- system : ubuntu 20
 >
-><Br>
+><br>
 >
 >certbot 설치 및 nginx 적용
 >```
@@ -385,7 +373,7 @@ openvidu docs 참고<br>
 >
 ><br>
 >
->![jenkins](README.assets/jenkins.png)
+>![jenkins](README.assets/jenkins.PNG)
 ><br>
 >
 >Dashboard > Jenkins 관리 > Plugin Manager 에서<br>
@@ -400,34 +388,40 @@ openvidu docs 참고<br>
 >![jenkins-cre](README.assets/jenkins-cre.png)<br>
 >Dashboard > Jenkins 관리 > Manage Credentials > 이후로 위의 바에서 System > Global Credentials 순으로 타고 들어갑니다.
 >>**Gitlab API Token**
->>![jenkins-gitlabcre](README.assets/jenkins-gitlabcre.png)
+>>![jenkins-gitlabcre](README.assets/jenkins-gitlabcre.PNG)
 >>Gitlab에서 생성한 API Token을 입력합니다.
 >><br>
->>
+>
 >>**SSH Credential**
->>![jenkins-sshcre](README.assets/jenkins-sshcre.png)<br>
+>>
+>>![jenkins-sshcre](README.assets/jenkins-sshcre.PNG)
+>>
+>><br>
 >>**Username을 ubuntu로 설정합니다.<br>
 >>ubuntu@~ 로 접근하기 때문에 ubuntu로만 가능합니다.<br>
->> private key에 ec2에 접근하는 데 필요한 pem 키를 등록합니다.
+>>private key에 ec2에 접근하는 데 필요한 pem 키를 등록합니다.
 >><br>
->>
+>
 >>**Gitlab Access Credential**
->>![jenkins-accesscre](README.assets/jenkins-accesscre.png)<br>
+>>
+>>![jenkins-accesscre](README.assets/jenkins-accesscre.PNG)
+>>
+>><br>
 >>Username, password : 깃랩 아이디와 패스워드 입력
 >
 ><br>
 >
 >**Credential 등록**
 >>**Gitlab API**
->>![jenkins-gitlab](README.assets/jenkins-gitlab.png)
+>>![jenkins-gitlab](README.assets/jenkins-gitlab.PNG)
 >>Dashboard > 환경설정의 Gitlab 란을 설정합니다.
 >>Gitlab Access Token Credential 사용
 >>Test Connection의 성공 여부를 확인합니다.
->>
+>
 >><br>
->>
+>
 >>**SSH**
->>![jenkins-ssh](README.assets/jenkins-ssh.png)
+>>![jenkins-ssh](README.assets/jenkins-ssh.PNG)
 >>Dashboard > 환경설정의 SSH remote hosts 란을 설정합니다.
 >>Hostname : 도메인서버이름<br>
 >>Port   : ssh port인 22<br>
@@ -439,41 +433,29 @@ openvidu docs 참고<br>
 >>**Jenkins project 생성**
 >>Dashboard > 새로운 아이템 > Freestyle project를 생성합니다.<br>
 >>그 후에, 그 프로젝트의 구성 탭으로 이동<br>
->>
+>
 >>**소스 코드 관리**
->>![jenkins-access](README.assets/jenkins-access.png)
+>>![jenkins-access](README.assets/jenkins-access.PNG)
 >>git 선택
 >>Repository url에 깃랩 http 클론을 복사하여 입력<br>
 >>credential에서는 Gitlab Access Credential 입력<br>
->>
+>
 >><br>
->>
+>
 >>**빌드 유발**
->>![jenkins-buildtrigger](README.assets/jenkins-buildtrigger.png)
+>>![jenkins-buildtrigger](README.assets/jenkins-buildtrigger.PNG)
 >>위와 같이 체크해줍니다.
 >>Gitlab Webook URL을 후에 사용할 것이므로 기억해둡니다.<br>
 >>그리고 빌드 유발 탭의 고급 설정을 클릭하여 Secret Token을 발급 받습니다.
->>
+>
 >><br>
->>
+>
 >>**Gitlab Webhook**<br>
 >>Gitlab Webhook URL 과 Secret Token을 가지고 Gitlab으로 갑니다.<br>
 >>Gitlab Webhook 등록 과정은 생략합니다.<br>
->>
+>
 >><br>
->>
+>
 >>**빌드**
->> ![jenkins-buildtrigger](README.assets/jenkins-buildtrigger.png)
+>> ![jenkins-buildtrigger](README.assets/jenkins-buildtrigger.PNG)
 >> Gitlab에 등록한 Webhook이 동작할 때 실행할 코드를 등록합니다.
-
-
-
-
-<br>
-
----
-외부 서비스 정보
----
-DB 덤프 파일
----
-시연 시나리오
