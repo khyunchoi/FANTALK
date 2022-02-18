@@ -464,5 +464,5 @@ ufw enable
 >><br>
 >
 >>**빌드**
->> ![jenkins-buildtrigger](README.assets/jenkins-buildtrigger.PNG)
+>> ![jenkins-build](README.assets/jenkins-buildt.PNG)
 >> Gitlab에 등록한 Webhook이 동작할 때 실행할 코드를 등록합니다.
